@@ -1,0 +1,67 @@
+2024-08-14 12:14:10.950 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-14 12:14:11.360 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-14 12:14:13.404 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-14 12:14:14.665 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:14:14.670 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:14:35.865 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-14 12:14:36.148 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-14 12:14:37.313 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-14 12:14:38.006 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:14:38.021 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:14:40.073 +05:30 [Information] | Message : Received HTTP response after 2045.7479ms - OK | Exception :  
+2024-08-14 12:14:40.076 +05:30 [Information] | Message : End processing HTTP request after 2088.4533ms - OK | Exception :  
+2024-08-14 12:16:20.406 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-14 12:16:20.735 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-14 12:16:21.942 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-14 12:16:22.608 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:16:22.612 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:16:23.818 +05:30 [Information] | Message : Received HTTP response after 1203.3474ms - OK | Exception :  
+2024-08-14 12:16:23.821 +05:30 [Information] | Message : End processing HTTP request after 1230.8263ms - OK | Exception :  
+2024-08-14 12:16:40.258 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:16:40.258 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:16:40.288 +05:30 [Information] | Message : Received HTTP response after 29.2683ms - OK | Exception :  
+2024-08-14 12:16:40.288 +05:30 [Information] | Message : End processing HTTP request after 29.7621ms - OK | Exception :  
+2024-08-14 12:16:49.603 +05:30 [Error] | Message : SahadevService.ClientService | Exception : System.NullReferenceException: Object reference not set to an instance of an object.
+   at SahadevDBLayer.Repository.ClientRepository.Insert(Client objClient) in D:\.Pawan\Projects\AdFactors\Docs\New folder\CoreAPI\SahadevDBLayer\Repository\ClientRepository.cs:line 96
+   at SahadevService.ClientService.Insert(Client objClient) in D:\.Pawan\Projects\AdFactors\Docs\New folder\CoreAPI\SahadevService\Client\ClientService.cs:line 93
+ 
+2024-08-14 12:16:55.324 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:16:55.325 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:16:55.354 +05:30 [Information] | Message : Received HTTP response after 29.8603ms - OK | Exception :  
+2024-08-14 12:16:55.355 +05:30 [Information] | Message : End processing HTTP request after 30.9188ms - OK | Exception :  
+2024-08-14 12:17:10.369 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:17:10.370 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:17:10.399 +05:30 [Information] | Message : Received HTTP response after 29.5111ms - OK | Exception :  
+2024-08-14 12:17:10.399 +05:30 [Information] | Message : End processing HTTP request after 30.2349ms - OK | Exception :  
+2024-08-14 12:17:25.416 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:17:25.416 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:17:25.441 +05:30 [Information] | Message : Received HTTP response after 24.8214ms - OK | Exception :  
+2024-08-14 12:17:25.441 +05:30 [Information] | Message : End processing HTTP request after 25.2609ms - OK | Exception :  
+2024-08-14 12:17:40.455 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:17:40.456 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:17:40.491 +05:30 [Information] | Message : Received HTTP response after 34.9382ms - OK | Exception :  
+2024-08-14 12:17:40.491 +05:30 [Information] | Message : End processing HTTP request after 35.6282ms - OK | Exception :  
+2024-08-14 12:17:55.506 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:17:55.506 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:17:55.551 +05:30 [Information] | Message : Received HTTP response after 44.8354ms - OK | Exception :  
+2024-08-14 12:17:55.551 +05:30 [Information] | Message : End processing HTTP request after 45.6836ms - OK | Exception :  
+2024-08-14 12:18:10.573 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:18:10.573 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:18:10.602 +05:30 [Information] | Message : Received HTTP response after 29.0604ms - OK | Exception :  
+2024-08-14 12:18:10.602 +05:30 [Information] | Message : End processing HTTP request after 29.4593ms - OK | Exception :  
+2024-08-14 12:18:25.611 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:18:25.611 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:18:25.676 +05:30 [Information] | Message : Received HTTP response after 65.3074ms - OK | Exception :  
+2024-08-14 12:18:25.677 +05:30 [Information] | Message : End processing HTTP request after 65.8985ms - OK | Exception :  
+2024-08-14 12:21:16.773 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:21:16.773 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:21:20.094 +05:30 [Error] | Message : SahadevService.ClientService | Exception : System.NullReferenceException: Object reference not set to an instance of an object.
+   at SahadevDBLayer.Repository.ClientRepository.Insert(Client objClient) in D:\.Pawan\Projects\AdFactors\Docs\New folder\CoreAPI\SahadevDBLayer\Repository\ClientRepository.cs:line 96
+   at SahadevService.ClientService.Insert(Client objClient) in D:\.Pawan\Projects\AdFactors\Docs\New folder\CoreAPI\SahadevService\Client\ClientService.cs:line 93
+ 
+2024-08-14 12:21:20.127 +05:30 [Information] | Message : Received HTTP response after 3354.5486ms - OK | Exception :  
+2024-08-14 12:21:20.128 +05:30 [Information] | Message : End processing HTTP request after 3355.0625ms - OK | Exception :  
+2024-08-14 12:21:35.145 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:21:35.145 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-14 12:21:35.186 +05:30 [Information] | Message : Received HTTP response after 40.4969ms - OK | Exception :  
+2024-08-14 12:21:35.186 +05:30 [Information] | Message : End processing HTTP request after 40.8772ms - OK | Exception :  

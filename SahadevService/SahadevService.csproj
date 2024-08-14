@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Member\**" />
+    <EmbeddedResource Remove="Member\**" />
+    <None Remove="Member\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="DependencyResolver.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SahadevBusinessEntity\SahadevBusinessEntity.csproj" />
+    <ProjectReference Include="..\SahadevDBLayer\SahadevDBLayer.csproj" />
+  </ItemGroup>
+
+</Project>
