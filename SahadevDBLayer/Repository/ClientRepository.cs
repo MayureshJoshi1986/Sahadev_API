@@ -68,7 +68,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to insert client detail in client table
         /// </summary>
-        /// <param name="objClient">object containing client detail</param>
+        /// <param name="objClient">object containing client details</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>14-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
