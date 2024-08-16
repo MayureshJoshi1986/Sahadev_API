@@ -55,6 +55,7 @@ namespace SahadevDBLayer.Repository
             try
             {
                 var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null);
+
                 return data;
             }
             catch (Exception ex)
