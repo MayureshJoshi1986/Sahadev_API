@@ -10,11 +10,7 @@ namespace SahadevBusinessEntity.DTO.Model
     /// </summary>
     public class Event
     {
-        /// <summary>
-        /// EventID
-        /// </summary>
-        [Key]
-        public int EventID { get; set; }
+       
 
         /// <summary>
         /// ClientID

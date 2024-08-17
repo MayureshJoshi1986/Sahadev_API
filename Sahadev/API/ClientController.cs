@@ -1,7 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿/**********************************************************************************************
+*  ClassName      :- UserController                                                           *
+*  -------------------------------------------------------------------------------------------*
+*  Description    :- This class contain API related to user device                           *
+*  -------------------------------------------------------------------------------------------*
+*  CreatedOn      :- 17-Aug-2024                                                               *
+*  -------------------------------------------------------------------------------------------*
+*  CreatedBy      :- PJ                                                                       *
+*  -------------------------------------------------------------------------------------------*
+*  ModifiedOn     :-                                                                          *
+*  ModifiedBy     :-                                                                          *
+*  ModifiedReason :-                                                                          *
+*  -------------------------------------------------------------------------------------------*
+*  ModifiedOn     :-                                                                          *
+*  ModifiedBy     :-                                                                          *
+*  ModifiedReason :-                                                                          *
+**********************************************************************************************/
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SahadevBusinessEntity.DTO.Model;
+using SahadevBusinessEntity.DTO.RequestModel;
 using SahadevBusinessEntity.DTO.ResultModel;
 using SahadevService;
 using SahadevService.Sentry;
@@ -79,15 +97,15 @@ namespace Sahadev.API
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        [HttpPost]
-        [Route("Insert")]
-        public IActionResult Insert([FromBody] Client objClient)
-        {
-            try
-            {
-                bool bReturn = SS.ClientService.Insert(objClient);
-                if (bReturn == true)
-                {
+        //[HttpPost]
+        //[Route("Insert")]
+        //public IActionResult Insert([FromBody] RQ_EventDetail objRQ_EventDetail)
+        //{
+        //    try
+        //    {
+        //        bool bReturn = SS.ClientService.Insert(objClient);
+        //        if (bReturn == true)
+        //        {
 
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Client detail added successfully.", });
                 }
