@@ -58,11 +58,11 @@ namespace Sahadev.API.Sentry
         /// <modifiedreason></modifiedreason>
         [HttpPost]
         [Route("")]
-        public IActionResult Add([FromBody] RQ_EventDetail objRQ_EventDetail)
+        public IActionResult Add([FromBody] Event objEvent)
         {
             try
             {
-                bool bReturn = SS.EventService.Add(objRQ_EventDetail);
+                bool bReturn = SS.EventService.Add(objEvent);
                 if (bReturn == true)
                 {
 
