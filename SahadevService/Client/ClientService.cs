@@ -18,7 +18,9 @@ using SahadevBusinessEntity.DTO.ResultModel;
 using SahadevDBLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
+using System.Transactions;
 
 namespace SahadevService
 {
@@ -90,7 +92,7 @@ namespace SahadevService
             bool bReturn = false;
             try
             {
-                bReturn = uw.ClientRepository.Insert(objClient);                
+               // bReturn = uw.ClientRepository.Insert(objClient);                
             }
             catch (Exception ex)
             {
@@ -98,6 +100,47 @@ namespace SahadevService
             }
             return bReturn;
         }
+
+
+
+        //public bool InsertClient(Client objClient)
+        //{
+
+        //    //using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+        //    //{
+        //        try
+        //        {
+        //        //operation on Sahadevc2
+
+
+        //        //uw.GetConnection().BeginTransaction();
+               
+        //            int TagId= uw.SahadevC2Repository.Insert(objClient, uw.Transaction1());
+        //            objClient.CoreTagID = TagId;
+
+        //            //throw new TransactionAbortedException();
+        //            //operation on SahadevA2
+        //            bool result= uw.ClientRepository.InsertClient(objClient, uw.Transaction());
+
+        //          uw.Commit();
+        //           //uw.Transaction1().Commit();
+        //        //scope.Complete();
+        //        return result;
+        //        }
+        //        catch (Exception ex)
+        //        {
+
+        //        //transaction will automatically be rolled back here due to the exception
+        //       // uw.Transaction().Rollback();
+        //       // uw.Transaction1().Rollback();
+        //       uw.Rollback();
+        //        //log or handel exception 
+        //        return false;
+        //        }
+        //    //}//
+
+             
+        //}
 
 
     }

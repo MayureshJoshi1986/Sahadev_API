@@ -85,15 +85,15 @@ namespace SahadevDBLayer.Repository
         #endregion
 
         #region Insert
-        public T InsertByQuery<T>(string sp, DynamicParameters parms)
+        public T InsertByQuery<T>(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
-            return Insert<T>(sp, parms, CommandType.Text);
+            return Insert<T>(sp, parms, CommandType.Text, transaction);
         }
-        public T InsertByProcedure<T>(string sp, DynamicParameters parms)
+        public T InsertByProcedure<T>(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
-            return Insert<T>(sp, parms, CommandType.StoredProcedure);
+            return Insert<T>(sp, parms, CommandType.StoredProcedure, transaction);
         }
-        T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction= null)
         {
             T result;
             try
@@ -101,15 +101,15 @@ namespace SahadevDBLayer.Repository
                 if (Connection.State == ConnectionState.Closed)
                     Connection.Open();
 
-                using var tran = Connection.BeginTransaction();
+                //using var tran = Connection.BeginTransaction();
                 try
                 {
-                    result = Connection.ExecuteScalar<T>(sp, parms, commandType: commandType, transaction: tran);
-                    tran.Commit();
+                    result = Connection.ExecuteScalar<T>(sp, parms, commandType: commandType, transaction: transaction);
+                   // tran.Commit();
                 }
                 catch (Exception ex)
                 {
-                    tran.Rollback();
+                   // tran.Rollback();
                     throw ex;
                 }
             }
@@ -119,8 +119,8 @@ namespace SahadevDBLayer.Repository
             }
             finally
             {
-                if (Connection.State == ConnectionState.Open)
-                    Connection.Close();
+                ///if (Connection.State == ConnectionState.Open)
+                   // Connection.Close();
             }
 
             return result;

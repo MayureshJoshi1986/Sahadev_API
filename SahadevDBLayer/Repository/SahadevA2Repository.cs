@@ -1,42 +1,39 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :- ClientRepository                                                         *
+ *  Class Name      :- SahadevA2Repository                                                      *
  *  --------------------------------------------------------------------------------------------*
- *  Description     :- This is ClientRepository class which contains all function &             * 
- *                     SP related to client                                                     *
+ *  Description     :- This is SahadevA2Repository class which contains all functions &         *
+ *                     SP related to SahadevA2 repository                                       *
  *  --------------------------------------------------------------------------------------------*
- *  Created By      :- MS                                                                       *                                                                 
+ *  Created By      :- PJ                                                                       *
  *  --------------------------------------------------------------------------------------------*
- *  Created Date    :- 10/Apr/2014                                                              *
- *  --------------------------------------------------------------------------------------------* 
+ *  Created Date    :- 17-Aug-2024                                                              *
+ *  --------------------------------------------------------------------------------------------*
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
 using Dapper;
-using Microsoft.AspNetCore.Mvc;
 using SahadevBusinessEntity.DTO.Model;
-using SahadevBusinessEntity.DTO.ResultModel;
-using SahadevDBLayer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
-using static Dapper.SqlMapper;
 
 namespace SahadevDBLayer.Repository
 {
-
-    public interface IClientRepository
+    /// <summary>
+    /// Interface of SahadevA2Repository class
+    /// </summary>
+    public interface ISahadevA2Repository
     {
         List<Client> Get();
         bool Insert(Client objClient, IDbTransaction transaction);
     }
-    internal class ClientRepository : RepositoryBase, IClientRepository
-    {
 
-        public ClientRepository(IDbTransaction transaction, IDbConnection connection)
+    internal class SahadevA2Repository : RepositoryBase, ISahadevA2Repository
+    {
+        public SahadevA2Repository(IDbTransaction transaction, IDbConnection connection)
             : base(transaction, connection)
         {
         }
@@ -45,7 +42,7 @@ namespace SahadevDBLayer.Repository
         /// This method is used to get fetch client detail from client table
         /// </summary>
         /// <returns>list of object containing client detail</returns>
-        /// <createdon>14-Aug-2024</createdon>
+        /// <createdon>17-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
@@ -61,7 +58,7 @@ namespace SahadevDBLayer.Repository
             {
                 throw ex;
             }
-           
+
         }
 
         /// <summary>
@@ -74,7 +71,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool Insert(Client objClient,IDbTransaction transaction)
+        public bool Insert(Client objClient, IDbTransaction transaction)
         {
             bool bReturn = false;
             try
@@ -85,6 +82,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@description", objClient.Description);
                 dbparams.Add("@bseListed", objClient.BSEListed);
                 dbparams.Add("@nseListed", objClient.NSEListed);
+                dbparams.Add("@coreTagID", objClient.CoreTagID);
                 dbparams.Add("@activationFrom", objClient.ActivationFrom);
                 dbparams.Add("@validUntil", objClient.ValidUntil);
                 int iResult = InsertByProcedure<int>(@"[dbo].[USP_ClientDetail_Insert]", dbparams, transaction);
