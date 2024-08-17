@@ -49,7 +49,7 @@ namespace Sahadev.API.Sentry
         /// <summary>
         /// This API is used to insert event detail in event table
         /// </summary>
-        /// <param name="objRQ_EventDetail">request object containing event and tag detail</param>
+        /// <param name="objEvent">request object containing event detail</param>
         /// <returns>success message if successfully inserted else error message</returns>
         /// <createdon>17-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
