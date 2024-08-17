@@ -18,6 +18,7 @@ using SahadevBusinessEntity.DTO.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing.Printing;
 using System.Text;
 using System.Transactions;
 
@@ -28,23 +29,28 @@ namespace SahadevDBLayer.Repository
     /// </summary>
     public interface ISahadevA2Repository
     {
-        List<Client> Get(IDbTransaction transaction);
-        bool InsertClient(Client objClient, IDbTransaction transaction);
+        List<Client> Get();
+        bool InsertClient(Client objClient);
 
-        int InsertClientTopic(ClientTopic objClientTopic, IDbTransaction transaction);
+        int InsertClientTopic(ClientTopic objClientTopic);
 
-        int InsertTag(Tag objTag, IDbTransaction transaction);
+        int InsertTag(Tag objTag);
 
-        bool InsertTagMap(TagMap objTagMap, IDbTransaction transaction);
+        bool InsertTagMap(TagMap objTagMap);
 
-        bool InsertTagQuery(TagQuery objTagQuery, IDbTransaction transaction);
+        bool InsertTagQuery(TagQuery objTagQuery);
     }
 
     internal class SahadevA2Repository : RepositoryBase, ISahadevA2Repository
     {
+        private readonly IDbTransaction _transaction;
+        private readonly IDbConnection _connection;
+
         public SahadevA2Repository(IDbTransaction transaction, IDbConnection connection)
             : base(transaction, connection)
         {
+            _transaction = transaction;
+            _connection = connection;
         }
 
         /// <summary>
@@ -56,11 +62,11 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<Client> Get(IDbTransaction transaction)
+        public List<Client> Get()
         {
             try
             {
-                var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null, transaction);
+                var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -80,7 +86,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool InsertClient(Client objClient, IDbTransaction transaction)
+        public bool InsertClient(Client objClient)
         {
             bool bReturn = false;
             try
@@ -94,7 +100,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@coreTagID", objClient.CoreTagID);
                 dbparams.Add("@activationFrom", objClient.ActivationFrom);
                 dbparams.Add("@validUntil", objClient.ValidUntil);
-                int iResult = InsertByProcedure<int>(@"[dbo].[USP_ClientDetail_Insert]", dbparams, transaction);
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_ClientDetail_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
             }
@@ -116,7 +122,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public int InsertClientTopic(ClientTopic objClientTopic, IDbTransaction transaction)
+        public int InsertClientTopic(ClientTopic objClientTopic)
         {
             int iResult = 0;
             try
@@ -131,7 +137,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@startDate", objClientTopic.StartDate);
                 dbparams.Add("@endDate", objClientTopic.EndDate);
 
-                iResult = GetByProcedure<int>(@"[dbo].[USP_ClientTopic_Insert]", dbparams, transaction);
+                iResult = GetByProcedure<int>(@"[dbo].[USP_ClientTopic_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
             {
@@ -151,7 +157,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public int InsertTag(Tag objTag, IDbTransaction transaction)
+        public int InsertTag(Tag objTag)
         {
             int iResult = 0;
             try
@@ -161,7 +167,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@tagName", objTag.TagName);
                 dbparams.Add("@tagDescription", objTag.TagDescription);
                 dbparams.Add("@isActive", objTag.IsActive);
-                iResult = GetByProcedure<int>(@"[dbo].[USP_Tag_Insert]", dbparams, transaction);
+                iResult = GetByProcedure<int>(@"[dbo].[USP_Tag_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
             {
@@ -181,7 +187,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool InsertTagMap(TagMap objTagMap, IDbTransaction transaction)
+        public bool InsertTagMap(TagMap objTagMap)
         {
             bool bResult = false;
             try
@@ -191,7 +197,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@tagID", objTagMap.TagID);
                 dbparams.Add("@isActive", objTagMap.IsActive);
 
-                int iResult = InsertByProcedure<int>(@"[dbo].[USP_TagMap_Insert]", dbparams, transaction);
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_TagMap_Insert]", dbparams, _transaction);
                 if (iResult != -1)
                     bResult = true;
             }
@@ -213,7 +219,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool InsertTagQuery(TagQuery objTagQuery, IDbTransaction transaction)
+        public bool InsertTagQuery(TagQuery objTagQuery)
         {
             bool bResult = false;
             try
@@ -225,7 +231,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@typeOfQuery", objTagQuery.TypeOfQuery);
                 dbparams.Add("@isActive", objTagQuery.IsActive);
 
-                int iResult = InsertByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, transaction);
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bResult = true;
             }

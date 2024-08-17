@@ -17,6 +17,7 @@ using SahadevBusinessEntity.DTO.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Text;
 
 namespace SahadevDBLayer.Repository
@@ -31,10 +32,13 @@ namespace SahadevDBLayer.Repository
 
     internal class SahadevC3Repository:RepositoryBase, ISahadevC3Repository
     {
-
+        private readonly IDbTransaction _transaction;
+        private readonly IDbConnection _connection;
         public SahadevC3Repository(IDbTransaction transaction, IDbConnection connection)
             : base(transaction, connection)
         {
+            _transaction = transaction;
+            _connection = connection;
         }
     }
 }

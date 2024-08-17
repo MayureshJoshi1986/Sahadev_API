@@ -27,15 +27,19 @@ namespace SahadevDBLayer.Repository
     /// </summary>
     public interface ISahadevC1Repository
     {
-        List<Client> Get(IDbTransaction transaction);
-        bool Insert(Client objClient, IDbTransaction transaction);
+        List<Client> Get();
+        bool Insert(Client objClient);
     }
 
     internal class SahadevC1Repository : RepositoryBase, ISahadevC1Repository
     {
+        private readonly IDbTransaction _transaction;
+        private readonly IDbConnection _connection;
         public SahadevC1Repository(IDbTransaction transaction, IDbConnection connection)
            : base(transaction, connection)
         {
+            _transaction = transaction;
+            _connection = connection;
         }
 
         /// <summary>
@@ -47,11 +51,11 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<Client> Get(IDbTransaction transaction)
+        public List<Client> Get()
         {
             try
             {
-                var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null, transaction);
+                var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -71,7 +75,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool Insert(Client objClient, IDbTransaction transaction)
+        public bool Insert(Client objClient)
         {
             bool bReturn = false;
             try
@@ -85,7 +89,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@coreTagID", objClient.CoreTagID);
                 dbparams.Add("@activationFrom", objClient.ActivationFrom);
                 dbparams.Add("@validUntil", objClient.ValidUntil);
-                int iResult = InsertByProcedure<int>(@"[dbo].[USP_ClientDetail_Insert]", dbparams, transaction);
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_ClientDetail_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
             }
