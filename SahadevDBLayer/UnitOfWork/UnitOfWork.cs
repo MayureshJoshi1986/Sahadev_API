@@ -164,25 +164,6 @@ namespace SahadevDBLayer.UnitOfWork
         //}
 
 
-        public IDbTransaction GetSahadevA2Transaction()
-        {
-            return _SahadevA2Transaction;
-        }
-
-        public IDbTransaction GetSahadevC1Transaction()
-        {
-            return _SahadevC1Transaction;
-        }
-
-        public IDbTransaction GetSahadevC2Transaction()
-        {
-            return _SahadevC2Transaction;
-        }
-
-        public IDbTransaction GetSahadevC3Transaction()
-        {
-            return _SahadevC3Transaction;
-        }
         public void Rollback()
         {
             _SahadevA2Transaction.Rollback();

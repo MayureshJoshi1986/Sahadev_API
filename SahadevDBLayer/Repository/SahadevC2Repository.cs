@@ -33,16 +33,21 @@ namespace SahadevDBLayer.Repository
     /// </summary>
     public interface ISahadevC2Repository
     {
-        List<FeedbackType> GetFeedbackType(IDbTransaction transaction);
+        List<FeedbackType> GetFeedbackType();
 
-        int InsertEvent(Event objEvent, IDbTransaction transaction);
+        int InsertEvent(Event objEvent);
     }
     internal class SahadevC2Repository : RepositoryBase, ISahadevC2Repository
     {
 
+        private readonly IDbTransaction _transaction;
+        private readonly IDbConnection _connection;
+
         public SahadevC2Repository(IDbTransaction transaction, IDbConnection connection)
             : base(transaction, connection)
         {
+            _transaction = transaction;
+            _connection = connection;
         }
 
         /// <summary>
@@ -54,11 +59,11 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<FeedbackType> GetFeedbackType(IDbTransaction transaction)
+        public List<FeedbackType> GetFeedbackType()
         {
             try
             {
-                var data = GetAllByProcedure<FeedbackType>(@"[dbo].[USP_mstFeedbackType_FetchAll]", null, transaction);
+                var data = GetAllByProcedure<FeedbackType>(@"[dbo].[USP_mstFeedbackType_FetchAll]", null, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -78,7 +83,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool InsertFeedback(Feedback objEvent, IDbTransaction transaction)
+        public bool InsertFeedback(Feedback objEvent)
         {
             bool bReturn = false;
             try
@@ -91,7 +96,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@recordID", objEvent.RecordID);
                 dbparams.Add("@screenName", objEvent.ScreenName);
                 dbparams.Add("@feedback", objEvent.FeedbackDescription);
-                int iResult = InsertByProcedure<int>(@"[dbo].[USP_Feedback_Insert]", dbparams, transaction);
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_Feedback_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
             }
@@ -113,7 +118,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public int InsertEvent(Event objEvent, IDbTransaction transaction)
+        public int InsertEvent(Event objEvent)
         {
             int iResult = 0;
             try
@@ -134,7 +139,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@endDate", objEvent.EndDate);
                 dbparams.Add("@statusID", objEvent.StatusID);
                 dbparams.Add("@tagID", objEvent.TagID);
-                iResult = GetByProcedure<int>(@"[dbo].[USP_Event_Insert]", dbparams, transaction);
+                iResult = GetByProcedure<int>(@"[dbo].[USP_Event_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
             {

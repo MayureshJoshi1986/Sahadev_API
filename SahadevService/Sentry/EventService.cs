@@ -76,7 +76,7 @@ namespace SahadevService.Sentry
                 objTag.IsActive = true;
 
 
-                int TagID = uw.SahadevA2Repository.InsertTag(objTag, uw.GetSahadevA2Transaction());
+                int TagID = uw.SahadevA2Repository.InsertTag(objTag);
 
                 objTag.TagID = TagID;
 
@@ -85,7 +85,7 @@ namespace SahadevService.Sentry
 
                 //Insert Event anf get event Id
 
-                int EventID = uw.SahadevC2Repository.InsertEvent(objEvent, uw.GetSahadevC2Transaction());
+                int EventID = uw.SahadevC2Repository.InsertEvent(objEvent);
                 objEvent.EventID = EventID;
 
                 //DO entry in Client Topic
@@ -100,7 +100,7 @@ namespace SahadevService.Sentry
                 objClientTopic.EndDate = objEvent.EndDate;
                 objClientTopic.TopicTypeID = objEvent.EventTypeID;
 
-                int ClientTopicId = uw.SahadevA2Repository.InsertClientTopic(objClientTopic, uw.GetSahadevA2Transaction());
+                int ClientTopicId = uw.SahadevA2Repository.InsertClientTopic(objClientTopic);
 
 
                 //do the enrty in Tag Map
@@ -108,9 +108,9 @@ namespace SahadevService.Sentry
                 objTagMap.TagID = TagID;
                 objTagMap.ClientTopicID = ClientTopicId;
                 objTagMap.IsActive = objTag.IsActive;
-                bool result = uw.SahadevA2Repository.InsertTagMap(objTagMap, uw.GetSahadevA2Transaction());
+                bool result = uw.SahadevA2Repository.InsertTagMap(objTagMap);
 
-                // throw new TransactionAbortedException(); // Just to test the Transaction Rollback
+                 //throw new TransactionAbortedException(); // Just to test the Transaction Rollback
 
                 //do the entry in Tag query for all the selected plateform
                 TagQuery objTagQuery = new TagQuery();
@@ -122,7 +122,7 @@ namespace SahadevService.Sentry
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
                     objTagQuery.PlatformID = objEvent.Platform1;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery, uw.GetSahadevA2Transaction());
+                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery);
                 }
                 if (objEvent.Platform2 != 0)
                 {
@@ -132,7 +132,7 @@ namespace SahadevService.Sentry
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
                     objTagQuery.PlatformID = objEvent.Platform2;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery, uw.GetSahadevA2Transaction());
+                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery);
                 }
 
                 if (objEvent.Platform3 != 0)
@@ -143,7 +143,7 @@ namespace SahadevService.Sentry
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
                     objTagQuery.PlatformID = objEvent.Platform3;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery, uw.GetSahadevA2Transaction());
+                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery);
                 }
 
                 if (objEvent.Platform4 != 0)
@@ -154,7 +154,7 @@ namespace SahadevService.Sentry
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
                     objTagQuery.PlatformID = objEvent.Platform4;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery, uw.GetSahadevA2Transaction());
+                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery);
                 }
 
                 uw.Commit();
