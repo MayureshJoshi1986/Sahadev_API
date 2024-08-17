@@ -119,7 +119,7 @@ namespace SahadevDBLayer.Repository
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@clientID", objEvent.EventID);
+                dbparams.Add("@clientID", objEvent.ClientID);
                 dbparams.Add("@eventTypeID", objEvent.EventTypeID);
                 dbparams.Add("@eventName", objEvent.EventName);
                 dbparams.Add("@description", objEvent.Description);

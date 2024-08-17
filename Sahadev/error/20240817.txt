@@ -1,0 +1,229 @@
+2024-08-17 16:19:52.152 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-17 16:19:52.313 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-17 16:19:53.049 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-17 16:19:53.438 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:19:53.443 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:19:54.359 +05:30 [Information] | Message : Received HTTP response after 913.0822ms - OK | Exception :  
+2024-08-17 16:19:54.359 +05:30 [Information] | Message : End processing HTTP request after 930.3528ms - OK | Exception :  
+2024-08-17 16:24:46.580 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-17 16:24:46.759 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-17 16:24:47.401 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-17 16:24:47.791 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:24:47.800 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:24:53.115 +05:30 [Information] | Message : Received HTTP response after 5307.2132ms - OK | Exception :  
+2024-08-17 16:24:53.118 +05:30 [Information] | Message : End processing HTTP request after 5339.6203ms - OK | Exception :  
+2024-08-17 16:26:16.156 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-17 16:26:16.280 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-17 16:26:16.956 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-17 16:26:17.373 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:26:17.381 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:26:21.709 +05:30 [Information] | Message : Received HTTP response after 4319.8024ms - OK | Exception :  
+2024-08-17 16:26:21.712 +05:30 [Information] | Message : End processing HTTP request after 4351.8326ms - OK | Exception :  
+2024-08-17 16:27:22.042 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:27:22.043 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:27:57.319 +05:30 [Information] | Message : Received HTTP response after 35276.6757ms - OK | Exception :  
+2024-08-17 16:27:57.330 +05:30 [Information] | Message : End processing HTTP request after 35287.492ms - OK | Exception :  
+2024-08-17 16:29:11.971 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:29:11.972 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:29:12.098 +05:30 [Information] | Message : Received HTTP response after 126.3109ms - OK | Exception :  
+2024-08-17 16:29:12.098 +05:30 [Information] | Message : End processing HTTP request after 126.868ms - OK | Exception :  
+2024-08-17 16:29:27.129 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:29:27.130 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:29:27.261 +05:30 [Information] | Message : Received HTTP response after 131.2998ms - OK | Exception :  
+2024-08-17 16:29:27.262 +05:30 [Information] | Message : End processing HTTP request after 132.879ms - OK | Exception :  
+2024-08-17 16:29:42.289 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:29:42.290 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:29:42.409 +05:30 [Information] | Message : Received HTTP response after 119.6629ms - OK | Exception :  
+2024-08-17 16:29:42.409 +05:30 [Information] | Message : End processing HTTP request after 120.7024ms - OK | Exception :  
+2024-08-17 16:29:57.444 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:29:57.444 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:29:57.683 +05:30 [Information] | Message : Received HTTP response after 238.7419ms - OK | Exception :  
+2024-08-17 16:29:57.683 +05:30 [Information] | Message : End processing HTTP request after 239.6784ms - OK | Exception :  
+2024-08-17 16:30:12.706 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:30:12.706 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:30:12.937 +05:30 [Information] | Message : Received HTTP response after 230.5749ms - OK | Exception :  
+2024-08-17 16:30:12.937 +05:30 [Information] | Message : End processing HTTP request after 231.3583ms - OK | Exception :  
+2024-08-17 16:30:27.972 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:30:27.972 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:30:28.161 +05:30 [Information] | Message : Received HTTP response after 188.9459ms - OK | Exception :  
+2024-08-17 16:30:28.162 +05:30 [Information] | Message : End processing HTTP request after 189.8127ms - OK | Exception :  
+2024-08-17 16:30:43.184 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:30:43.184 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:30:44.292 +05:30 [Information] | Message : Received HTTP response after 1107.8862ms - OK | Exception :  
+2024-08-17 16:30:44.292 +05:30 [Information] | Message : End processing HTTP request after 1108.5338ms - OK | Exception :  
+2024-08-17 16:30:59.318 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:30:59.319 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:30:59.436 +05:30 [Information] | Message : Received HTTP response after 116.7444ms - OK | Exception :  
+2024-08-17 16:30:59.436 +05:30 [Information] | Message : End processing HTTP request after 117.9839ms - OK | Exception :  
+2024-08-17 16:31:14.463 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:31:14.463 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:31:14.978 +05:30 [Information] | Message : Received HTTP response after 515.4818ms - OK | Exception :  
+2024-08-17 16:31:14.979 +05:30 [Information] | Message : End processing HTTP request after 516.0382ms - OK | Exception :  
+2024-08-17 16:31:29.989 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:31:29.990 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:31:30.134 +05:30 [Information] | Message : Received HTTP response after 144.5341ms - OK | Exception :  
+2024-08-17 16:31:30.134 +05:30 [Information] | Message : End processing HTTP request after 145.1352ms - OK | Exception :  
+2024-08-17 16:31:45.162 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:31:45.162 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:31:45.244 +05:30 [Information] | Message : Received HTTP response after 82.0406ms - OK | Exception :  
+2024-08-17 16:31:45.244 +05:30 [Information] | Message : End processing HTTP request after 82.4951ms - OK | Exception :  
+2024-08-17 16:32:00.250 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:32:00.251 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:32:00.444 +05:30 [Information] | Message : Received HTTP response after 193.2199ms - OK | Exception :  
+2024-08-17 16:32:00.444 +05:30 [Information] | Message : End processing HTTP request after 193.5703ms - OK | Exception :  
+2024-08-17 16:32:15.477 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:32:15.478 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:32:15.603 +05:30 [Information] | Message : Received HTTP response after 125.3981ms - OK | Exception :  
+2024-08-17 16:32:15.603 +05:30 [Information] | Message : End processing HTTP request after 125.6889ms - OK | Exception :  
+2024-08-17 16:32:30.621 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:32:30.621 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:32:30.752 +05:30 [Information] | Message : Received HTTP response after 130.8521ms - OK | Exception :  
+2024-08-17 16:32:30.752 +05:30 [Information] | Message : End processing HTTP request after 131.0364ms - OK | Exception :  
+2024-08-17 16:32:45.771 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:32:45.771 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:32:45.910 +05:30 [Information] | Message : Received HTTP response after 138.8032ms - OK | Exception :  
+2024-08-17 16:32:45.911 +05:30 [Information] | Message : End processing HTTP request after 139.2461ms - OK | Exception :  
+2024-08-17 16:33:00.917 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:33:00.917 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:33:01.127 +05:30 [Information] | Message : Received HTTP response after 209.9514ms - OK | Exception :  
+2024-08-17 16:33:01.127 +05:30 [Information] | Message : End processing HTTP request after 210.3371ms - OK | Exception :  
+2024-08-17 16:33:16.148 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:33:16.148 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:33:16.323 +05:30 [Information] | Message : Received HTTP response after 174.9124ms - OK | Exception :  
+2024-08-17 16:33:16.323 +05:30 [Information] | Message : End processing HTTP request after 175.2335ms - OK | Exception :  
+2024-08-17 16:35:12.347 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-17 16:35:12.503 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-17 16:35:13.152 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-17 16:35:13.505 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:35:13.515 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:35:14.494 +05:30 [Information] | Message : Received HTTP response after 976.5884ms - OK | Exception :  
+2024-08-17 16:35:14.495 +05:30 [Information] | Message : End processing HTTP request after 1000.1785ms - OK | Exception :  
+2024-08-17 16:35:29.802 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:35:29.802 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:35:29.964 +05:30 [Information] | Message : Received HTTP response after 162.3113ms - OK | Exception :  
+2024-08-17 16:35:29.965 +05:30 [Information] | Message : End processing HTTP request after 163.2763ms - OK | Exception :  
+2024-08-17 16:35:49.979 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:35:49.979 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:35:57.505 +05:30 [Information] | Message : Received HTTP response after 7525.6077ms - OK | Exception :  
+2024-08-17 16:35:57.506 +05:30 [Information] | Message : End processing HTTP request after 7527.8326ms - OK | Exception :  
+2024-08-17 16:36:14.180 +05:30 [Error] | Message : SahadevService.Common.EventService | Exception : System.Transactions.TransactionAbortedException: The transaction has aborted.
+   at SahadevService.Sentry.EventService.InsertEvent(Event objEvent) in D:\V.Sarojladdha\OneDrive - Adfactors PR Pvt Ltd\GitHub\Sahadev_API\SahadevService\Sentry\EventService.cs:line 112
+ 
+2024-08-17 16:36:15.552 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:36:15.553 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:36:16.151 +05:30 [Information] | Message : Received HTTP response after 598.1654ms - OK | Exception :  
+2024-08-17 16:36:16.152 +05:30 [Information] | Message : End processing HTTP request after 599.9568ms - OK | Exception :  
+2024-08-17 16:36:31.168 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:36:31.169 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:36:31.283 +05:30 [Information] | Message : Received HTTP response after 113.7135ms - OK | Exception :  
+2024-08-17 16:36:31.283 +05:30 [Information] | Message : End processing HTTP request after 115.304ms - OK | Exception :  
+2024-08-17 16:36:46.308 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:36:46.308 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:36:46.448 +05:30 [Information] | Message : Received HTTP response after 139.5865ms - OK | Exception :  
+2024-08-17 16:36:46.449 +05:30 [Information] | Message : End processing HTTP request after 141.1912ms - OK | Exception :  
+2024-08-17 16:37:01.472 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:37:01.473 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:37:01.719 +05:30 [Information] | Message : Received HTTP response after 246.1223ms - OK | Exception :  
+2024-08-17 16:37:01.720 +05:30 [Information] | Message : End processing HTTP request after 247.873ms - OK | Exception :  
+2024-08-17 16:37:16.738 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:37:16.739 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:37:16.973 +05:30 [Information] | Message : Received HTTP response after 234.147ms - OK | Exception :  
+2024-08-17 16:37:16.974 +05:30 [Information] | Message : End processing HTTP request after 236.6371ms - OK | Exception :  
+2024-08-17 16:38:09.446 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-17 16:38:09.584 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-17 16:38:10.275 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-17 16:38:10.692 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:38:10.696 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:38:11.770 +05:30 [Information] | Message : Received HTTP response after 1071.8951ms - OK | Exception :  
+2024-08-17 16:38:11.794 +05:30 [Information] | Message : End processing HTTP request after 1121.5355ms - OK | Exception :  
+2024-08-17 16:38:34.582 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:38:34.583 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:38:39.397 +05:30 [Information] | Message : Received HTTP response after 4814.0784ms - OK | Exception :  
+2024-08-17 16:38:39.397 +05:30 [Information] | Message : End processing HTTP request after 4815.0282ms - OK | Exception :  
+2024-08-17 16:38:41.418 +05:30 [Error] | Message : SahadevService.Common.EventService | Exception : System.Transactions.TransactionAbortedException: The transaction has aborted.
+   at SahadevService.Sentry.EventService.InsertEvent(Event objEvent) in D:\V.Sarojladdha\OneDrive - Adfactors PR Pvt Ltd\GitHub\Sahadev_API\SahadevService\Sentry\EventService.cs:line 112
+ 
+2024-08-17 16:38:54.443 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:38:54.444 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:38:54.598 +05:30 [Information] | Message : Received HTTP response after 153.9983ms - OK | Exception :  
+2024-08-17 16:38:54.599 +05:30 [Information] | Message : End processing HTTP request after 156.6584ms - OK | Exception :  
+2024-08-17 16:39:09.621 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:39:09.622 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:39:09.788 +05:30 [Information] | Message : Received HTTP response after 166.3488ms - OK | Exception :  
+2024-08-17 16:39:09.789 +05:30 [Information] | Message : End processing HTTP request after 168.2686ms - OK | Exception :  
+2024-08-17 16:39:20.867 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-17 16:39:21.021 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-17 16:39:21.695 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-17 16:39:22.100 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:39:22.104 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:39:23.412 +05:30 [Information] | Message : Received HTTP response after 1304.9383ms - OK | Exception :  
+2024-08-17 16:39:23.414 +05:30 [Information] | Message : End processing HTTP request after 1326.5008ms - OK | Exception :  
+2024-08-17 16:39:49.427 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:39:49.427 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:39:49.562 +05:30 [Information] | Message : Received HTTP response after 134.2245ms - OK | Exception :  
+2024-08-17 16:39:49.563 +05:30 [Information] | Message : End processing HTTP request after 135.81ms - OK | Exception :  
+2024-08-17 16:40:07.685 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:40:07.685 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:40:09.487 +05:30 [Information] | Message : Received HTTP response after 1802.0188ms - OK | Exception :  
+2024-08-17 16:40:09.487 +05:30 [Information] | Message : End processing HTTP request after 1802.6083ms - OK | Exception :  
+2024-08-17 16:40:24.506 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:40:24.506 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:40:24.670 +05:30 [Information] | Message : Received HTTP response after 163.4347ms - OK | Exception :  
+2024-08-17 16:40:24.670 +05:30 [Information] | Message : End processing HTTP request after 165.0143ms - OK | Exception :  
+2024-08-17 16:40:39.754 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:40:39.755 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:40:40.134 +05:30 [Information] | Message : Received HTTP response after 379.2513ms - OK | Exception :  
+2024-08-17 16:40:40.135 +05:30 [Information] | Message : End processing HTTP request after 381.5681ms - OK | Exception :  
+2024-08-17 16:40:55.178 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:40:55.179 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:40:55.378 +05:30 [Information] | Message : Received HTTP response after 199.1413ms - OK | Exception :  
+2024-08-17 16:40:55.379 +05:30 [Information] | Message : End processing HTTP request after 201.0704ms - OK | Exception :  
+2024-08-17 16:41:10.416 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:41:10.416 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:41:10.546 +05:30 [Information] | Message : Received HTTP response after 129.5116ms - OK | Exception :  
+2024-08-17 16:41:10.547 +05:30 [Information] | Message : End processing HTTP request after 131.2467ms - OK | Exception :  
+2024-08-17 16:41:25.572 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:41:25.574 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:41:25.793 +05:30 [Information] | Message : Received HTTP response after 219.1818ms - OK | Exception :  
+2024-08-17 16:41:25.793 +05:30 [Information] | Message : End processing HTTP request after 220.8952ms - OK | Exception :  
+2024-08-17 16:41:40.817 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:41:40.817 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:41:41.052 +05:30 [Information] | Message : Received HTTP response after 235.1632ms - OK | Exception :  
+2024-08-17 16:41:41.053 +05:30 [Information] | Message : End processing HTTP request after 236.052ms - OK | Exception :  
+2024-08-17 16:41:56.075 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:41:56.075 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:41:56.179 +05:30 [Information] | Message : Received HTTP response after 103.6682ms - OK | Exception :  
+2024-08-17 16:41:56.179 +05:30 [Information] | Message : End processing HTTP request after 104.6738ms - OK | Exception :  
+2024-08-17 16:42:11.206 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:42:11.206 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:42:11.364 +05:30 [Information] | Message : Received HTTP response after 157.2719ms - OK | Exception :  
+2024-08-17 16:42:11.364 +05:30 [Information] | Message : End processing HTTP request after 157.6958ms - OK | Exception :  
+2024-08-17 16:42:20.750 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-17 16:42:21.063 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-17 16:42:36.289 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-17 16:42:36.444 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-17 16:42:37.103 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-17 16:42:37.488 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:42:37.492 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:42:38.421 +05:30 [Information] | Message : Received HTTP response after 926.2315ms - OK | Exception :  
+2024-08-17 16:42:38.422 +05:30 [Information] | Message : End processing HTTP request after 942.1095ms - OK | Exception :  
+2024-08-17 16:42:57.197 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:42:57.197 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:42:57.838 +05:30 [Information] | Message : Received HTTP response after 641.1756ms - OK | Exception :  
+2024-08-17 16:42:57.839 +05:30 [Information] | Message : End processing HTTP request after 642.0939ms - OK | Exception :  
+2024-08-17 16:43:12.870 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:43:12.871 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:43:12.977 +05:30 [Information] | Message : Received HTTP response after 106.4503ms - OK | Exception :  
+2024-08-17 16:43:12.977 +05:30 [Information] | Message : End processing HTTP request after 107.6157ms - OK | Exception :  
+2024-08-17 16:43:28.001 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:43:28.002 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:43:28.266 +05:30 [Information] | Message : Received HTTP response after 263.7171ms - OK | Exception :  
+2024-08-17 16:43:28.266 +05:30 [Information] | Message : End processing HTTP request after 265.4804ms - OK | Exception :  
+2024-08-17 16:43:43.302 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:43:43.303 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:43:43.403 +05:30 [Information] | Message : Received HTTP response after 100.0019ms - OK | Exception :  
+2024-08-17 16:43:43.404 +05:30 [Information] | Message : End processing HTTP request after 101.389ms - OK | Exception :  
+2024-08-17 16:43:58.415 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:43:58.416 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 16:43:58.991 +05:30 [Information] | Message : Received HTTP response after 575.0204ms - OK | Exception :  
+2024-08-17 16:43:58.991 +05:30 [Information] | Message : End processing HTTP request after 576.1311ms - OK | Exception :  

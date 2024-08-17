@@ -100,16 +100,12 @@ namespace SahadevDBLayer.Repository
             {
                 if (Connection.State == ConnectionState.Closed)
                     Connection.Open();
-
-                //using var tran = Connection.BeginTransaction();
                 try
                 {
                     result = Connection.ExecuteScalar<T>(sp, parms, commandType: commandType, transaction: transaction);
-                   // tran.Commit();
                 }
                 catch (Exception ex)
                 {
-                   // tran.Rollback();
                     throw ex;
                 }
             }
@@ -119,8 +115,7 @@ namespace SahadevDBLayer.Repository
             }
             finally
             {
-                ///if (Connection.State == ConnectionState.Open)
-                   // Connection.Close();
+               //do not close connection here
             }
 
             return result;

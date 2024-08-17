@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using SahadevBusinessEntity.DTO.Model;
 using SahadevBusinessEntity.DTO.ResultModel;
 using SahadevService;
+using SahadevService.Sentry;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -85,6 +86,53 @@ namespace Sahadev.API
             try
             {
                 bool bReturn = SS.ClientService.Insert(objClient);
+                if (bReturn == true)
+                {
+
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Client detail added successfully.", });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Failed to add client detail. Please try again." });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "Insert");
+                return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = "Server Error! Please try again later." });
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpPost]
+        [Route("InsertEvent")]
+        public IActionResult InsertEvent()
+        {
+            try
+            {
+                Event objEvent = new Event();
+                objEvent.EventName = "Test Event Name 2";
+                objEvent.Description = "Test Desciption 2";
+                objEvent.StartDate = DateTime.Now;
+                objEvent.EndDate = DateTime.Now.AddDays(30);
+                objEvent.StatusID = 1;
+                objEvent.Platform1 = 1;
+                objEvent.Platform2 = 2;
+                objEvent.Query = "Test Query";
+                objEvent.Keywords = "Test Keywords";
+                objEvent.EventTypeID = 2;
+                objEvent.ClientID = 1;
+
+                
+                bool bReturn = SS.EventService.InsertEvent(objEvent);
                 if (bReturn == true)
                 {
 

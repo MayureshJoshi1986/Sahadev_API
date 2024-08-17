@@ -19,7 +19,7 @@ namespace SahadevBusinessEntity.DTO.Model
         /// <summary>
         /// IGTagID
         /// </summary>
-        public int IGTagID { get; set; }
+        public int? IGTagID { get; set; }
 
         /// <summary>
         /// TagName
@@ -34,7 +34,7 @@ namespace SahadevBusinessEntity.DTO.Model
         /// <summary>
         /// IsActive
         /// </summary>
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// CreatedAt

@@ -29,7 +29,7 @@ namespace SahadevBusinessEntity.DTO.Model
         /// <summary>
         /// IsActive
         /// </summary>
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// CreatedAt

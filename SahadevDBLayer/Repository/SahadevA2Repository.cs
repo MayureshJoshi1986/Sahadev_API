@@ -32,6 +32,12 @@ namespace SahadevDBLayer.Repository
         bool InsertClient(Client objClient, IDbTransaction transaction);
 
         int InsertClientTopic(ClientTopic objClientTopic, IDbTransaction transaction);
+
+        int InsertTag(Tag objTag, IDbTransaction transaction);
+
+        bool InsertTagMap(TagMap objTagMap, IDbTransaction transaction);
+
+        bool InsertTagQuery(TagQuery objTagQuery, IDbTransaction transaction);
     }
 
     internal class SahadevA2Repository : RepositoryBase, ISahadevA2Repository
@@ -179,14 +185,14 @@ namespace SahadevDBLayer.Repository
         {
             bool bResult = false;
             try
-            {
+            {   
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@clientTopicID", objTagMap.ClientTopicID);
                 dbparams.Add("@tagID", objTagMap.TagID);
                 dbparams.Add("@isActive", objTagMap.IsActive);
 
                 int iResult = InsertByProcedure<int>(@"[dbo].[USP_TagMap_Insert]", dbparams, transaction);
-                if (iResult != 0)
+                if (iResult != -1)
                     bResult = true;
             }
             catch (Exception ex)
