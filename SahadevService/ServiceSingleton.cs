@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using SahadevDBLayer.UnitOfWork;
 using SahadevService;
+using SahadevService.Common;
+using SahadevService.Sentry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,23 +27,9 @@ namespace SahadevService
             this._logger = logger;
         }
 
-        //private MemberService _MemberService;
         private ClientService _ClientService;
-
-        ///// <summary>
-        ///// MemberService
-        ///// </summary>
-        //public MemberService MemberService
-        //{
-        //    get
-        //    {
-        //        if (_MemberService == null)
-        //        {
-        //            _MemberService = new MemberService(uow, _logger);
-        //        }
-        //        return _MemberService;
-        //    }
-        //}
+        private EventService _EventService;
+        private TagService _TagService;
 
         public ClientService ClientService
         {
@@ -52,6 +40,30 @@ namespace SahadevService
                     _ClientService = new ClientService(uow, _logger);
                 }
                 return _ClientService;
+            }
+        }
+
+        public EventService EventService
+        {
+            get
+            {
+                if (_EventService == null)
+                {
+                    _EventService = new EventService(uow, _logger);
+                }
+                return _EventService;
+            }
+        }
+
+        public TagService TagService
+        {
+            get
+            {
+                if (_TagService == null)
+                {
+                    _TagService = new TagService(uow, _logger);
+                }
+                return _TagService;
             }
         }
     }

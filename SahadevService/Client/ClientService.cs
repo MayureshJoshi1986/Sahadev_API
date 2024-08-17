@@ -29,7 +29,7 @@ namespace SahadevService
     /// </summary>
     interface IClientService
     {
-        List<Client> GetDetail();
+        //List<Client> GetDetail();
     }
 
     /// <summary>
@@ -63,19 +63,19 @@ namespace SahadevService
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<Client> GetDetail()
-        {
-            try
-            {
-                List<Client> lstClient = uw.ClientRepository.Get();
-                return lstClient;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, _className, "GetDetail");
-                return null;
-            }
-        }
+        //public List<Client> GetDetail()
+        //{
+        //    try
+        //    {
+        //        List<Client> lstClient = uw.ClientRepository.Get();
+        //        return lstClient;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, _className, "GetDetail");
+        //        return null;
+        //    }
+        //}
 
         /// <summary>
         /// This method is used to insert client detail in client table

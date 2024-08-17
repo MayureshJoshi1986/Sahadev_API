@@ -41,32 +41,32 @@ namespace Sahadev.API
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        [HttpGet]
-        [Route("GetAll")]
-        public IActionResult GetAll()
-        {
-            try
-            {
-                object lstClientDetail = SS.ClientService.GetDetail();
-                if (lstClientDetail != null)
-                {
+        //[HttpGet]
+        //[Route("GetAll")]
+        //public IActionResult GetAll()
+        //{
+        //    try
+        //    {
+        //        object lstClientDetail = SS.ClientService.GetDetail();
+        //        if (lstClientDetail != null)
+        //        {
 
-                    return Ok(new GenericResponse.APIResponse{ code = HttpStatusCode.OK, message = string.Empty, data = lstClientDetail });
-                }
-                else
-                {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Client detail not available." });
-                }
-            }
-            catch (Exception ex)
-            {
-                //For error user Log.LogError methods
-                //For warning user Log.LogWarning methods
-                //For information user Log.LogInformation methods
-                _logger.LogError(ex, _className, "GetAll");
-                return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = "Server Error! Please try again later." });
-            }
-        }
+        //            return Ok(new GenericResponse.APIResponse{ code = HttpStatusCode.OK, message = string.Empty, data = lstClientDetail });
+        //        }
+        //        else
+        //        {
+        //            return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Client detail not available." });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //For error user Log.LogError methods
+        //        //For warning user Log.LogWarning methods
+        //        //For information user Log.LogInformation methods
+        //        _logger.LogError(ex, _className, "GetAll");
+        //        return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = "Server Error! Please try again later." });
+        //    }
+        //}
 
         /// <summary>
         /// This API is used to insert client detail in client table

@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using static Dapper.SqlMapper;
 
 namespace SahadevDBLayer.Repository
@@ -32,7 +33,9 @@ namespace SahadevDBLayer.Repository
     /// </summary>
     public interface ISahadevC2Repository
     {
-        List<FeedbackType> GetFeedbackType();
+        List<FeedbackType> GetFeedbackType(IDbTransaction transaction);
+
+        int InsertEvent(Event objEvent, IDbTransaction transaction);
     }
     internal class SahadevC2Repository : RepositoryBase, ISahadevC2Repository
     {
@@ -51,11 +54,11 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<FeedbackType> GetFeedbackType()
+        public List<FeedbackType> GetFeedbackType(IDbTransaction transaction)
         {
             try
             {
-                var data = GetAllByProcedure<FeedbackType>(@"[dbo].[USP_mstFeedbackType_FetchAll]", null);
+                var data = GetAllByProcedure<FeedbackType>(@"[dbo].[USP_mstFeedbackType_FetchAll]", null, transaction);
                 return data;
             }
             catch (Exception ex)
@@ -100,44 +103,46 @@ namespace SahadevDBLayer.Repository
 
         }
 
-        ///// <summary>
-        ///// This method is used to insert event detail in event table
-        ///// </summary>
-        ///// <param name="objEvent">object containing feedback detail</param>
-        ///// <returns>true if successfully inserted else false</returns>
-        ///// <createdon>17-Aug-2024</createdon>
-        ///// <createdby>PJ</createdby>
-        ///// <modifiedon></modifiedon>
-        ///// <modifiedby></modifiedby>
-        ///// <modifiedreason></modifiedreason>
-        //public bool InsertEvent(Event objEvent, IDbTransaction transaction)
-        //{
-        //    bool bReturn = false;
-        //    try
-        //    {
-        //        var dbparams = new DynamicParameters();
-        //        dbparams.Add("@clientID", objEvent.EventID);
-        //        dbparams.Add("@eventTypeID", objEvent.UserID);
-        //        dbparams.Add("@eventName", objEvent.PlatformID);
-        //        dbparams.Add("@description", objEvent.FTID);
-        //        dbparams.Add("@refArticleURL", objEvent.RecordID);
-        //        dbparams.Add("@keywords", objEvent.ScreenName);
-        //        dbparams.Add("@query", objEvent.FeedbackDescription);
-        //        dbparams.Add("@query", objEvent.FeedbackDescription);
-        //        dbparams.Add("@query", objEvent.FeedbackDescription);
-        //        dbparams.Add("@query", objEvent.FeedbackDescription);
-        //        dbparams.Add("@query", objEvent.FeedbackDescription);
-        //        int iResult = InsertByProcedure<int>(@"[dbo].[USP_Feedback_Insert]", dbparams, transaction);
-        //        if (iResult != 0)
-        //            bReturn = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //    return bReturn;
+        /// <summary>
+        /// This method is used to insert event detail in event table
+        /// </summary>
+        /// <param name="objEvent">object containing feedback detail</param>
+        /// <returns>PK of feedback if successfully inserted else 0</returns>
+        /// <createdon>17-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public int InsertEvent(Event objEvent, IDbTransaction transaction)
+        {
+            int iResult = 0;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientID", objEvent.EventID);
+                dbparams.Add("@eventTypeID", objEvent.EventTypeID);
+                dbparams.Add("@eventName", objEvent.EventName);
+                dbparams.Add("@description", objEvent.Description);
+                dbparams.Add("@refArticleURL", objEvent.RefArticleURL);
+                dbparams.Add("@keywords", objEvent.Keywords);
+                dbparams.Add("@query", objEvent.Query);
+                dbparams.Add("@platform1", objEvent.Platform1);
+                dbparams.Add("@platform2", objEvent.Platform2);
+                dbparams.Add("@platform3", objEvent.Platform3);
+                dbparams.Add("@platform4", objEvent.Platform4);
+                dbparams.Add("@startDate", objEvent.StartDate);
+                dbparams.Add("@endDate", objEvent.EndDate);
+                dbparams.Add("@statusID", objEvent.StatusID);
+                dbparams.Add("@tagID", objEvent.TagID);
+                iResult = GetByProcedure<int>(@"[dbo].[USP_Event_Insert]", dbparams, transaction);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return iResult;
 
-        //}
+        }
     }
 
 }

@@ -30,7 +30,7 @@ namespace SahadevDBLayer.Repository
 
     public interface IClientRepository
     {
-        List<Client> Get();
+        List<Client> Get(IDbTransaction transaction);
         bool Insert(Client objClient, IDbTransaction transaction);
     }
     internal class ClientRepository : RepositoryBase, IClientRepository
@@ -50,11 +50,11 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<Client> Get()
+        public List<Client> Get(IDbTransaction transaction)
         {
             try
             {
-                var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null);
+                var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null, transaction);
                 return data;
             }
             catch (Exception ex)

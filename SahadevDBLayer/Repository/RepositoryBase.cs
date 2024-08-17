@@ -55,32 +55,32 @@ namespace SahadevDBLayer.Repository
         #endregion
 
         #region Get
-        public T GetByQuery<T>(string sp, DynamicParameters parms)
+        public T GetByQuery<T>(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
-            return Get<T>(sp, parms, CommandType.Text);
+            return Get<T>(sp, parms, CommandType.Text, transaction);
         }
-        public T GetByProcedure<T>(string sp, DynamicParameters parms)
+        public T GetByProcedure<T>(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
-            return Get<T>(sp, parms, CommandType.StoredProcedure);
+            return Get<T>(sp, parms, CommandType.StoredProcedure, transaction);
         }
-        T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
+        T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text, IDbTransaction transaction = null)
         {
-            return Connection.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+            return Connection.Query<T>(sp, parms, commandType: commandType, transaction: transaction).FirstOrDefault();
         }
         #endregion
 
         #region GetAll
-        public List<T> GetAllByQuery<T>(string sp, DynamicParameters parms)
+        public List<T> GetAllByQuery<T>(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
-            return GetAll<T>(sp, parms, CommandType.Text);
+            return GetAll<T>(sp, parms, CommandType.Text, transaction);
         }
-        public List<T> GetAllByProcedure<T>(string sp, DynamicParameters parms)
+        public List<T> GetAllByProcedure<T>(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
-            return GetAll<T>(sp, parms, CommandType.StoredProcedure);
+            return GetAll<T>(sp, parms, CommandType.StoredProcedure, transaction);
         }
-        List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction = null)
         {
-            return Connection.Query<T>(sp, parms, commandType: commandType).ToList();
+            return Connection.Query<T>(sp, parms, commandType: commandType, transaction: transaction).ToList();
         }
         #endregion
 

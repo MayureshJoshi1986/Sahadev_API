@@ -19,4 +19,8 @@
     <ProjectReference Include="..\SahadevDBLayer\SahadevDBLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dossier\" />
+  </ItemGroup>
+
 </Project>

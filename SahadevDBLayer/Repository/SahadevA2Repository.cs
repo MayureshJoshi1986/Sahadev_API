@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Transactions;
 
 namespace SahadevDBLayer.Repository
 {
@@ -27,8 +28,10 @@ namespace SahadevDBLayer.Repository
     /// </summary>
     public interface ISahadevA2Repository
     {
-        List<Client> Get();
-        bool Insert(Client objClient, IDbTransaction transaction);
+        List<Client> Get(IDbTransaction transaction);
+        bool InsertClient(Client objClient, IDbTransaction transaction);
+
+        int InsertClientTopic(ClientTopic objClientTopic, IDbTransaction transaction);
     }
 
     internal class SahadevA2Repository : RepositoryBase, ISahadevA2Repository
@@ -47,11 +50,11 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<Client> Get()
+        public List<Client> Get(IDbTransaction transaction)
         {
             try
             {
-                var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null);
+                var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null, transaction);
                 return data;
             }
             catch (Exception ex)
@@ -71,7 +74,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool Insert(Client objClient, IDbTransaction transaction)
+        public bool InsertClient(Client objClient, IDbTransaction transaction)
         {
             bool bReturn = false;
             try
@@ -94,6 +97,137 @@ namespace SahadevDBLayer.Repository
                 throw ex;
             }
             return bReturn;
+
+        }
+
+        /// <summary>
+        /// This method is used to insert client topic detail in ClientTopic table
+        /// </summary>
+        /// <param name="objClientTopic">object containing client topic detail</param>
+        /// <returns>PK of ClientTopic if successfully inserted else 0</returns>
+        /// <createdon>17-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public int InsertClientTopic(ClientTopic objClientTopic, IDbTransaction transaction)
+        {
+            int iResult = 0;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientID", objClientTopic.ClientID);
+                dbparams.Add("@topicTypeID", objClientTopic.TopicTypeID);
+                dbparams.Add("@topicName", objClientTopic.TopicName);
+                dbparams.Add("@topicDescription", objClientTopic.TopicDescription);
+                dbparams.Add("@refTopicID", objClientTopic.RefTopicID);
+                dbparams.Add("@status", objClientTopic.Status);
+                dbparams.Add("@startDate", objClientTopic.StartDate);
+                dbparams.Add("@endDate", objClientTopic.EndDate);
+
+                iResult = GetByProcedure<int>(@"[dbo].[USP_ClientTopic_Insert]", dbparams, transaction);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return iResult;
+
+        }
+
+        /// <summary>
+        /// This method is used to insert tag detail in Tag table
+        /// </summary>
+        /// <param name="objTag">object containing tag detail</param>
+        /// <returns>PK of Tag table if successfully inserted else 0</returns>
+        /// <createdon>17-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public int InsertTag(Tag objTag, IDbTransaction transaction)
+        {
+            int iResult = 0;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@igTagID", objTag.IGTagID);
+                dbparams.Add("@tagName", objTag.TagName);
+                dbparams.Add("@tagDescription", objTag.TagDescription);
+                dbparams.Add("@isActive", objTag.IsActive);
+                iResult = GetByProcedure<int>(@"[dbo].[USP_Tag_Insert]", dbparams, transaction);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return iResult;
+
+        }
+
+        /// <summary>
+        /// This method is used to insert tag map detail in TagMap table
+        /// </summary>
+        /// <param name="objTagMap">object containing TagMap detail</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>17-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool InsertTagMap(TagMap objTagMap, IDbTransaction transaction)
+        {
+            bool bResult = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientTopicID", objTagMap.ClientTopicID);
+                dbparams.Add("@tagID", objTagMap.TagID);
+                dbparams.Add("@isActive", objTagMap.IsActive);
+
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_TagMap_Insert]", dbparams, transaction);
+                if (iResult != 0)
+                    bResult = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bResult;
+
+        }
+
+        /// <summary>
+        /// This method is used to insert tag query detail in TagQuery table
+        /// </summary>
+        /// <param name="objTagQuery">object containing TagQuery detail</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>17-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool InsertTagQuery(TagQuery objTagQuery, IDbTransaction transaction)
+        {
+            bool bResult = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagID", objTagQuery.TagID);
+                dbparams.Add("@platformID", objTagQuery.PlatformID);
+                dbparams.Add("@query", objTagQuery.Query);
+                dbparams.Add("@typeOfQuery", objTagQuery.TypeOfQuery);
+                dbparams.Add("@isActive", objTagQuery.IsActive);
+
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, transaction);
+                if (iResult != 0)
+                    bResult = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bResult;
 
         }
     }
