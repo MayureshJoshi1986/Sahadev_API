@@ -70,7 +70,7 @@ namespace SahadevService.Sentry
 
                 //New Event as a Tag Mapping
                 Tag objTag = new Tag();
-                objTag.IGTagID = null;// what to map with ???
+                objTag.IGTagID = null;// what to map with ???  B Databas Tab
                 objTag.TagName = objEvent.EventName;
                 objTag.TagDescription = objEvent.Description;
                 objTag.IsActive = true;
@@ -110,7 +110,7 @@ namespace SahadevService.Sentry
                 objTagMap.IsActive = objTag.IsActive;
                 bool result = uw.SahadevA2Repository.InsertTagMap(objTagMap);
 
-                 //throw new TransactionAbortedException(); // Just to test the Transaction Rollback
+                //throw new TransactionAbortedException(); // Just to test the Transaction Rollback
 
                 //do the entry in Tag query for all the selected plateform
                 TagQuery objTagQuery = new TagQuery();
@@ -169,6 +169,152 @@ namespace SahadevService.Sentry
                 return false;
             }
         }
+
+
+
+
+        /// <summary>
+        /// This method is used to insert feedback in feeback table
+        /// </summary>
+        /// <param name="objFeedback">object containing feeback detail</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>18-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool InsertFeedback(Feedback objFeedback)
+        {
+            bool bReturn = false;
+            try
+            {
+                int iResult = uw.SahadevC2Repository.InsertFeedback(objFeedback);
+                if (iResult != 0)
+                    bReturn = true;
+                uw.Commit();
+
+
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "InsertFeedbak");
+            }
+
+            return bReturn;
+        }
+
+
+
+
+        /// <summary>
+        /// This method is used to insert or update BookMark Table based on the action parameter
+        /// </summary>
+        /// <param name="objFeedback">object containing feeback detail</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>18-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool InsertUpdateBookMark(BookMark objBookMark, string action)
+        {
+            bool bReturn = false;
+            int iResult = 0;
+            try
+            {
+                switch (action)
+                {
+                    case "Insert":
+                        iResult = uw.SahadevC2Repository.InsertBookMark(objBookMark);
+
+                        if (iResult != 0)
+                        {
+                            objBookMark.BookMarkID = iResult;
+                            bReturn = true;
+                        }
+                        break;
+                    case "Update":
+                        bReturn = uw.SahadevC2Repository.UpdateBookMark(objBookMark);
+                        break;
+                    case "Delete":
+                        bReturn = uw.SahadevC2Repository.DeleteBookMark(objBookMark);
+                        break;
+
+                }
+
+                uw.Commit();
+                return bReturn;
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "InsertUpdateBookMark");
+                return false;
+            }
+        }
+
+
+
+        /// <summary>
+        /// This method is used to Fecth All Feedback Type in mstFeedbackType
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        /// <createdon>18-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<FeedbackType> GetAllFeedbackType()
+        {
+            try
+            {
+                var data = uw.SahadevC2Repository.GetFeedbackType();
+                return data;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetAllFeedbackType");
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to insert Data for Download in DataRequestTable
+        /// </summary>
+        /// <param name="objDataRequest">object containing DataRequest detaill</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>18-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool InsertDataRequest(DataRequest objDataRequest)
+        {
+            bool bReturn = false;
+            try
+            {
+                int iResult = uw.SahadevC2Repository.InsertDataRequest(objDataRequest);
+                if (iResult != 0)
+                    bReturn = true;
+                uw.Commit();
+
+
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "InsertDataRequest");
+            }
+
+            return bReturn;
+        }
+
+
 
         /// <summary>
         /// This method is used to insert event detail in Event table

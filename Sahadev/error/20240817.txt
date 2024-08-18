@@ -1370,3 +1370,7 @@
 2024-08-17 20:18:40.984 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
 2024-08-17 20:18:41.077 +05:30 [Information] | Message : Received HTTP response after 92.9383ms - OK | Exception :  
 2024-08-17 20:18:41.077 +05:30 [Information] | Message : End processing HTTP request after 94.3568ms - OK | Exception :  
+2024-08-17 20:18:56.121 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 20:18:56.121 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-17 20:18:56.233 +05:30 [Information] | Message : Received HTTP response after 111.688ms - OK | Exception :  
+2024-08-17 20:18:56.234 +05:30 [Information] | Message : End processing HTTP request after 112.6923ms - OK | Exception :  

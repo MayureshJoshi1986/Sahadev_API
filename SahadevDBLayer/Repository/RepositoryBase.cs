@@ -123,15 +123,15 @@ namespace SahadevDBLayer.Repository
         #endregion
 
         #region Update
-        public int UpdateByQuery(string sp, DynamicParameters parms)
+        public int UpdateByQuery(string sp, DynamicParameters parms , IDbTransaction transaction)
         {
-            return Update(sp, parms, CommandType.Text);
+            return Update(sp, parms, CommandType.Text, transaction);
         }
-        public int UpdateByProcedure(string sp, DynamicParameters parms)
+        public int UpdateByProcedure(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
-            return Update(sp, parms, CommandType.StoredProcedure);
+            return Update(sp, parms, CommandType.StoredProcedure, transaction);
         }
-        int Update(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        int Update(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction = null)
         {
             int result;
             try
@@ -139,15 +139,15 @@ namespace SahadevDBLayer.Repository
                 if (Connection.State == ConnectionState.Closed)
                     Connection.Open();
 
-                using var tran = Connection.BeginTransaction();
+               // using var tran = Connection.BeginTransaction();
                 try
                 {
-                    result = Connection.Execute(sp, parms, transaction: tran, commandTimeout: null, commandType: commandType);
-                    tran.Commit();
+                    result = Connection.Execute(sp, parms, transaction: transaction, commandTimeout: null, commandType: commandType);
+                   // tran.Commit();
                 }
                 catch (Exception ex)
                 {
-                    tran.Rollback();
+                    //tran.Rollback();
                     throw ex;
                 }
             }
@@ -157,8 +157,8 @@ namespace SahadevDBLayer.Repository
             }
             finally
             {
-                if (Connection.State == ConnectionState.Open)
-                    Connection.Close();
+                //if (Connection.State == ConnectionState.Open)
+                    //Connection.Close();
             }
 
             return result;
