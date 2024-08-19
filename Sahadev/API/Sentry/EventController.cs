@@ -1,7 +1,7 @@
 ﻿/**********************************************************************************************
 *  ClassName      :- EventController                                                          *
 *  -------------------------------------------------------------------------------------------*
-*  Description    :- This class contain API related to user device                            *
+*  Description    :- This class contain API related to event                                  *
 *  -------------------------------------------------------------------------------------------*
 *  CreatedOn      :- 17-Aug-2024                                                              *
 *  -------------------------------------------------------------------------------------------*
@@ -25,9 +25,13 @@ using System.Net;
 using System;
 using SahadevBusinessEntity.DTO.RequestModel;
 using System.Collections.Generic;
+using SahadevBusinessEntity.DTO.Error.Common;
 
 namespace Sahadev.API.Sentry
 {
+    /// <summary>
+    /// This is EventController class which contain all APIs related to Event
+    /// </summary>
     [Route("v1/Sentry/Event")]
     [ApiController]
     public class EventController : ControllerBase
@@ -71,11 +75,11 @@ namespace Sahadev.API.Sentry
                 if (bReturn == true)
                 {
 
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Event detail added successfully.", });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Event.SDCOM003, "event") });
                 }
                 else
                 {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Failed to add event detail. Please try again." });
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.Event.SDCOM002, "event") });
                 }
             }
             catch (Exception ex)
@@ -84,7 +88,7 @@ namespace Sahadev.API.Sentry
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "Add");
-                return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = "Server Error! Please try again later." });
+                return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.Event.SDCOM002 });
             }
         }
 
@@ -133,7 +137,7 @@ namespace Sahadev.API.Sentry
 
 
         /// <summary>
-        /// This API is used to insert or update BookMark Table based on the action parameter
+        /// This API is used to insert or update Bookmark detail in BookMark Table based on the action parameter
         /// </summary>
         /// <param name="objBookMark">request object containing BookMark</param>
         /// <returns>success message if successfully inserted else error message</returns>
@@ -144,23 +148,24 @@ namespace Sahadev.API.Sentry
         /// <modifiedreason></modifiedreason>
         [HttpPost]
         [Route("UpdateBookMark")]
-        public IActionResult UpdateBookMark([FromBody] BookMark objBookMark, string action)
+        public IActionResult UpdateBookMark([FromBody] BookMark objBookMark)
         {
             try
             {
 
 
-                bool bReturn = SS.EventService.InsertUpdateBookMark(objBookMark, action);
+                bool bReturn = SS.EventService.InsertUpdateBookMark(objBookMark);
                 if (bReturn == true)
                 {
                     string message = string.Empty;
-                    if (action == "Insert")
+                    if (objBookMark.Action == "Insert")
                         message = "BookMark added successfully";
 
-                    else if (action == "Update")
-                        message = "BookMark Updated successfully";
+                    else if (objBookMark.Action == "Update")
+                        message = "BookMark updated successfully";
+                    //message = string.Format(Common.Event.SDCOM004, "BookMark");
 
-                    else if (action == "Delete")
+                    else if (objBookMark.Action == "Delete")
                         message = "BookMark deleted successfully";
 
 
@@ -184,7 +189,6 @@ namespace Sahadev.API.Sentry
         /// <summary>
         /// This API is used to Fetch FeedbackType from mstFeedbackType
         /// </summary>
-        /// <param name=""></param>
         /// <returns></returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
