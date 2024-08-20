@@ -5,17 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Cache\Redis\**" />
-    <EmbeddedResource Remove="Cache\Redis\**" />
-    <None Remove="Cache\Redis\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Cache\Serialization\MsgPackSerializer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Cache\" />
+    <Compile Remove="ShortID\**" />
+    <EmbeddedResource Remove="ShortID\**" />
+    <None Remove="ShortID\**" />
   </ItemGroup>
 
   <ItemGroup>

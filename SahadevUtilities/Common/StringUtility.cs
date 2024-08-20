@@ -1,11 +1,7 @@
-﻿using Serilog;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace SahadevUtilities.Common
 {
@@ -15,8 +11,7 @@ namespace SahadevUtilities.Common
     public class StringUtility
     {
         static string _className = "SahadevUtilities.Common.StringUtility";
-        // Html pattern to be removed
-        const string HTML_TAG_PATTERN = "<.*?>";
+        
 
         #region ConvertNumbertoWords
         /// <summary>
@@ -66,90 +61,6 @@ namespace SahadevUtilities.Common
         }
         #endregion
 
-        #region DatasetToCommaSeparatedString
-
-        /// <summary>
-        ///  This method converts dataset to comma seperated string. 
-        ///  Dataset should contains only single row and single column
-        /// </summary>
-        /// <param name="dataset">DataSet</param>
-        /// <returns>Comma seperated string</returns>
-        public string DatasetToCommaSeparatedString(DataSet dataset)
-        {
-            string strCommaSeperated = string.Empty;
-            try
-            {
-                // Generate comma separated string
-                foreach (DataRow dr in dataset.Tables[0].Rows)
-                {
-                    strCommaSeperated = strCommaSeperated + "," + dr[0].ToString();
-                }
-                // Remove if starting with comma
-                if (strCommaSeperated.Length > 0)
-                {
-                    strCommaSeperated = strCommaSeperated.Remove(0, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, _className, "DatasetToCommaSeparatedString");
-            }
-
-            return strCommaSeperated;
-        }
-
-        #endregion
-
-        #region StripHTML
-        /// <summary>
-        /// This method Strips Html tags from the input string and returns plain string(Without html tags)
-        /// </summary>
-        /// <param name="inputString">String to be stripped of HTML tags</param>
-        /// <returns>Plain string</returns>
-        public static string StripHTML(string inputString)
-        {
-            return Regex.Replace(inputString, HTML_TAG_PATTERN, string.Empty);
-        }
-        #endregion
-
-        #region RemoveHTMLTags
-        /// <summary>
-        /// This method removes all HTML tag from string  
-        /// </summary>
-        /// <param name="value">String to be stripped of HTML tags</param>
-        /// <returns>String without html tags</returns>
-        public static string RemoveHTMLTags(string value)
-        {
-            // Return strippted string
-            return (string.IsNullOrEmpty(value) ? string.Empty : System.Text.RegularExpressions.Regex.Replace(value, "<[^>]*>", string.Empty));
-        }
-        #endregion
-
-        #region StripScript
-        /// <summary>
-        /// This method Strips script tags from the input string and returns plain string(With html tags)
-        /// </summary>
-        /// <param name="inputString">String to be stripped of HTML doc</param>
-        /// <returns>html string</returns>
-        public static string StripScript(string inputString)
-        {
-            return Regex.Replace(inputString, "<script.*?</script>", string.Empty, RegexOptions.Singleline | RegexOptions.IgnoreCase);
-        }
-        #endregion
-
-        #region RemoveScriptContent
-        /// <summary>
-        /// This method removes all script tag from string  
-        /// </summary>
-        /// <param name="value">String to be stripped of HTML doc</param>
-        /// <returns>String with html tags</returns>
-        public static string RemoveScriptContent(string value)
-        {
-            // Return stripped string
-            return (string.IsNullOrEmpty(value) ? string.Empty : System.Text.RegularExpressions.Regex.Replace(value, "<script.*?</script>", string.Empty));
-        }
-        #endregion
-
         #region ConvertStringToCamelCase
         /// <summary>
         /// This method converts first letter of every word to capital case in string 
@@ -161,177 +72,7 @@ namespace SahadevUtilities.Common
             TextInfo UsaTextInfo = new CultureInfo("en-US", false).TextInfo;
             return UsaTextInfo.ToTitleCase(str);
         }
-        #endregion
-
-        #region ReplaceEnterWithBR
-        /// <summary>
-        /// This method replaces enter key with BR tag 
-        /// </summary>
-        /// <param name="str">Input string replce \r\n </param>
-        public static string ReplaceEnterWithBR(string str)
-        {
-            return str.Replace("\r\n", "<br/>");
-        }
-        #endregion
-
-        #region GetCountOfWordsWithSentence
-        /// <summary>
-        /// This method is used to get count of words in a sentence
-        /// </summary>
-        /// <param name="value">The value from which the sentence is to  be extracted</param>
-        /// <param name="wordsCount">The count of words</param>
-        /// <returns>string with  count of words</returns>
-        public static string GetCountOfWordsWithSentence(string value, int wordsCount)
-        {
-            StringBuilder strB = new StringBuilder();
-            try
-            {
-                //Removing carriage returns
-                value = value.Replace("\r", " ");
-                value = value.Replace("\n", " ");
-                //Spliting by blank
-                string[] arr = value.Trim().Split(' ');
-
-                int count = 0;      //Used to count words
-                foreach (string temp in arr)
-                {
-                    string str = temp.Trim();
-                    if (str.Length == 0)    //Checking for blank values
-                        continue;
-
-                    strB.Append(str);
-
-                    count++;
-                    if (count == wordsCount)
-                        break;
-
-                    strB.Append(" ");
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, _className, "GetCountOfWordsWithSentence");
-            }
-
-            return strB.ToString().Trim();
-        }
-        #endregion
-
-        #region AppendAnchorTag
-        /// <summary>
-        /// This appends anchor tag to text/String containing http:// or https://
-        /// </summary>
-        /// <param name="text">String to append tag for links</param>
-        /// <returns>anchor tagged string</returns> 
-        public string AppendAnchorTag(string text)
-        {
-            string anchoredString = "";
-            try
-            {
-                foreach (string str in text.Split(new string[] { " ", "\r\n" }, StringSplitOptions.None))
-                {
-                    if (str.Contains("http://") || str.Contains("https://"))
-                        anchoredString += " <a target='_blank' href=" + str + ">" + str + "</a> ";
-                    else
-                        anchoredString += " " + str;
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, _className, "AppendAnchorTag");
-            }
-            return anchoredString;
-        }
-        #endregion
-
-        #region GetAlternateCharFromString
-        /// <summary>
-        /// Get Alternate Character From String
-        /// </summary>
-        /// <param name="input">input string</param>
-        /// <returns>returns the resultant string</returns>                                                                                      
-        public static string GetAlternateCharFromString(string input)
-        {
-            string sReturn = string.Empty;
-            input = input.Replace("-", string.Empty);
-            for (int i = 1; i <= input.Length; i++)
-            {
-                if (i % 2 == 0)
-                    sReturn += input[i - 1];
-            }
-            return sReturn;
-        }
-        #endregion
-
-        #region RemoveHyphenString
-        /// <summary>
-        /// Remove hyphen in the input string
-        /// </summary>
-        /// <param name="input">input string</param>
-        /// <returns>returns the string without hypen</returns>
-        public static string RemoveHyphenString(string input)
-        {
-            string sReturn = string.Empty;
-            sReturn = input.Replace("-", string.Empty);
-            return sReturn;
-        }
-        #endregion
-
-        #region CreateHyphenString
-        /// <summary>
-        /// Create hyphen string in the input string 
-        /// </summary>
-        /// <param name="input">input string</param>
-        /// <param name="splitsize">split size count to include hyphen</param>
-        /// <returns>returns the string with hyphen</returns>
-        public static string CreateHyphenString(string input, int splitsize)
-        {
-            string sReturn = string.Empty;
-            input = input.Replace("-", string.Empty);
-            for (int i = 1; i <= input.Length; i++)
-            {
-                if (i % splitsize == 0 && i != input.Length)
-                    sReturn += (input[i - 1] + "-");
-                else
-                    sReturn += input[i - 1];
-            }
-            return sReturn;
-        }
-        #endregion
-
-        #region ReverseString
-        /// <summary>
-        /// Reverse the given input string
-        /// </summary>
-        /// <param name="s">input string</param>
-        /// <returns>returns the reverse string</returns>
-        public static string ReverseString(string s)
-        {
-            char[] arr = s.ToCharArray();
-            Array.Reverse(arr);
-            return new string(arr);
-        }
-        #endregion
-
-        #region SplitString
-        /// <summary>
-        /// Split Key to get values
-        /// </summary>
-        /// <param name="decKey">decrypted key</param>
-        /// <returns>returns split list string values</returns>
-        public static List<string> SplitString(string decKey, List<int> lstKeyType)
-        {
-            List<string> lstKey = new List<string>();
-            decKey = decKey.Replace("-", string.Empty);
-            int curPos = 0;
-            foreach (int i in lstKeyType)
-            {
-                lstKey.Add(decKey.Substring(curPos, i));
-                curPos += i;
-            }
-            return lstKey;
-        }
-        #endregion
+        #endregion        
 
         #region GenerateRandomNo
         /// <summary>

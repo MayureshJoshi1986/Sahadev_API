@@ -26,22 +26,9 @@ namespace SahadevService
             this.uow = uow as UnitOfWork;
             this._logger = logger;
         }
-
-        private ClientService _ClientService;
         private EventService _EventService;
         private TagService _TagService;
 
-        public ClientService ClientService
-        {
-            get
-            {
-                if (_ClientService == null)
-                {
-                    _ClientService = new ClientService(uow, _logger);
-                }
-                return _ClientService;
-            }
-        }
 
         public EventService EventService
         {

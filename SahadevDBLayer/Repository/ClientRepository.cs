@@ -36,8 +36,8 @@ namespace SahadevDBLayer.Repository
     internal class ClientRepository : RepositoryBase, IClientRepository
     {
 
-        public ClientRepository(IDbTransaction transaction, IDbConnection connection)
-            : base(transaction, connection)
+        public ClientRepository(IDbConnection connection, IDbTransaction transaction)
+            : base(connection, transaction)
         {
         }
 

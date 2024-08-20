@@ -25,7 +25,8 @@ using System.Net;
 using System;
 using SahadevBusinessEntity.DTO.RequestModel;
 using System.Collections.Generic;
-using SahadevBusinessEntity.DTO.Error.Common;
+using System.Linq;
+using SahadevBusinessEntity.Constant.Messages;
 
 namespace Sahadev.API.Sentry
 {
@@ -51,10 +52,6 @@ namespace Sahadev.API.Sentry
             _logger = logger;
         }
 
-
-
-
-
         /// <summary>
         /// This API is used to insert event detail in event table
         /// </summary>
@@ -71,15 +68,19 @@ namespace Sahadev.API.Sentry
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return StatusCode(417, new GenericResponse.APIResponse { code = HttpStatusCode.ExpectationFailed, message = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).FirstOrDefault() });
+                    //return BadRequest(ModelState);
+                }
                 bool bReturn = SS.EventService.Add(objEvent);
                 if (bReturn == true)
                 {
-
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Event.SDCOM003, "event") });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.SDCOM006, "event") });
                 }
                 else
                 {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.Event.SDCOM002, "event") });
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM002, "event") });
                 }
             }
             catch (Exception ex)
@@ -88,12 +89,9 @@ namespace Sahadev.API.Sentry
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "Add");
-                return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.Event.SDCOM002 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
             }
         }
-
-
-
 
         /// <summary>
         /// This API is used to insert Feedback detail in Feedback table
@@ -111,16 +109,16 @@ namespace Sahadev.API.Sentry
         {
             try
             {
-                
+
                 bool bReturn = SS.EventService.InsertFeedback(objFeedback);
                 if (bReturn == true)
                 {
 
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Feedback added successfully.", });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.SDCOM006, "Feedback") });
                 }
                 else
                 {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Failed to add Feedback detail. Please try again." });
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM002, "Feedback") });
                 }
             }
             catch (Exception ex)
@@ -129,12 +127,9 @@ namespace Sahadev.API.Sentry
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "ShareFeedback");
-                return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = "Server Error! Please try again later." });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
             }
         }
-
-
-
 
         /// <summary>
         /// This API is used to insert or update Bookmark detail in BookMark Table based on the action parameter
@@ -152,28 +147,24 @@ namespace Sahadev.API.Sentry
         {
             try
             {
-
-
                 bool bReturn = SS.EventService.InsertUpdateBookMark(objBookMark);
                 if (bReturn == true)
                 {
                     string message = string.Empty;
                     if (objBookMark.Action == "Insert")
-                        message = "BookMark added successfully";
+                        message = string.Format(Common.SDCOM006, "BookMark");
 
                     else if (objBookMark.Action == "Update")
-                        message = "BookMark updated successfully";
-                    //message = string.Format(Common.Event.SDCOM004, "BookMark");
+                        message = string.Format(Common.SDCOM007, "BookMark");
 
                     else if (objBookMark.Action == "Delete")
-                        message = "BookMark deleted successfully";
+                        message = string.Format(Common.SDCOM008, "BookMark");
 
-
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message= message, });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = message, });
                 }
                 else
                 {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Failed to add BookMark detail. Please try again." });
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM002, "BookMark") });
                 }
             }
             catch (Exception ex)
@@ -182,7 +173,7 @@ namespace Sahadev.API.Sentry
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "UpdateBookMark");
-                return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = "Server Error! Please try again later." });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
             }
         }
 
@@ -197,14 +188,13 @@ namespace Sahadev.API.Sentry
         /// <modifiedreason></modifiedreason>
         [HttpGet]
         [Route("Fetch_FeedbackTypes")]
-        public IActionResult Fecth_FeedbackTypes()
+        public IActionResult Fetch_FeedbackTypes()
         {
             try
             {
                 List<FeedbackType> feedbackTypes = SS.EventService.GetAllFeedbackType();
                 if (feedbackTypes != null)
                 {
-
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = feedbackTypes });
                 }
                 else
@@ -217,8 +207,44 @@ namespace Sahadev.API.Sentry
                 //For error user Log.LogError methods
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
-                _logger.LogError(ex, _className, "Fecth_FeedbackTypes");
-                return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = "Server Error! Please try again later." });
+                _logger.LogError(ex, _className, "Fetch_FeedbackTypes");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+            }
+        }
+
+        /// <summary>
+        /// This API is used to insert data request in DataRequest table
+        /// </summary>
+        /// <param name="objDataRequest">request object containing DataRequest detail</param>
+        /// <returns>success message if successfully inserted else error message</returns>
+        /// <createdon>20-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpPost]
+        [Route("DownloadData")]
+        public IActionResult DownloadData([FromBody] DataRequest objDataRequest)
+        {
+            try
+            {
+                bool bReturn = SS.EventService.InsertDataRequest(objDataRequest);
+                if (bReturn == true)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, });
+                }
+                else
+                {
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM002, "DataRequest") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "DownloadData");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
             }
         }
 

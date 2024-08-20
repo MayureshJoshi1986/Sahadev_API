@@ -284,11 +284,8 @@ namespace SahadevService.Sentry
             bool bReturn = false;
             try
             {
-                int iResult = uw.SahadevC2Repository.InsertDataRequest(objDataRequest);
-                if (iResult != 0)
-                    bReturn = true;
+                bReturn = uw.SahadevC2Repository.InsertDataRequest(objDataRequest);
                 uw.Commit();
-
 
             }
             catch (Exception ex)

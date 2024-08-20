@@ -92,27 +92,27 @@ namespace SahadevDBLayer.UnitOfWork
 
         public ISahadevA2Repository SahadevA2Repository
         {
-            get { return _SahadevA2Repository ?? (_SahadevA2Repository = new SahadevA2Repository(_SahadevA2Transaction, _SahadevA2Connection)); }
+            get { return _SahadevA2Repository ?? (_SahadevA2Repository = new SahadevA2Repository(_SahadevA2Connection, _SahadevA2Transaction)); }
         }
 
         public ISahadevC1Repository SahadevC1Repository
         {
-            get { return _SahadevC1Repository ?? (_SahadevC1Repository = new SahadevC1Repository(_SahadevC1Transaction, _SahadevC1Connection)); }
+            get { return _SahadevC1Repository ?? (_SahadevC1Repository = new SahadevC1Repository(_SahadevC1Connection, _SahadevC1Transaction)); }
         }
 
         public ISahadevC2Repository SahadevC2Repository
         {
-            get { return _SahadevC2Repository ?? (_SahadevC2Repository = new SahadevC2Repository(_SahadevC2Transaction, _SahadevC2Connection)); }
+            get { return _SahadevC2Repository ?? (_SahadevC2Repository = new SahadevC2Repository(_SahadevC2Connection, _SahadevC2Transaction)); }
         }
 
         public ISahadevC3Repository SahadevC3Repository
         {
-            get { return _SahadevC3Repository ?? (_SahadevC3Repository = new SahadevC3Repository(_SahadevC3Transaction, _SahadevC3Connection)); }
+            get { return _SahadevC3Repository ?? (_SahadevC3Repository = new SahadevC3Repository(_SahadevC3Connection, _SahadevC3Transaction)); }
         }
 
         public IClientRepository ClientRepository
         {
-            get { return _ClientRepository ?? (_ClientRepository = new ClientRepository(_transaction, _connection)); }
+            get { return _ClientRepository ?? (_ClientRepository = new ClientRepository(_connection, _transaction)); }
         }
 
         ///USE FOLLOWING FOR ENTITY FRAMEWORK

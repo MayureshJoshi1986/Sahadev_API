@@ -17,24 +17,13 @@
  *  revised Details :-                                                                          *
  /**********************************************************************************************/
 
+
+using Microsoft.AspNetCore.Http;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.IO;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
-//using System.Web;
-//using System.Web.UI;
-//using System.Web.UI.HtmlControls;
-//using System.Web.UI.WebControls;
-using System.Globalization;
-using SahadevUtilities.Encryption;
-using System.Web;
-using Microsoft.AspNetCore.Http;
-using Serilog;
 
 namespace SahadevUtilities.Common
 {
@@ -149,53 +138,8 @@ namespace SahadevUtilities.Common
         }
         #endregion
 
-        #region GetServiceUrl
-        /// <summary>
-        /// This methos is used to concatenate base url and url
-        /// </summary>
-        /// <param name="baseUrl">Base URL</param>
-        /// <param name="urlPath">URL Path</param>
-        /// <returns>Returns full path</returns>
-        public static string GetServiceUrl(string baseUrl, string urlPath)
-        {
-            string sReturn = string.Empty;
-            if (baseUrl.StartsWith("http:") || baseUrl.StartsWith("https:"))
-            {
-                Uri uriBaseUrl = new Uri(baseUrl);
-                Uri uriServiceUrl = new Uri(uriBaseUrl, urlPath);
-                sReturn = uriServiceUrl.ToString();
-            }
-            else
-            {
-                baseUrl = "http://" + baseUrl;
-                Uri uriBaseUrl = new Uri(baseUrl);
-                Uri uriServiceUrl = new Uri(uriBaseUrl, urlPath);
-                sReturn = uriServiceUrl.ToString();
-            }
-            return sReturn;
-        }
-        #endregion
+        
 
-        #region GenerateMacIDInXPattern
-        /// <summary>
-        /// This method is used to generate MACID
-        /// </summary>
-        /// <param name="input">Input String</param>
-        /// <returns>Returns MACID</returns>
-        public static string GenerateMacIDInXPattern(string input)
-        {
-            string sReturn = string.Empty;
-            input = input.Replace("-", string.Empty);
-            int j = 0;
-            for (int i = 1; i <= 32; i++)
-            {
-                if (i % 2 == 0)
-                    sReturn += input[j++];
-                else
-                    sReturn += "X";
-            }
-            return sReturn;
-        }
-        #endregion
+        
     }
 }

@@ -45,22 +45,20 @@ namespace SahadevDBLayer.Repository
 
         bool DeleteBookMark(BookMark objBookMark);
 
-        int InsertDataRequest(DataRequest objDataRequest);
-
-
-
+        bool InsertDataRequest(DataRequest objDataRequest);
     }
+
     internal class SahadevC2Repository : RepositoryBase, ISahadevC2Repository
     {
 
-        private readonly IDbTransaction _transaction;
         private readonly IDbConnection _connection;
+        private readonly IDbTransaction _transaction;
 
-        public SahadevC2Repository(IDbTransaction transaction, IDbConnection connection)
-            : base(transaction, connection)
+        public SahadevC2Repository(IDbConnection connection, IDbTransaction transaction)
+            : base(connection, transaction)
         {
-            _transaction = transaction;
             _connection = connection;
+            _transaction = transaction;
         }
 
         /// <summary>
@@ -130,12 +128,12 @@ namespace SahadevDBLayer.Repository
         /// <returns>PK of Feedback if successfully inserted else 0</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public int InsertDataRequest(DataRequest objDataRequest)
+        /// <modifiedon>20-Aug-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changed return type from int to bool & handled condition accordingly</modifiedreason>
+        public bool InsertDataRequest(DataRequest objDataRequest)
         {
-            int iResult = 0;
+            bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
@@ -144,15 +142,17 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@platformID", objDataRequest.PlatformID);
                 dbparams.Add("@startDate", objDataRequest.StartDate);
                 dbparams.Add("@endDate", objDataRequest.EndDate);
-                dbparams.Add("@filterJson", objDataRequest.FilterJson);
+                dbparams.Add("@filtersJson ", objDataRequest.FilterJson);
                 dbparams.Add("@statusID", objDataRequest.StatusID);
-                iResult = InsertByProcedure<int>(@"[dbo].[USP_DataRequest_Insert]", dbparams, _transaction);
-                return iResult;
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_DataRequest_Insert]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+            return bReturn;
 
 
         }

@@ -43,14 +43,14 @@ namespace SahadevDBLayer.Repository
 
     internal class SahadevA2Repository : RepositoryBase, ISahadevA2Repository
     {
-        private readonly IDbTransaction _transaction;
         private readonly IDbConnection _connection;
+        private readonly IDbTransaction _transaction;
 
-        public SahadevA2Repository(IDbTransaction transaction, IDbConnection connection)
-            : base(transaction, connection)
+        public SahadevA2Repository(IDbConnection connection, IDbTransaction transaction)
+            : base(connection, transaction)
         {
-            _transaction = transaction;
             _connection = connection;
+            _transaction = transaction;           
         }
 
         /// <summary>

@@ -10,13 +10,14 @@ namespace SahadevDBLayer.Repository
 {
     internal abstract class RepositoryBase
     {
-        protected IDbTransaction Transaction { get; private set; }
         protected IDbConnection Connection { get; private set; }
 
-        public RepositoryBase(IDbTransaction transaction, IDbConnection connection)
+        protected IDbTransaction Transaction { get; private set; }
+
+        public RepositoryBase(IDbConnection connection, IDbTransaction transaction)
         {
-            Transaction = transaction;
             Connection = connection;
+            Transaction = transaction;
         }
 
         #region Functions
@@ -93,7 +94,7 @@ namespace SahadevDBLayer.Repository
         {
             return Insert<T>(sp, parms, CommandType.StoredProcedure, transaction);
         }
-        T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction= null)
+        T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction = null)
         {
             T result;
             try
@@ -112,7 +113,7 @@ namespace SahadevDBLayer.Repository
             }
             finally
             {
-               //do not close connection here
+                //do not close connection here
             }
 
             return result;
@@ -120,7 +121,7 @@ namespace SahadevDBLayer.Repository
         #endregion
 
         #region Update
-        public T UpdateByQuery<T>(string sp, DynamicParameters parms , IDbTransaction transaction)
+        public T UpdateByQuery<T>(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
             return Update<T>(sp, parms, CommandType.Text, transaction);
         }
@@ -147,7 +148,7 @@ namespace SahadevDBLayer.Repository
             finally
             {
                 //if (Connection.State == ConnectionState.Open)
-                    //Connection.Close();
+                //Connection.Close();
             }
 
             return result;
