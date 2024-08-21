@@ -10,13 +10,14 @@ namespace SahadevDBLayer.Repository
 {
     internal abstract class RepositoryBase
     {
-        protected IDbTransaction Transaction { get; private set; }
         protected IDbConnection Connection { get; private set; }
 
-        public RepositoryBase(IDbTransaction transaction, IDbConnection connection)
+        protected IDbTransaction Transaction { get; private set; }
+
+        public RepositoryBase(IDbConnection connection, IDbTransaction transaction)
         {
-            Transaction = transaction;
             Connection = connection;
+            Transaction = transaction;
         }
 
         #region Functions
@@ -93,29 +94,26 @@ namespace SahadevDBLayer.Repository
         {
             return Insert<T>(sp, parms, CommandType.StoredProcedure, transaction);
         }
-        T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction= null)
+        T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction = null)
         {
             T result;
             try
             {
                 if (Connection.State == ConnectionState.Closed)
                     Connection.Open();
-                try
-                {
-                    result = Connection.ExecuteScalar<T>(sp, parms, commandType: commandType, transaction: transaction);
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+
+                result = Connection.ExecuteScalar<T>(sp, parms, commandType: commandType, transaction: transaction);
+                result = (T)Convert.ChangeType(1, typeof(T));
+
             }
             catch (Exception ex)
             {
+                result = (T)Convert.ChangeType(0, typeof(T));
                 throw ex;
             }
             finally
             {
-               //do not close connection here
+                //do not close connection here
             }
 
             return result;
@@ -123,42 +121,34 @@ namespace SahadevDBLayer.Repository
         #endregion
 
         #region Update
-        public int UpdateByQuery(string sp, DynamicParameters parms , IDbTransaction transaction)
+        public T UpdateByQuery<T>(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
-            return Update(sp, parms, CommandType.Text, transaction);
+            return Update<T>(sp, parms, CommandType.Text, transaction);
         }
-        public int UpdateByProcedure(string sp, DynamicParameters parms, IDbTransaction transaction)
+        public T UpdateByProcedure<T>(string sp, DynamicParameters parms, IDbTransaction transaction)
         {
-            return Update(sp, parms, CommandType.StoredProcedure, transaction);
+            return Update<T>(sp, parms, CommandType.StoredProcedure, transaction);
         }
-        int Update(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction = null)
+        T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, IDbTransaction transaction = null)
         {
-            int result;
+            T result;
             try
             {
                 if (Connection.State == ConnectionState.Closed)
                     Connection.Open();
 
-               // using var tran = Connection.BeginTransaction();
-                try
-                {
-                    result = Connection.Execute(sp, parms, transaction: transaction, commandTimeout: null, commandType: commandType);
-                   // tran.Commit();
-                }
-                catch (Exception ex)
-                {
-                    //tran.Rollback();
-                    throw ex;
-                }
+                result = Connection.ExecuteScalar<T>(sp, parms, transaction: transaction, commandTimeout: null, commandType: commandType);
+                result = (T)Convert.ChangeType(1, typeof(T));
             }
             catch (Exception ex)
             {
+                result = (T)Convert.ChangeType(0, typeof(T));
                 throw ex;
             }
             finally
             {
                 //if (Connection.State == ConnectionState.Open)
-                    //Connection.Close();
+                //Connection.Close();
             }
 
             return result;

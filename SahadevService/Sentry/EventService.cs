@@ -158,16 +158,14 @@ namespace SahadevService.Sentry
                 }
 
                 uw.Commit();
-                return true;
-
-
+                bReturn =  true;
             }
             catch (Exception ex)
             {
                 uw.Rollback();
                 _logger.LogError(ex, _className, "InsertEvent");
-                return false;
             }
+            return bReturn;
         }
 
 
@@ -188,19 +186,14 @@ namespace SahadevService.Sentry
             bool bReturn = false;
             try
             {
-                int iResult = uw.SahadevC2Repository.InsertFeedback(objFeedback);
-                if (iResult != 0)
-                    bReturn = true;
+                bReturn = uw.SahadevC2Repository.InsertFeedback(objFeedback);
                 uw.Commit();
-
-
             }
             catch (Exception ex)
             {
                 uw.Rollback();
                 _logger.LogError(ex, _className, "InsertFeedbak");
             }
-
             return bReturn;
         }
 
@@ -217,22 +210,15 @@ namespace SahadevService.Sentry
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool InsertUpdateBookMark(BookMark objBookMark, string action)
+        public bool InsertUpdateBookMark(BookMark objBookMark)
         {
             bool bReturn = false;
-            int iResult = 0;
             try
             {
-                switch (action)
+                switch (objBookMark.Action)
                 {
                     case "Insert":
-                        iResult = uw.SahadevC2Repository.InsertBookMark(objBookMark);
-
-                        if (iResult != 0)
-                        {
-                            objBookMark.BookMarkID = iResult;
-                            bReturn = true;
-                        }
+                        bReturn = uw.SahadevC2Repository.InsertBookMark(objBookMark);
                         break;
                     case "Update":
                         bReturn = uw.SahadevC2Repository.UpdateBookMark(objBookMark);
@@ -298,11 +284,8 @@ namespace SahadevService.Sentry
             bool bReturn = false;
             try
             {
-                int iResult = uw.SahadevC2Repository.InsertDataRequest(objDataRequest);
-                if (iResult != 0)
-                    bReturn = true;
+                bReturn = uw.SahadevC2Repository.InsertDataRequest(objDataRequest);
                 uw.Commit();
-
 
             }
             catch (Exception ex)
