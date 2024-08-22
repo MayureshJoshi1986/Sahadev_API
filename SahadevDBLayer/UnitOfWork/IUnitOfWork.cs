@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using System.Data.Common;
-using Dapper;
-
-namespace SahadevDBLayer.UnitOfWork
+﻿namespace SahadevDBLayer.UnitOfWork
 {
     public interface IUnitOfWork
     {

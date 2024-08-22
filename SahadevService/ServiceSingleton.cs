@@ -1,13 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SahadevDBLayer.UnitOfWork;
-using SahadevService;
 using SahadevService.Common;
 using SahadevService.Sentry;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SahadevService
 {
