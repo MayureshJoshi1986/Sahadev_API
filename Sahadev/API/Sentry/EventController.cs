@@ -54,25 +54,24 @@ namespace Sahadev.API.Sentry
         /// <summary>
         /// This API is used to insert event detail in event table
         /// </summary>
-        /// <param name="objEvent">request object containing event detail</param>
+        /// <param name="objRQ_Event">request object containing event detail</param>
         /// <returns>success message if successfully inserted else error message</returns>
         /// <createdon>17-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>23-Aug-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changed request model from Event to RQ_Event</modifiedreason>
         [HttpPost]
         [Route("")]
-        public IActionResult Add([FromBody] Event objEvent)
+        public IActionResult Add([FromBody] RQ_Event objRQ_Event)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
                     return StatusCode(417, new GenericResponse.APIResponse { code = HttpStatusCode.ExpectationFailed, message = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).FirstOrDefault() });
-                    //return BadRequest(ModelState);
                 }
-                bool bReturn = SS.EventService.Add(objEvent);
+                bool bReturn = SS.EventService.Add(objRQ_Event);
                 if (bReturn == true)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.SDCOM006, "event") });
@@ -99,9 +98,9 @@ namespace Sahadev.API.Sentry
         /// <returns>success message if successfully inserted else error message</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>23-Aug-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changed request model from Feedback to RQ_Feedback</modifiedreason>
         [HttpPost]
         [Route("ShareFeedback")]
         public IActionResult ShareFeedback([FromBody] RQ_Feedback objRQ_Feedback)
@@ -133,30 +132,30 @@ namespace Sahadev.API.Sentry
         /// <summary>
         /// This API is used to insert or update Bookmark detail in BookMark Table based on the action parameter
         /// </summary>
-        /// <param name="objBookMark">request object containing BookMark</param>
+        /// <param name="objRQ_BookMark">request object containing BookMark</param>
         /// <returns>success message if successfully inserted else error message</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>23-Aug-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changed request model from BookMark to RQ_BookMark</modifiedreason>
         [HttpPost]
         [Route("UpdateBookMark")]
-        public IActionResult UpdateBookMark([FromBody] BookMark objBookMark)
+        public IActionResult UpdateBookMark([FromBody] RQ_BookMark objRQ_BookMark)
         {
             try
             {
-                bool bReturn = SS.EventService.InsertUpdateBookMark(objBookMark);
+                bool bReturn = SS.EventService.InsertUpdateBookMark(objRQ_BookMark);
                 if (bReturn == true)
                 {
                     string message = string.Empty;
-                    if (objBookMark.Action == "Insert")
+                    if (objRQ_BookMark.Action == "Insert")
                         message = string.Format(Common.SDCOM006, "BookMark");
 
-                    else if (objBookMark.Action == "Update")
+                    else if (objRQ_BookMark.Action == "Update")
                         message = string.Format(Common.SDCOM007, "BookMark");
 
-                    else if (objBookMark.Action == "Delete")
+                    else if (objRQ_BookMark.Action == "Delete")
                         message = string.Format(Common.SDCOM008, "BookMark");
 
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = message, });
@@ -214,20 +213,20 @@ namespace Sahadev.API.Sentry
         /// <summary>
         /// This API is used to insert data request in DataRequest table
         /// </summary>
-        /// <param name="objDataRequest">request object containing DataRequest detail</param>
+        /// <param name="objRQ_DataRequest">request object containing DataRequest detail</param>
         /// <returns>success message if successfully inserted else error message</returns>
         /// <createdon>20-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>23-Aug-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changed request model from DataRequest to RQ_DataRequest</modifiedreason>
         [HttpPost]
         [Route("DownloadData")]
-        public IActionResult DownloadData([FromBody] DataRequest objDataRequest)
+        public IActionResult DownloadData([FromBody] RQ_DataRequest objRQ_DataRequest)
         {
             try
             {
-                bool bReturn = SS.EventService.InsertDataRequest(objDataRequest);
+                bool bReturn = SS.EventService.InsertDataRequest(objRQ_DataRequest);
                 if (bReturn == true)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, });

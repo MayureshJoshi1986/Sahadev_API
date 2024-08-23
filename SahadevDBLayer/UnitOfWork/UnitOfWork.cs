@@ -22,31 +22,31 @@ namespace SahadevDBLayer.UnitOfWork
         /// <param name="config"></param>
         
         //Configuration for SahadevA2Database
-        private IDbConnection _SahadevA2Connection;
-        private IDbTransaction _SahadevA2Transaction;
-        public static string SahadevA2ConnectionSring = "SahadevA2ConnectionSring"; 
-        private ISahadevA2Repository _SahadevA2Repository;
+        private IDbConnection _A2Connection;
+        private IDbTransaction _A2Transaction;
+        public static string A2ConnectionSring = "A2ConnectionSring"; 
+        private IA2Repository _A2Repository;
 
 
         //Configuration for SahadevC1Database
-        private IDbConnection _SahadevC1Connection;
-        private IDbTransaction _SahadevC1Transaction;
-        public static string SahadevC1ConnectionSring = "SahadevC1ConnectionSring";
-        private ISahadevC1Repository _SahadevC1Repository;
+        private IDbConnection _C1Connection;
+        private IDbTransaction _C1Transaction;
+        public static string C1ConnectionSring = "C1ConnectionSring";
+        private IC1Repository _C1Repository;
 
 
         //Configuration for SahadevC2Database
-        private IDbConnection _SahadevC2Connection;
-        private IDbTransaction _SahadevC2Transaction;
-        public static string SahadevC2ConnectionSring = "SahadevC2ConnectionSring";
-        private ISahadevC2Repository _SahadevC2Repository;
+        private IDbConnection _C2Connection;
+        private IDbTransaction _C2Transaction;
+        public static string C2ConnectionSring = "C2ConnectionSring";
+        private IC2Repository _C2Repository;
 
 
-        //Configuration for SahadevC3Database
-        private IDbConnection _SahadevC3Connection;
-        private IDbTransaction _SahadevC3Transaction;
-        public static string SahadevC3ConnectionSring = "SahadevC3ConnectionSring";
-        private ISahadevC3Repository _SahadevC3Repository;
+        //Configuration for C3Database
+        private IDbConnection _C3Connection;
+        private IDbTransaction _C3Transaction;
+        public static string C3ConnectionSring = "C3ConnectionSring";
+        private IC3Repository _C3Repository;
 
 
 
@@ -64,21 +64,21 @@ namespace SahadevDBLayer.UnitOfWork
             //_connection = new SqlConnection(_config.GetConnectionString(Connectionstring));
             //_connection.Open();
 
-            _SahadevA2Connection = new SqlConnection(_config.GetConnectionString(SahadevA2ConnectionSring));
-            _SahadevA2Connection.Open();
-            _SahadevA2Transaction = _SahadevA2Connection.BeginTransaction();
+            _A2Connection = new SqlConnection(_config.GetConnectionString(A2ConnectionSring));
+            _A2Connection.Open();
+            _A2Transaction = _A2Connection.BeginTransaction();
 
-            _SahadevC1Connection = new SqlConnection(_config.GetConnectionString(SahadevC1ConnectionSring));
-            _SahadevC1Connection.Open();
-            _SahadevC1Transaction = _SahadevC1Connection.BeginTransaction();
+            _C1Connection = new SqlConnection(_config.GetConnectionString(C1ConnectionSring));
+            _C1Connection.Open();
+            _C1Transaction = _C1Connection.BeginTransaction();
 
-            _SahadevC2Connection = new SqlConnection(_config.GetConnectionString(SahadevC2ConnectionSring));
-            _SahadevC2Connection.Open();
-            _SahadevC2Transaction = _SahadevC2Connection.BeginTransaction();
+            _C2Connection = new SqlConnection(_config.GetConnectionString(C2ConnectionSring));
+            _C2Connection.Open();
+            _C2Transaction = _C2Connection.BeginTransaction();
 
-            _SahadevC3Connection = new SqlConnection(_config.GetConnectionString(SahadevA2ConnectionSring));
-            _SahadevC3Connection.Open();
-            _SahadevC3Transaction = _SahadevC3Connection.BeginTransaction();
+            _C3Connection = new SqlConnection(_config.GetConnectionString(A2ConnectionSring));
+            _C3Connection.Open();
+            _C3Transaction = _C3Connection.BeginTransaction();
 
         }
 
@@ -88,115 +88,67 @@ namespace SahadevDBLayer.UnitOfWork
         /// </summary>
         /// 
 
-        public ISahadevA2Repository SahadevA2Repository
+        public IA2Repository A2Repository
         {
-            get { return _SahadevA2Repository ?? (_SahadevA2Repository = new SahadevA2Repository(_SahadevA2Connection, _SahadevA2Transaction)); }
+            get { return _A2Repository ?? (_A2Repository = new A2Repository(_A2Connection, _A2Transaction)); }
         }
 
-        public ISahadevC1Repository SahadevC1Repository
+        public IC1Repository C1Repository
         {
-            get { return _SahadevC1Repository ?? (_SahadevC1Repository = new SahadevC1Repository(_SahadevC1Connection, _SahadevC1Transaction)); }
+            get { return _C1Repository ?? (_C1Repository = new C1Repository(_C1Connection, _C1Transaction)); }
         }
 
-        public ISahadevC2Repository SahadevC2Repository
+        public IC2Repository C2Repository
         {
-            get { return _SahadevC2Repository ?? (_SahadevC2Repository = new SahadevC2Repository(_SahadevC2Connection, _SahadevC2Transaction)); }
+            get { return _C2Repository ?? (_C2Repository = new C2Repository(_C2Connection, _C2Transaction)); }
         }
 
-        public ISahadevC3Repository SahadevC3Repository
+        public IC3Repository C3Repository
         {
-            get { return _SahadevC3Repository ?? (_SahadevC3Repository = new SahadevC3Repository(_SahadevC3Connection, _SahadevC3Transaction)); }
+            get { return _C3Repository ?? (_C3Repository = new C3Repository(_C3Connection, _C3Transaction)); }
         }
 
-        //public IClientRepository ClientRepository
-        //{
-        //    get { return _ClientRepository ?? (_ClientRepository = new ClientRepository(_connection, _transaction)); }
-        //}
-
-        ///USE FOLLOWING FOR ENTITY FRAMEWORK
-        //private _GenericRepository<MemberMaster> _MemberMaster = null;
-        /// <summary>
-        /// MemberMaster
-        /// </summary>
-        //public _GenericRepository<MemberMaster> MemberMaster
-        //{
-        //    get
-        //    {
-        //        if (_MemberMaster == null)
-        //        {
-        //            _MemberMaster = new _GenericRepository<MemberMaster>(db);
-        //        }
-        //        return _MemberMaster;
-        //    }
-        //}
+        
         #endregion
-
-        //public int Save()
-        //{
-        //    return db.SaveChanges();
-        //}
 
         #region Transaction 
 
 
-
-        //private IDbContextTransaction dbTrans;
-        //public void BeginTransaction()
-        //{
-        //    if (dbTrans == null)
-        //    {
-        //        dbTrans = db.Database.BeginTransaction();
-        //    }
-        //}
-
-        //public void CommitTransaction()
-        //{
-        //    dbTrans.Commit();
-        //    dbTrans.Dispose();
-        //}
-
-        //public void RollbackTransaction()
-        //{
-        //    dbTrans.Rollback();
-        //    dbTrans.Dispose();
-        //}
-
-
         public void Rollback()
         {
-            _SahadevA2Transaction.Rollback();
-            _SahadevC1Transaction.Rollback();
-            _SahadevC2Transaction.Rollback();
-            _SahadevC3Transaction.Rollback();
+            _A2Transaction.Rollback();
+            _C1Transaction.Rollback();
+            _C2Transaction.Rollback();
+            _C3Transaction.Rollback();
         }
         public void Commit()
         {
             try
             {
-                _SahadevA2Transaction.Commit();
-                _SahadevC1Transaction.Commit();
-                _SahadevC2Transaction.Commit();
-                _SahadevC3Transaction.Commit();                                                                                                                                               
+                _A2Transaction.Commit();
+                _C1Transaction.Commit();
+                _C2Transaction.Commit();
+                _C3Transaction.Commit();                                                                                                                                               
             }
             catch
             {
-                _SahadevA2Transaction.Rollback();
-                _SahadevC1Transaction.Rollback();
-                _SahadevC2Transaction.Rollback();
-                _SahadevC3Transaction.Rollback();
+                _A2Transaction.Rollback();
+                _C1Transaction.Rollback();
+                _C2Transaction.Rollback();
+                _C3Transaction.Rollback();
                 throw;
             }
             finally
             {
-                _SahadevA2Transaction.Dispose();
-                _SahadevC1Transaction.Dispose();
-                _SahadevC2Transaction.Dispose();
-                _SahadevC3Transaction.Dispose();
+                _A2Transaction.Dispose();
+                _C1Transaction.Dispose();
+                _C2Transaction.Dispose();
+                _C3Transaction.Dispose();
 
-                _SahadevA2Transaction = _SahadevA2Connection.BeginTransaction();
-                _SahadevC1Transaction = _SahadevC1Connection.BeginTransaction();
-                _SahadevC2Transaction = _SahadevC2Connection.BeginTransaction();
-                _SahadevC3Transaction = _SahadevC3Connection.BeginTransaction();
+                _A2Transaction = _A2Connection.BeginTransaction();
+                _C1Transaction = _C1Connection.BeginTransaction();
+                _C2Transaction = _C2Connection.BeginTransaction();
+                _C3Transaction = _C3Connection.BeginTransaction();
 
                 disposed = true;
 
@@ -206,13 +158,11 @@ namespace SahadevDBLayer.UnitOfWork
 
         private void resetRepositories()
         {
-            _SahadevA2Repository = null;
-            _SahadevC1Repository = null;
-            _SahadevC2Repository = null;
-            _SahadevC3Repository = null;
+            _A2Repository = null;
+            _C1Repository = null;
+            _C2Repository = null;
+            _C3Repository = null;
         }
-
-
 
         private void Dispose(bool disposing)
         {
@@ -220,56 +170,54 @@ namespace SahadevDBLayer.UnitOfWork
             {
                 if (disposing)
                 {
-                    if (_SahadevA2Transaction != null)
+                    if (_A2Transaction != null)
                     {
-                        _SahadevA2Transaction.Dispose();
-                        _SahadevA2Transaction = null;
+                        _A2Transaction.Dispose();
+                        _A2Transaction = null;
                     }
-                    if (_SahadevA2Connection != null)
+                    if (_A2Connection != null)
                     {
-                        _SahadevA2Connection.Dispose();
-                        _SahadevA2Connection = null;
-                    }
-
-                    if (_SahadevC1Transaction != null)
-                    {
-                        _SahadevC1Transaction.Dispose();
-                        _SahadevC1Transaction = null;
-                    }
-                    if (_SahadevC2Connection != null)
-                    {
-                        _SahadevC1Connection.Dispose();
-                        _SahadevC1Connection = null;
+                        _A2Connection.Dispose();
+                        _A2Connection = null;
                     }
 
-                    if (_SahadevC2Transaction != null)
+                    if (_C1Transaction != null)
                     {
-                        _SahadevC2Transaction.Dispose();
-                        _SahadevC2Transaction = null;
+                        _C1Transaction.Dispose();
+                        _C1Transaction = null;
                     }
-                    if (_SahadevC2Connection != null)
+                    if (_C2Connection != null)
                     {
-                        _SahadevC2Connection.Dispose();
-                        _SahadevC2Connection = null;
+                        _C1Connection.Dispose();
+                        _C1Connection = null;
+                    }
+
+                    if (_C2Transaction != null)
+                    {
+                        _C2Transaction.Dispose();
+                        _C2Transaction = null;
+                    }
+                    if (_C2Connection != null)
+                    {
+                        _C2Connection.Dispose();
+                        _C2Connection = null;
                     }
 
 
-                    if (_SahadevC3Transaction != null)
+                    if (_C3Transaction != null)
                     {
-                        _SahadevC3Transaction.Dispose();
-                        _SahadevC3Transaction = null;
+                        _C3Transaction.Dispose();
+                        _C3Transaction = null;
                     }
-                    if (_SahadevC3Connection != null)
+                    if (_C3Connection != null)
                     {
-                        _SahadevC3Connection.Dispose();
-                        _SahadevC3Connection = null;
+                        _C3Connection.Dispose();
+                        _C3Connection = null;
                     }
                 }
                 disposed = true;
             }
         }
-
-
 
         #endregion 
 

@@ -1,52 +1,64 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :- RS_ClientDetail                                                          *
+ *  Class Name      :- RQ_BookMark                                                              *
  *  --------------------------------------------------------------------------------------------*
- *  Description     :- This is request model for event detail                                   *
+ *  Description     :- BookMark request model                                                   *
  *  --------------------------------------------------------------------------------------------*
- *  Created By      :- PJ                                                                       *
+ *  Created By      :- Saroj Laddha                                                             *
  *  --------------------------------------------------------------------------------------------*
- *  Created Date    :- 17-Aug-2024                                                              *
+ *  Created Date    :- 18-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
-using SahadevBusinessEntity.DTO.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
+using System.Text.Json.Serialization;
 
 namespace SahadevBusinessEntity.DTO.RequestModel
 {
     /// <summary>
-    /// RQ_EventDetail
+    /// Request model for BookMark
     /// </summary>
-    public class RQ_EventDetail
+    public class RQ_BookMark
     {
         /// <summary>
-        /// lstEvent
+        /// Action
         /// </summary>
-        public Event objEvent { get; set; }
+        [JsonPropertyName("action")]
+        public string Action { get; set; }
 
         /// <summary>
-        /// objClientTopic
+        /// BookMarkID
         /// </summary>
-        public ClientTopic objClientTopic { get; set; }
+        [JsonPropertyName("bookmark_id")]
+        public int BookMarkID { get; set; }
 
         /// <summary>
-        /// Tag
-        /// </summary>
-        public Tag objTag { get; set; }        
+        /// EventID
+        /// </summary
+        [JsonPropertyName("event_id")]
+        public int EventID { get; set; }
+
 
         /// <summary>
-        /// objTagMap
-        /// </summary>
-        public TagMap objTagMap{ get; set; }
+        /// UserID
+        /// </summary
+        [JsonPropertyName("user_id")]
+        public int UserID { get; set; }
+
 
         /// <summary>
-        /// objTagQuery
-        /// </summary>
-        public TagQuery objTagQuery { get; set; }
+        /// PlateformID
+        /// </summary
+        [JsonPropertyName("platform_id")]
+        public int PlateformID { get; set; }
+
+
+        /// <summary>
+        /// RecordID
+        /// </summary
+        [JsonPropertyName("record_id")]
+        public int RecordID { get; set; }
     }
 }

@@ -1,15 +1,15 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :- SahadevC1Repository                                                      *
+ *  Class Name      :- C1Repository                                                             *
  *  --------------------------------------------------------------------------------------------*
- *  Description     :- This is SahadevC1Repository class which contains all functions &         *
+ *  Description     :- This is C1Repository class which contains all functions &                *
  *                     SP related to SahadevC1 repository                                       *
  *  --------------------------------------------------------------------------------------------*
  *  Created By      :- PJ                                                                       *
  *  --------------------------------------------------------------------------------------------*
  *  Created Date    :- 17-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  revised By      :-  PJ                                                                      *
+ *  revised Details :-  Changed class name from SahadevC1Repository to C1Repository             *  
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
@@ -22,9 +22,9 @@ using System.Data;
 namespace SahadevDBLayer.Repository
 {
     /// <summary>
-    /// Interface of SahadevA2Repository class
+    /// Interface of C1Repository class
     /// </summary>
-    public interface ISahadevC1Repository
+    public interface IC1Repository
     {
         List<Client> Get();
         bool Insert(Client objClient);
@@ -35,11 +35,11 @@ namespace SahadevDBLayer.Repository
         List<User> GetAllUser();
     }
 
-    internal class SahadevC1Repository : RepositoryBase, ISahadevC1Repository
+    internal class C1Repository : RepositoryBase, IC1Repository
     {
         private readonly IDbConnection _connection;
         private readonly IDbTransaction _transaction;
-        public SahadevC1Repository(IDbConnection connection, IDbTransaction transaction)
+        public C1Repository(IDbConnection connection, IDbTransaction transaction)
             : base(connection, transaction)
         {
             _connection = connection;

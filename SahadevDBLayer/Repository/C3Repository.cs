@@ -1,15 +1,15 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :- SahadevC3Repository                                                      *
+ *  Class Name      :- C3Repository                                                             *
  *  --------------------------------------------------------------------------------------------*
- *  Description     :- This is SahadevC3Repository class which contains all functions &         *
+ *  Description     :- This is C3Repository class which contains all functions &                *
  *                     SP related to SahadevC3 repository                                       *
  *  --------------------------------------------------------------------------------------------*
  *  Created By      :- PJ                                                                       *
  *  --------------------------------------------------------------------------------------------*
  *  Created Date    :- 17-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  revised By      :-  PJ                                                                      *
+ *  revised Details :-  Changed class name from SahadevC3Repository to C3Repository             *  
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
@@ -22,21 +22,21 @@ using Dapper;
 namespace SahadevDBLayer.Repository
 {
     /// <summary>
-    /// Interface of SahadevC3Repository class
+    /// Interface of C3Repository class
     /// </summary>
-    public interface ISahadevC3Repository
+    public interface IC3Repository
     {
         //List<FeedbackType> GetFeedbackType();
 
         List<string> GetAllTagIDByTagGroupName(string tagGroupName);
     }
 
-    internal class SahadevC3Repository:RepositoryBase, ISahadevC3Repository
+    internal class C3Repository:RepositoryBase, IC3Repository
     {
         private readonly IDbConnection _connection;
         private readonly IDbTransaction _transaction;
 
-        public SahadevC3Repository(IDbConnection connection, IDbTransaction transaction)
+        public C3Repository(IDbConnection connection, IDbTransaction transaction)
             : base(connection, transaction)
         {
             _connection = connection;

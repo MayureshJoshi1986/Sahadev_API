@@ -70,9 +70,9 @@ namespace SahadevService.Dossier
         {
             try
             {
-                var lstTagID = uw.SahadevC3Repository.GetAllTagIDByTagGroupName(tagGroupName);
+                var lstTagID = uw.C3Repository.GetAllTagIDByTagGroupName(tagGroupName);
                 string strTagID = String.Join(",", lstTagID);
-                var data = uw.SahadevC1Repository.GetAllClientByTagID(strTagID);
+                var data = uw.C1Repository.GetAllClientByTagID(strTagID);
                 return data;
             }
             catch (Exception ex)
@@ -97,7 +97,7 @@ namespace SahadevService.Dossier
         {
             try
             {
-                var data = uw.SahadevC1Repository.GetAllClientByUserID(userID);
+                var data = uw.C1Repository.GetAllClientByUserID(userID);
                 return data;
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ namespace SahadevService.Dossier
         {
             try
             {
-                var data = uw.SahadevC1Repository.GetAllUser();
+                var data = uw.C1Repository.GetAllUser();
                 return data;
             }
             catch (Exception ex)
