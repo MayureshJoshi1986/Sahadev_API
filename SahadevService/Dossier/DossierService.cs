@@ -120,7 +120,7 @@ namespace SahadevService.Dossier
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<User> GetAllUser(int userID)
+        public List<User> GetAllUser()
         {
             try
             {

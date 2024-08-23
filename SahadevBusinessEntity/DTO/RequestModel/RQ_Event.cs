@@ -54,7 +54,7 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         /// <summary>
         /// RefArticleURL
         /// </summary>
-        [JsonPropertyName("URL")]
+        [JsonPropertyName("url")]
         public string RefArticleURL { get; set; }
 
         /// <summary>

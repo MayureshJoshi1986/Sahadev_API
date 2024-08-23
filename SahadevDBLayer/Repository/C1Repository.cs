@@ -109,7 +109,7 @@ namespace SahadevDBLayer.Repository
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@userID", userID);
-                var data = GetAllByProcedure<Client>(@"[dbo].[USP_UserClient_FetchByUserID]",dbparams, _transaction);
+                var data = GetAllByProcedure<Client>(@"[dbo].[USP_UserClient_Fetch]",dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
