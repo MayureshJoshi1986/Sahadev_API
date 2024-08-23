@@ -14,17 +14,11 @@
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
 using Dapper;
-using Microsoft.AspNetCore.Mvc;
 using SahadevBusinessEntity.DTO.Model;
-using SahadevBusinessEntity.DTO.ResultModel;
-using SahadevDBLayer.Repository;
+using SahadevBusinessEntity.DTO.RequestModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Transactions;
-using static Dapper.SqlMapper;
 
 namespace SahadevDBLayer.Repository
 {
@@ -37,7 +31,7 @@ namespace SahadevDBLayer.Repository
 
         int InsertEvent(Event objEvent);
 
-        bool InsertFeedback(Feedback objFeedback);
+        bool InsertFeedback(RQ_Feedback objRQ_Feedback);
 
         bool InsertBookMark(BookMark objBookMark);
 
@@ -87,7 +81,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to insert feedback detail in Feedback table
         /// </summary>
-        /// <param name="objFeedback">object containing feedback detail</param>
+        /// <param name="objRQ_Feedback">object containing feedback detail</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>17-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
@@ -97,19 +91,19 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon>19-Aug-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changed return type from int to bool & handled condition accordingly</modifiedreason>
-        public bool InsertFeedback(Feedback objFeedback)
+        public bool InsertFeedback(RQ_Feedback objRQ_Feedback)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@eventID", objFeedback.EventID);
-                dbparams.Add("@userID", objFeedback.UserID);
-                dbparams.Add("@platformID", objFeedback.PlatformID);
-                dbparams.Add("@ftID", objFeedback.FTID);
-                dbparams.Add("@recordID", objFeedback.RecordID);
-                dbparams.Add("@screenName", objFeedback.ScreenName);
-                dbparams.Add("@feedback", objFeedback.FeedbackDescription);
+                dbparams.Add("@eventID", objRQ_Feedback.event_id);
+                dbparams.Add("@userID", objRQ_Feedback.user_id);
+                dbparams.Add("@platformID", objRQ_Feedback.platform_id);
+                dbparams.Add("@ftID", objRQ_Feedback.type_id);
+                dbparams.Add("@recordID", objRQ_Feedback.record_id);
+                dbparams.Add("@screenName", objRQ_Feedback.screen_name);
+                dbparams.Add("@feedback", objRQ_Feedback.description);
                 int iResult = InsertByProcedure<int>(@"[dbo].[USP_Feedback_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;

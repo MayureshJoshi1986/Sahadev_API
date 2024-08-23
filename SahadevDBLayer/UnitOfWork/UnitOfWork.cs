@@ -1,6 +1,5 @@
 ﻿using System;
 using SahadevDBLayer.Repository;
-//using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -15,7 +14,6 @@ namespace SahadevDBLayer.UnitOfWork
         private IDbConnection _connection;
         private IDbTransaction _transaction;
         public static string Connectionstring = "DefaultConnection";
-        private IClientRepository _ClientRepository;
 
         /// <summary>
         /// Connection configuration for the Databases
@@ -110,10 +108,10 @@ namespace SahadevDBLayer.UnitOfWork
             get { return _SahadevC3Repository ?? (_SahadevC3Repository = new SahadevC3Repository(_SahadevC3Connection, _SahadevC3Transaction)); }
         }
 
-        public IClientRepository ClientRepository
-        {
-            get { return _ClientRepository ?? (_ClientRepository = new ClientRepository(_connection, _transaction)); }
-        }
+        //public IClientRepository ClientRepository
+        //{
+        //    get { return _ClientRepository ?? (_ClientRepository = new ClientRepository(_connection, _transaction)); }
+        //}
 
         ///USE FOLLOWING FOR ENTITY FRAMEWORK
         //private _GenericRepository<MemberMaster> _MemberMaster = null;

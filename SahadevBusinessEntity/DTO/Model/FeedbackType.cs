@@ -21,16 +21,5 @@ namespace SahadevBusinessEntity.DTO.Model
         /// FeedbackType
         /// </summary>
         public string FeedbackTypeName { get; set; }
-
-        /// <summary>
-        /// CreatedAt
-        /// </summary>
-        public DateTime? CreatedAt { get; set; }
-
-        /// <summary>
-        /// ModifiedAt
-        /// </summary>
-        public DateTime? ModifiedAt { get; set; }
-
     }
 }

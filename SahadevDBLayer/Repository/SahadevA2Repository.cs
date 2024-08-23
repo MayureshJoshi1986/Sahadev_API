@@ -18,9 +18,6 @@ using SahadevBusinessEntity.DTO.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing.Printing;
-using System.Text;
-using System.Transactions;
 
 namespace SahadevDBLayer.Repository
 {

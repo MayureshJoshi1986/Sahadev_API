@@ -1,175 +1,175 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>SampleMVCCoreProject</name>
+        <name>Sahadev</name>
     </assembly>
     <members>
-        <member name="T:SampleMVCCoreProject.API.PollController">
+        <member name="T:Sahadev.API.PollController">
             <summary>
             
             </summary>
         </member>
-        <member name="M:SampleMVCCoreProject.API.PollController.#ctor(SahadevService.IServiceSingleton,Microsoft.Extensions.Logging.ILogger{SampleMVCCoreProject.API.PollController})">
+        <member name="M:Sahadev.API.PollController.#ctor(SahadevService.IServiceSingleton,Microsoft.Extensions.Logging.ILogger{Sahadev.API.PollController})">
             <summary>
             Constructor of MemberController class
             </summary>
             <param name="SS">object of ServiceSingleton</param>
             <param name="logger">object of logger of serilog</param>
         </member>
-        <member name="M:SampleMVCCoreProject.API.PollController.GetAll">
+        <member name="M:Sahadev.API.PollController.GetAll">
             <summary>
             This API is used get all records of poll.
             </summary>
             <returns>Returns list of poll.</returns>
         </member>
-        <member name="M:SampleMVCCoreProject.API.PollController.Insert(SahadevBusinessEntity.DTO.Model.Poll)">
+        <member name="M:Sahadev.API.PollController.Insert(SahadevBusinessEntity.DTO.Model.Poll)">
             <summary>
             This api is used to insert poll details.
             </summary>
             <param name="objPoll">Object of poll detail.</param>
             <returns>Returns success if inserted successfully.</returns>
         </member>
-        <member name="T:SampleMVCCoreProject.API.UserController">
+        <member name="T:Sahadev.API.UserController">
             <summary>
             UserController
             </summary>
         </member>
-        <member name="M:SampleMVCCoreProject.API.UserController.#ctor(SahadevService.IServiceSingleton,Microsoft.Extensions.Logging.ILogger{SampleMVCCoreProject.API.UserController})">
+        <member name="M:Sahadev.API.UserController.#ctor(SahadevService.IServiceSingleton,Microsoft.Extensions.Logging.ILogger{Sahadev.API.UserController})">
             <summary>
             Constructor of MemberController class
             </summary>
             <param name="SS">object of ServiceSingleton</param>
             <param name="logger">object of logger of serilog</param>
         </member>
-        <member name="M:SampleMVCCoreProject.API.UserController.GetAll">
+        <member name="M:Sahadev.API.UserController.GetAll">
             <summary>
             This API is used get all records of User.
             </summary>
             <returns>Returns list of User.</returns>
         </member>
-        <member name="M:SampleMVCCoreProject.API.UserController.GetByID(System.Int32)">
+        <member name="M:Sahadev.API.UserController.GetByID(System.Int32)">
             <summary>
             This API is used get all records of User.
             </summary>
             <returns>Returns user details.</returns>
         </member>
-        <member name="M:SampleMVCCoreProject.API.UserController.GetPoll">
+        <member name="M:Sahadev.API.UserController.GetPoll">
             <summary>
             This API is used get all user poll detail.
             </summary>
             <returns>Returns list of user poll detail.</returns>
         </member>
-        <member name="M:SampleMVCCoreProject.API.UserController.GetPollCount">
+        <member name="M:Sahadev.API.UserController.GetPollCount">
             <summary>
             This API is used get user poll count.
             </summary>
             <returns>Returns list of User.</returns>
         </member>
-        <member name="M:SampleMVCCoreProject.API.UserController.Insert(SahadevBusinessEntity.DTO.Model.UserMaster)">
+        <member name="M:Sahadev.API.UserController.Insert(SahadevBusinessEntity.DTO.Model.UserMaster)">
             <summary>
             This api is used to insert user details.
             </summary>
             <param name="objUM">Object of User detail.</param>
             <returns>Returns success if inserted successfully.</returns>
         </member>
-        <member name="M:SampleMVCCoreProject.API.UserController.Update(SahadevBusinessEntity.DTO.Model.UserMaster)">
+        <member name="M:Sahadev.API.UserController.Update(SahadevBusinessEntity.DTO.Model.UserMaster)">
             <summary>
             This api is used to update user details.
             </summary>
             <param name="objUM">Object of User detail.</param>
             <returns>Returns success if updated successfully.</returns>
         </member>
-        <member name="M:SampleMVCCoreProject.API.UserController.Delete(System.Int32)">
+        <member name="M:Sahadev.API.UserController.Delete(System.Int32)">
             <summary>
             This API is used delete user detail
             </summary>
             <returns>Returns success if deleted successfully.</returns>
         </member>
-        <member name="T:SampleMVCCoreProject.Controllers.HomeController">
+        <member name="T:Sahadev.Controllers.HomeController">
             <summary>
             HomeController
             </summary>
         </member>
-        <member name="M:SampleMVCCoreProject.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{SampleMVCCoreProject.Controllers.HomeController})">
+        <member name="M:Sahadev.Controllers.HomeController.#ctor(Microsoft.Extensions.Logging.ILogger{Sahadev.Controllers.HomeController})">
             <summary>
             HomeController constructor
             </summary>
             <param name="logger"></param>
         </member>
-        <member name="M:SampleMVCCoreProject.Controllers.HomeController.Index">
+        <member name="M:Sahadev.Controllers.HomeController.Index">
             <summary>
             HomeController index page
             </summary>
             <returns></returns>
         </member>
-        <member name="M:SampleMVCCoreProject.Controllers.HomeController.Privacy">
+        <member name="M:Sahadev.Controllers.HomeController.Privacy">
             <summary>
             HomeController privacy method
             </summary>
             <returns></returns>
         </member>
-        <member name="M:SampleMVCCoreProject.Controllers.HomeController.Error">
+        <member name="M:Sahadev.Controllers.HomeController.Error">
             <summary>
             HomeController error method
             </summary>
             <returns></returns>
         </member>
-        <member name="T:SampleMVCCoreProject.Models.ErrorViewModel">
+        <member name="T:Sahadev.Models.ErrorViewModel">
             <summary>
             ErrorViewModel
             </summary>
         </member>
-        <member name="P:SampleMVCCoreProject.Models.ErrorViewModel.RequestId">
+        <member name="P:Sahadev.Models.ErrorViewModel.RequestId">
             <summary>
             RequestId
             </summary>
         </member>
-        <member name="P:SampleMVCCoreProject.Models.ErrorViewModel.ShowRequestId">
+        <member name="P:Sahadev.Models.ErrorViewModel.ShowRequestId">
             <summary>
             ShowRequestId
             </summary>
         </member>
-        <member name="T:SampleMVCCoreProject.Program">
+        <member name="T:Sahadev.Program">
             <summary>
             Program
             </summary>
         </member>
-        <member name="M:SampleMVCCoreProject.Program.Main(System.String[])">
+        <member name="M:Sahadev.Program.Main(System.String[])">
             <summary>
             Program class main method
             </summary>
             <param name="args">Arguments</param>
         </member>
-        <member name="M:SampleMVCCoreProject.Program.CreateHostBuilder(System.String[])">
+        <member name="M:Sahadev.Program.CreateHostBuilder(System.String[])">
             <summary>
             Program class CreateHostBuilder method
             </summary>
             <param name="args">Arguments</param>
             <returns></returns>
         </member>
-        <member name="T:SampleMVCCoreProject.Startup">
+        <member name="T:Sahadev.Startup">
             <summary>
             Startup
             </summary>
         </member>
-        <member name="M:SampleMVCCoreProject.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:Sahadev.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Startup class constructor
             </summary>
             <param name="configuration"></param>
         </member>
-        <member name="P:SampleMVCCoreProject.Startup.Configuration">
+        <member name="P:Sahadev.Startup.Configuration">
             <summary>
             Configuration
             </summary>
         </member>
-        <member name="M:SampleMVCCoreProject.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:Sahadev.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             This method gets called by the runtime. Use this method to add services to the container.
             </summary>
             <param name="services">Object of IServiceCollection</param>
         </member>
-        <member name="M:SampleMVCCoreProject.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+        <member name="M:Sahadev.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
             <summary>
             This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             </summary>

@@ -15,7 +15,6 @@
 *  ModifiedBy     :-                                                                          *
 *  ModifiedReason :-                                                                          *
 **********************************************************************************************/
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SahadevBusinessEntity.DTO.Model;
@@ -23,10 +22,10 @@ using SahadevBusinessEntity.DTO.ResultModel;
 using SahadevService;
 using System.Net;
 using System;
-using SahadevBusinessEntity.DTO.RequestModel;
 using System.Collections.Generic;
 using System.Linq;
 using SahadevBusinessEntity.Constant.Messages;
+using SahadevBusinessEntity.DTO.RequestModel;
 
 namespace Sahadev.API.Sentry
 {
@@ -96,7 +95,7 @@ namespace Sahadev.API.Sentry
         /// <summary>
         /// This API is used to insert Feedback detail in Feedback table
         /// </summary>
-        /// <param name="objFeedback">request object containing Feedback</param>
+        /// <param name="objRQ_Feedback">request object containing Feedback</param>
         /// <returns>success message if successfully inserted else error message</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -105,12 +104,12 @@ namespace Sahadev.API.Sentry
         /// <modifiedreason></modifiedreason>
         [HttpPost]
         [Route("ShareFeedback")]
-        public IActionResult ShareFeedback([FromBody] Feedback objFeedback)
+        public IActionResult ShareFeedback([FromBody] RQ_Feedback objRQ_Feedback)
         {
             try
             {
 
-                bool bReturn = SS.EventService.InsertFeedback(objFeedback);
+                bool bReturn = SS.EventService.InsertFeedback(objRQ_Feedback);
                 if (bReturn == true)
                 {
 
