@@ -28,6 +28,11 @@ namespace SahadevDBLayer.Repository
     {
         List<Client> Get();
         bool Insert(Client objClient);
+        List<Client> GetAllClientByUserID(int userID);
+
+        List<Client> GetAllClientByTagID(string lstTagID);
+
+        List<User> GetAllUser();
     }
 
     internal class SahadevC1Repository : RepositoryBase, ISahadevC1Repository
@@ -55,6 +60,84 @@ namespace SahadevDBLayer.Repository
             try
             {
                 var data = GetAllByProcedure<Client>(@"[dbo].[USP_ClientDetail_FetchAll]", null, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to fecth all User
+        /// </summary>
+        /// <returns>list of object containing User</returns>
+        /// <createdon>23-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<User> GetAllUser()
+        {
+            try
+            {
+                var data = GetAllByProcedure<User>(@"[dbo].[USP_User_Fetch]", null, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// This method is used to get all client by user id
+        /// </summary>
+        /// <returns>list of object containing client</returns>
+        /// <createdon>23-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<Client> GetAllClientByUserID(int userID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@userID", userID);
+                var data = GetAllByProcedure<Client>(@"[dbo].[USP_UserClient_FetchByUserID]",dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to get all client by TagID's
+        /// </summary>
+        /// <returns>list of object containing client</returns>
+        /// <createdon>23-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<Client> GetAllClientByTagID(string lstTagID)
+        {
+            try
+            {
+               
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagID", lstTagID);
+                var data = GetAllByProcedure<Client>(@"[dbo].[Usp_FetchClient]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
