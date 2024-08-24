@@ -13,14 +13,12 @@
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace SahadevBusinessEntity.DTO.RequestModel
 {
     /// <summary>
-    /// RQ_Event
+    /// Request model for Event
     /// </summary>
     public class RQ_Event
     {
@@ -56,7 +54,7 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         /// <summary>
         /// RefArticleURL
         /// </summary>
-        [JsonPropertyName("URL")]
+        [JsonPropertyName("url")]
         public string RefArticleURL { get; set; }
 
         /// <summary>
@@ -115,5 +113,9 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("status_id")]
         public int StatusID { get; set; }
 
+        /// <summary>
+        /// TagID
+        /// </summary>
+        public int TagID { get; set; }
     }
 }

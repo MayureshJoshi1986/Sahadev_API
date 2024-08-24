@@ -1,15 +1,15 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :- SahadevA2Repository                                                      *
+ *  Class Name      :- A2Repository                                                             *
  *  --------------------------------------------------------------------------------------------*
- *  Description     :- This is SahadevA2Repository class which contains all functions &         *
+ *  Description     :- This is A2Repository class which contains all functions &                *
  *                     SP related to SahadevA2 repository                                       *
  *  --------------------------------------------------------------------------------------------*
  *  Created By      :- PJ                                                                       *
  *  --------------------------------------------------------------------------------------------*
  *  Created Date    :- 17-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  revised By      :-  PJ                                                                      *
+ *  revised Details :-  Changed class name from SahadevA2Repository to A2Repository             *                                                         *
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
@@ -22,9 +22,9 @@ using System.Data;
 namespace SahadevDBLayer.Repository
 {
     /// <summary>
-    /// Interface of SahadevA2Repository class
+    /// Interface of A2Repository class
     /// </summary>
-    public interface ISahadevA2Repository
+    public interface IA2Repository
     {
         List<Client> Get();
         bool InsertClient(Client objClient);
@@ -38,12 +38,12 @@ namespace SahadevDBLayer.Repository
         bool InsertTagQuery(TagQuery objTagQuery);
     }
 
-    internal class SahadevA2Repository : RepositoryBase, ISahadevA2Repository
+    internal class A2Repository : RepositoryBase, IA2Repository
     {
         private readonly IDbConnection _connection;
         private readonly IDbTransaction _transaction;
 
-        public SahadevA2Repository(IDbConnection connection, IDbTransaction transaction)
+        public A2Repository(IDbConnection connection, IDbTransaction transaction)
             : base(connection, transaction)
         {
             _connection = connection;

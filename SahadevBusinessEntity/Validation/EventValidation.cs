@@ -1,14 +1,11 @@
 ﻿using FluentValidation;
-using SahadevBusinessEntity.DTO.Model;
+using SahadevBusinessEntity.DTO.RequestModel;
 using System;
 
 namespace SahadevBusinessEntity.Validation
 {
-    //internal class EventValidation
-    //{
-    //}
 
-    public class EventValidation : AbstractValidator<Event>
+    public class EventValidation : AbstractValidator<RQ_Event>
     {
         public EventValidation()
         {

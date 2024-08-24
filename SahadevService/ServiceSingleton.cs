@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SahadevDBLayer.UnitOfWork;
 using SahadevService.Common;
+using SahadevService.Dossier;
 using SahadevService.Sentry;
 
 namespace SahadevService
@@ -22,7 +23,7 @@ namespace SahadevService
         }
         private EventService _EventService;
         private TagService _TagService;
-
+        private DossierService _DossierService;
 
         public EventService EventService
         {
@@ -45,6 +46,21 @@ namespace SahadevService
                     _TagService = new TagService(uow, _logger);
                 }
                 return _TagService;
+            }
+        }
+
+        /// <summary>
+        /// DossierService
+        /// </summary>
+        public DossierService DossierService
+        {
+            get
+            {
+                if (_DossierService == null)
+                {
+                    _DossierService = new DossierService(uow, _logger);
+                }
+                return _DossierService;
             }
         }
     }

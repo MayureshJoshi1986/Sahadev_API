@@ -12,9 +12,6 @@
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace SahadevBusinessEntity.DTO.RequestModel
@@ -25,39 +22,46 @@ namespace SahadevBusinessEntity.DTO.RequestModel
     public class RQ_Feedback
     {
         /// <summary>
-        /// event_id
+        /// EventID
         /// </summary>
-        public int event_id { get; set; }
+        [JsonPropertyName("event_id")]
+        public int EventID { get; set; }
 
         /// <summary>
-        /// user_id
+        /// UserID
         /// </summary>
-        public int user_id { get; set; }
+        [JsonPropertyName("user_id")]
+        public int UserID { get; set; }
 
         /// <summary>
-        /// platform_id
+        /// PlatformID
         /// </summary>
-        public int platform_id { get; set; }
+        [JsonPropertyName("platform_id")]
+        public int PlatformID { get; set; }
 
         /// <summary>
-        /// type_id
+        /// FTID
         /// </summary>
-        public int type_id { get; set; }
+        [JsonPropertyName("type_id")]
+        public int FTID { get; set; }
 
         /// <summary>
-        /// record_id
+        /// RecordID
         /// </summary>
-        public int record_id { get; set; }
+        [JsonPropertyName("record_id")]
+        public int RecordID { get; set; }
 
         /// <summary>
-        /// screen_name 
+        /// ScreenName 
         /// </summary>
-        public string screen_name { get; set; }
+        [JsonPropertyName("screen_name")]
+        public string ScreenName { get; set; }
 
         /// <summary>
-        /// description
+        /// FeedbackDescription
         /// </summary>
-        public string description { get; set; }
+        [JsonPropertyName("description")]
+        public string FeedbackDescription { get; set; }
 
     }
 }

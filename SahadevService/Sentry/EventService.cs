@@ -22,7 +22,7 @@ using System.Collections.Generic;
 namespace SahadevService.Sentry
 {
     /// <summary>
-    /// Interface ClientService class  
+    /// Interface EventService class  
     /// </summary>
     interface IEventService
     {
@@ -51,14 +51,17 @@ namespace SahadevService.Sentry
         /// <summary>
         /// This method is used to insert event detail in Event table
         /// </summary>
-        /// <param name="objEvent">object containing Event detail</param>
+        /// <param name="objRQ_Event">request object containing Event detail</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>17-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
         /// <modifiedon>17-Aug-2024</modifiedon>
         /// <modifiedby>Saroj Laddha</modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool Add(Event objEvent)
+        /// <modifiedon>23-Aug-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changed request model from Event to RQ_Event</modifiedreason>
+        public bool Add(RQ_Event objRQ_Event)
         {
             bool bReturn = false;
             try
@@ -68,36 +71,36 @@ namespace SahadevService.Sentry
                 //New Event as a Tag Mapping
                 Tag objTag = new Tag();
                 objTag.IGTagID = null;// what to map with ???  B Databas Tab
-                objTag.TagName = objEvent.EventName;
-                objTag.TagDescription = objEvent.Description;
+                objTag.TagName = objRQ_Event.EventName;
+                objTag.TagDescription = objRQ_Event.Description;
                 objTag.IsActive = true;
 
 
-                int TagID = uw.SahadevA2Repository.InsertTag(objTag);
+                int TagID = uw.A2Repository.InsertTag(objTag);
 
                 objTag.TagID = TagID;
 
                 //Assign TagId to the Event
-                objEvent.TagID = TagID;
+                objRQ_Event.TagID = TagID;
 
                 //Insert Event anf get event Id
 
-                int EventID = uw.SahadevC2Repository.InsertEvent(objEvent);
-                objEvent.EventID = EventID;
+                int EventID = uw.C2Repository.InsertEvent(objRQ_Event);
+                objRQ_Event.EventID = EventID;
 
                 //DO entry in Client Topic
 
                 ClientTopic objClientTopic = new ClientTopic();
                 objClientTopic.RefTopicID = EventID;
-                objClientTopic.TopicName = objEvent.EventName;
-                objClientTopic.TopicDescription = objEvent.Description;
-                objClientTopic.ClientID = objEvent.ClientID;
-                objClientTopic.Status = objEvent.StatusID;
-                objClientTopic.StartDate = objEvent.StartDate;
-                objClientTopic.EndDate = objEvent.EndDate;
-                objClientTopic.TopicTypeID = objEvent.EventTypeID;
+                objClientTopic.TopicName = objRQ_Event.EventName;
+                objClientTopic.TopicDescription = objRQ_Event.Description;
+                objClientTopic.ClientID = objRQ_Event.ClientID;
+                objClientTopic.Status = objRQ_Event.StatusID;
+                objClientTopic.StartDate = objRQ_Event.StartDate;
+                objClientTopic.EndDate = objRQ_Event.EndDate;
+                objClientTopic.TopicTypeID = objRQ_Event.EventTypeID;
 
-                int ClientTopicId = uw.SahadevA2Repository.InsertClientTopic(objClientTopic);
+                int ClientTopicId = uw.A2Repository.InsertClientTopic(objClientTopic);
 
 
                 //do the enrty in Tag Map
@@ -105,53 +108,53 @@ namespace SahadevService.Sentry
                 objTagMap.TagID = TagID;
                 objTagMap.ClientTopicID = ClientTopicId;
                 objTagMap.IsActive = objTag.IsActive;
-                bool result = uw.SahadevA2Repository.InsertTagMap(objTagMap);
+                bool result = uw.A2Repository.InsertTagMap(objTagMap);
 
                 //throw new TransactionAbortedException(); // Just to test the Transaction Rollback
 
                 //do the entry in Tag query for all the selected plateform
                 TagQuery objTagQuery = new TagQuery();
 
-                if (objEvent.Platform1 != 0)
+                if (objRQ_Event.Platform1 != 0)
                 {
                     objTagQuery.TagID = TagID;
-                    objTagQuery.Query = objEvent.Query;
+                    objTagQuery.Query = objRQ_Event.Query;
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
-                    objTagQuery.PlatformID = objEvent.Platform1;
+                    objTagQuery.PlatformID = objRQ_Event.Platform1;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery);
+                    uw.A2Repository.InsertTagQuery(objTagQuery);
                 }
-                if (objEvent.Platform2 != 0)
+                if (objRQ_Event.Platform2 != 0)
                 {
                     objTagQuery = new TagQuery();
                     objTagQuery.TagID = TagID;
-                    objTagQuery.Query = objEvent.Query;
+                    objTagQuery.Query = objRQ_Event.Query;
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
-                    objTagQuery.PlatformID = objEvent.Platform2;
+                    objTagQuery.PlatformID = objRQ_Event.Platform2;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery);
-                }
-
-                if (objEvent.Platform3 != 0)
-                {
-                    objTagQuery = new TagQuery();
-                    objTagQuery.TagID = TagID;
-                    objTagQuery.Query = objEvent.Query;
-                    objTagQuery.TypeOfQuery = string.Empty; // what to map with??
-                    objTagQuery.PlatformID = objEvent.Platform3;
-                    objTagQuery.IsActive = objTag.IsActive;
-                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery);
+                    uw.A2Repository.InsertTagQuery(objTagQuery);
                 }
 
-                if (objEvent.Platform4 != 0)
+                if (objRQ_Event.Platform3 != 0)
                 {
                     objTagQuery = new TagQuery();
                     objTagQuery.TagID = TagID;
-                    objTagQuery.Query = objEvent.Query;
+                    objTagQuery.Query = objRQ_Event.Query;
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
-                    objTagQuery.PlatformID = objEvent.Platform4;
+                    objTagQuery.PlatformID = objRQ_Event.Platform3;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.SahadevA2Repository.InsertTagQuery(objTagQuery);
+                    uw.A2Repository.InsertTagQuery(objTagQuery);
+                }
+
+                if (objRQ_Event.Platform4 != 0)
+                {
+                    objTagQuery = new TagQuery();
+                    objTagQuery.TagID = TagID;
+                    objTagQuery.Query = objRQ_Event.Query;
+                    objTagQuery.TypeOfQuery = string.Empty; // what to map with??
+                    objTagQuery.PlatformID = objRQ_Event.Platform4;
+                    objTagQuery.IsActive = objTag.IsActive;
+                    uw.A2Repository.InsertTagQuery(objTagQuery);
                 }
 
                 uw.Commit();
@@ -165,7 +168,6 @@ namespace SahadevService.Sentry
             return bReturn;
         }
 
-
         /// <summary>
         /// This method is used to insert feedback in feeback table
         /// </summary>
@@ -173,15 +175,15 @@ namespace SahadevService.Sentry
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>23-Aug-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changed request model from Feedback to RQ_Feedback</modifiedreason>
         public bool InsertFeedback(RQ_Feedback objRQ_Feedback)
         {
             bool bReturn = false;
             try
             {
-                bReturn = uw.SahadevC2Repository.InsertFeedback(objRQ_Feedback);
+                bReturn = uw.C2Repository.InsertFeedback(objRQ_Feedback);
                 uw.Commit();
             }
             catch (Exception ex)
@@ -195,28 +197,28 @@ namespace SahadevService.Sentry
         /// <summary>
         /// This method is used to insert or update BookMark Table based on the action parameter
         /// </summary>
-        /// <param name="objFeedback">object containing feeback detail</param>
+        /// <param name="objRQ_BookMark">object containing feeback detail</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public bool InsertUpdateBookMark(BookMark objBookMark)
+        /// <modifiedon>23-Aug-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changed request model from BookMark to RQ_BookMark</modifiedreason>
+        public bool InsertUpdateBookMark(RQ_BookMark objRQ_BookMark)
         {
             bool bReturn = false;
             try
             {
-                switch (objBookMark.Action)
+                switch (objRQ_BookMark.Action)
                 {
                     case "Insert":
-                        bReturn = uw.SahadevC2Repository.InsertBookMark(objBookMark);
+                        bReturn = uw.C2Repository.InsertBookMark(objRQ_BookMark);
                         break;
                     case "Update":
-                        bReturn = uw.SahadevC2Repository.UpdateBookMark(objBookMark);
+                        bReturn = uw.C2Repository.UpdateBookMark(objRQ_BookMark);
                         break;
                     case "Delete":
-                        bReturn = uw.SahadevC2Repository.DeleteBookMark(objBookMark);
+                        bReturn = uw.C2Repository.DeleteBookMark(objRQ_BookMark);
                         break;
 
                 }
@@ -246,7 +248,7 @@ namespace SahadevService.Sentry
         {
             try
             {
-                var data = uw.SahadevC2Repository.GetFeedbackType();
+                var data = uw.C2Repository.GetFeedbackType();
                 return data;
             }
             catch (Exception ex)
@@ -260,19 +262,19 @@ namespace SahadevService.Sentry
         /// <summary>
         /// This method is used to insert Data for Download in DataRequestTable
         /// </summary>
-        /// <param name="objDataRequest">object containing DataRequest detaill</param>
+        /// <param name="objRQ_DataRequest">object containing DataRequest detaill</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public bool InsertDataRequest(DataRequest objDataRequest)
+        /// <modifiedon>23-Aug-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changed request model from DataRequest to RQ_DataRequest</modifiedreason>
+        public bool InsertDataRequest(RQ_DataRequest objRQ_DataRequest)
         {
             bool bReturn = false;
             try
             {
-                bReturn = uw.SahadevC2Repository.InsertDataRequest(objDataRequest);
+                bReturn = uw.C2Repository.InsertDataRequest(objRQ_DataRequest);
                 uw.Commit();
 
             }
@@ -284,5 +286,6 @@ namespace SahadevService.Sentry
 
             return bReturn;
         }
+
     }
 }

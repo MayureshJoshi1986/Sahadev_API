@@ -1,15 +1,15 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :- SahadevC2Repository                                                      *
+ *  Class Name      :- C2Repository                                                      *
  *  --------------------------------------------------------------------------------------------*
- *  Description     :- This is SahadevC2Repository class which contains all functions &         *
+ *  Description     :- This is C2Repository class which contains all functions &         *
  *                     SP related to SahadevC2 repository                                       *
  *  --------------------------------------------------------------------------------------------*
  *  Created By      :- SL                                                                       *
  *  --------------------------------------------------------------------------------------------*
  *  Created Date    :- 16-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  revised By      :-  PJ                                                                      *
+ *  revised Details :-  Changed class name from SahadevC2Repository to C2Repository             *  
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
@@ -23,32 +23,32 @@ using System.Data;
 namespace SahadevDBLayer.Repository
 {
     /// <summary>
-    /// Interface of SahadevC2Repository class
+    /// Interface of C2Repository class
     /// </summary>
-    public interface ISahadevC2Repository
+    public interface IC2Repository
     {
         List<FeedbackType> GetFeedbackType();
 
-        int InsertEvent(Event objEvent);
+        int InsertEvent(RQ_Event objRQ_Event);
 
         bool InsertFeedback(RQ_Feedback objRQ_Feedback);
 
-        bool InsertBookMark(BookMark objBookMark);
+        bool InsertBookMark(RQ_BookMark objRQ_BookMark);
 
-        bool UpdateBookMark(BookMark objBookMark);
+        bool UpdateBookMark(RQ_BookMark objRQ_BookMark);
 
-        bool DeleteBookMark(BookMark objBookMark);
+        bool DeleteBookMark(RQ_BookMark objRQ_BookMark);
 
-        bool InsertDataRequest(DataRequest objDataRequest);
+        bool InsertDataRequest(RQ_DataRequest objRQ_DataRequest);
     }
 
-    internal class SahadevC2Repository : RepositoryBase, ISahadevC2Repository
+    internal class C2Repository : RepositoryBase, IC2Repository
     {
 
         private readonly IDbConnection _connection;
         private readonly IDbTransaction _transaction;
 
-        public SahadevC2Repository(IDbConnection connection, IDbTransaction transaction)
+        public C2Repository(IDbConnection connection, IDbTransaction transaction)
             : base(connection, transaction)
         {
             _connection = connection;
@@ -97,13 +97,13 @@ namespace SahadevDBLayer.Repository
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@eventID", objRQ_Feedback.event_id);
-                dbparams.Add("@userID", objRQ_Feedback.user_id);
-                dbparams.Add("@platformID", objRQ_Feedback.platform_id);
-                dbparams.Add("@ftID", objRQ_Feedback.type_id);
-                dbparams.Add("@recordID", objRQ_Feedback.record_id);
-                dbparams.Add("@screenName", objRQ_Feedback.screen_name);
-                dbparams.Add("@feedback", objRQ_Feedback.description);
+                dbparams.Add("@eventID", objRQ_Feedback.EventID);
+                dbparams.Add("@userID", objRQ_Feedback.UserID);
+                dbparams.Add("@platformID", objRQ_Feedback.PlatformID);
+                dbparams.Add("@ftID", objRQ_Feedback.FTID);
+                dbparams.Add("@recordID", objRQ_Feedback.RecordID);
+                dbparams.Add("@screenName", objRQ_Feedback.ScreenName);
+                dbparams.Add("@feedback", objRQ_Feedback.FeedbackDescription);
                 int iResult = InsertByProcedure<int>(@"[dbo].[USP_Feedback_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -118,26 +118,26 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to insert dataRequest in DataRequest
         /// </summary>
-        /// <param name="objDataReques">object containing data reques</param>
+        /// <param name="objRQ_DataRequest">object containing data reques</param>
         /// <returns>PK of Feedback if successfully inserted else 0</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>20-Aug-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changed return type from int to bool & handled condition accordingly</modifiedreason>
-        public bool InsertDataRequest(DataRequest objDataRequest)
+        public bool InsertDataRequest(RQ_DataRequest objRQ_DataRequest)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@eventID", objDataRequest.EventID);
-                dbparams.Add("@userID", objDataRequest.UserID);
-                dbparams.Add("@platformID", objDataRequest.PlatformID);
-                dbparams.Add("@startDate", objDataRequest.StartDate);
-                dbparams.Add("@endDate", objDataRequest.EndDate);
-                dbparams.Add("@filtersJson ", objDataRequest.FilterJson);
-                dbparams.Add("@statusID", objDataRequest.StatusID);
+                dbparams.Add("@eventID", objRQ_DataRequest.EventID);
+                dbparams.Add("@userID", objRQ_DataRequest.UserID);
+                dbparams.Add("@platformID", objRQ_DataRequest.PlatformID);
+                dbparams.Add("@startDate", objRQ_DataRequest.StartDate);
+                dbparams.Add("@endDate", objRQ_DataRequest.EndDate);
+                dbparams.Add("@filtersJson ", objRQ_DataRequest.FilterJson);
+                dbparams.Add("@statusID", objRQ_DataRequest.StatusID);
                 int iResult = InsertByProcedure<int>(@"[dbo].[USP_DataRequest_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -151,27 +151,26 @@ namespace SahadevDBLayer.Repository
 
         }
 
-
         /// <summary>
         /// This method is used to insert BookMark in BookMark Table
         /// </summary>
-        /// <param name="objBookMark">object containing BookMark detail</param>
+        /// <param name="objRQ_BookMark">object containing BookMark detail</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>19-Aug-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changed return type from int to bool & handled condition accordingly</modifiedreason>
-        public bool InsertBookMark(BookMark objBookMark)
+        public bool InsertBookMark(RQ_BookMark objRQ_BookMark)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@userID", objBookMark.UserID);
-                dbparams.Add("@platformID", objBookMark.PlateformID);
-                dbparams.Add("@eventID", objBookMark.EventID);
-                dbparams.Add("@recordID", objBookMark.RecordID);
+                dbparams.Add("@userID", objRQ_BookMark.UserID);
+                dbparams.Add("@platformID", objRQ_BookMark.PlateformID);
+                dbparams.Add("@eventID", objRQ_BookMark.EventID);
+                dbparams.Add("@recordID", objRQ_BookMark.RecordID);
                 int iResult = InsertByProcedure<int>(@"[dbo].[USP_Bookmark_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -183,28 +182,27 @@ namespace SahadevDBLayer.Repository
             return bReturn;
         }
 
-
         /// <summary>
         /// This method is used to Update BookMark in BookMark Table
         /// </summary>
-        /// <param name="objBookMark">object containing BookMark detail</param>
+        /// <param name="objRQ_BookMark">object containing BookMark detail</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>PJ</modifiedon>
         /// <modifiedby>19-Aug-2024</modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool UpdateBookMark(BookMark objBookMark)
+        public bool UpdateBookMark(RQ_BookMark objRQ_BookMark)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@bookMarkID", objBookMark.BookMarkID);
-                dbparams.Add("@userID", objBookMark.UserID);
-                dbparams.Add("@platformID", objBookMark.PlateformID);
-                dbparams.Add("@eventID", objBookMark.EventID);
-                dbparams.Add("@recordID", objBookMark.RecordID);
+                dbparams.Add("@bookMarkID", objRQ_BookMark.BookMarkID);
+                dbparams.Add("@userID", objRQ_BookMark.UserID);
+                dbparams.Add("@platformID", objRQ_BookMark.PlateformID);
+                dbparams.Add("@eventID", objRQ_BookMark.EventID);
+                dbparams.Add("@recordID", objRQ_BookMark.RecordID);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_Bookmark_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -216,24 +214,23 @@ namespace SahadevDBLayer.Repository
             return bReturn;
         }
 
-
         /// <summary>
-        /// This method is used to Delete BookMark from BookMark Table
+        /// This method is used to delete BookMark from BookMark Table
         /// </summary>
-        /// <param name="objBookMark">object containing BookMark detail</param>
+        /// <param name="bookMarkID">bookMarkID to be deleted</param>
         /// <returns>true if successfully deleted else false</returns>
         /// <createdon>18-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool DeleteBookMark(BookMark objBookMark)
+        public bool DeleteBookMark(RQ_BookMark objRQ_BookMark)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@bookMarkID", objBookMark.BookMarkID);
+                dbparams.Add("@bookMarkID", objRQ_BookMark.BookMarkID);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_Bookmark_Delete]", dbparams, _transaction);
                 if (iResult !=0)
                     bReturn = true;
@@ -246,7 +243,6 @@ namespace SahadevDBLayer.Repository
 
         }
 
-
         /// <summary>
         /// This method is used to insert event detail in event table
         /// </summary>
@@ -257,27 +253,27 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public int InsertEvent(Event objEvent)
+        public int InsertEvent(RQ_Event objRQ_Event)
         {
             int iResult = 0;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@clientID", objEvent.ClientID);
-                dbparams.Add("@eventTypeID", objEvent.EventTypeID);
-                dbparams.Add("@eventName", objEvent.EventName);
-                dbparams.Add("@description", objEvent.Description);
-                dbparams.Add("@refArticleURL", objEvent.RefArticleURL);
-                dbparams.Add("@keywords", objEvent.Keywords);
-                dbparams.Add("@query", objEvent.Query);
-                dbparams.Add("@platform1", objEvent.Platform1);
-                dbparams.Add("@platform2", objEvent.Platform2);
-                dbparams.Add("@platform3", objEvent.Platform3);
-                dbparams.Add("@platform4", objEvent.Platform4);
-                dbparams.Add("@startDate", objEvent.StartDate);
-                dbparams.Add("@endDate", objEvent.EndDate);
-                dbparams.Add("@statusID", objEvent.StatusID);
-                dbparams.Add("@tagID", objEvent.TagID);
+                dbparams.Add("@clientID", objRQ_Event.ClientID);
+                dbparams.Add("@eventTypeID", objRQ_Event.EventTypeID);
+                dbparams.Add("@eventName", objRQ_Event.EventName);
+                dbparams.Add("@description", objRQ_Event.Description);
+                dbparams.Add("@refArticleURL", objRQ_Event.RefArticleURL);
+                dbparams.Add("@keywords", objRQ_Event.Keywords);
+                dbparams.Add("@query", objRQ_Event.Query);
+                dbparams.Add("@platform1", objRQ_Event.Platform1);
+                dbparams.Add("@platform2", objRQ_Event.Platform2);
+                dbparams.Add("@platform3", objRQ_Event.Platform3);
+                dbparams.Add("@platform4", objRQ_Event.Platform4);
+                dbparams.Add("@startDate", objRQ_Event.StartDate);
+                dbparams.Add("@endDate", objRQ_Event.EndDate);
+                dbparams.Add("@statusID", objRQ_Event.StatusID);
+                dbparams.Add("@tagID", objRQ_Event.TagID);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_Event_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)

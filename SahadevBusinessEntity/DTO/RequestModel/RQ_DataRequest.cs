@@ -1,5 +1,5 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :- BookMark                                                                 *
+ *  Class Name      :- RQ_DataRequest                                                           *
  *  --------------------------------------------------------------------------------------------*
  *  Description     :- BookMark request model                                                   *
  *  --------------------------------------------------------------------------------------------*
@@ -14,55 +14,36 @@
  //**********************************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace SahadevBusinessEntity.DTO.Model
+namespace SahadevBusinessEntity.DTO.RequestModel
 {
     /// <summary>
-    /// BookMark class
+    /// Request model for DataRequest
     /// </summary>
-    public class BookMark
+    public class RQ_DataRequest
     {
-        /// <summary>
-        /// Action
-        /// </summary>
-        [JsonPropertyName("action")]
-        public string Action { get; set; }
-
-        /// <summary>
-        /// BookMarkID
-        /// </summary>
-        [JsonPropertyName("bookmark_id")]
-        public int BookMarkID{ get; set; }
-
-        /// <summary>
-        /// EventID
-        /// </summary
-        [JsonPropertyName("event_id")]
-        public int EventID { get; set; }
-
-
-        /// <summary>
-        /// UserID
-        /// </summary
+        //public int DataRequestID {  get; set; }
         [JsonPropertyName("user_id")]
         public int UserID { get; set; }
 
+        [JsonPropertyName("event_id")]
+        public int EventID { get; set; }
 
-        /// <summary>
-        /// PlateformID
-        /// </summary
         [JsonPropertyName("platform_id")]
-        public int PlateformID { get; set; }
+        public int PlatformID { get; set; }
 
+        [JsonPropertyName("status_id")]
+        public int StatusID { get; set; }
 
-        /// <summary>
-        /// RecordID
-        /// </summary
-        [JsonPropertyName("record_id")]
-        public int RecordID { get; set; }
+        [JsonPropertyName("filter_json")]
+        public string FilterJson { get; set; }
 
+        [JsonPropertyName("start_date")]
+        public DateTime? StartDate { get; set; }
+
+        [JsonPropertyName("end_date")]
+        public DateTime? EndDate { get; set; }
     }
 }
