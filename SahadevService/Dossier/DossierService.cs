@@ -152,7 +152,7 @@ namespace SahadevService.Dossier
             try
             {
                 //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
-                int dossierDefID = uw.SahadevC3Repository.InsertDossierDef(objDossierDef);
+                int dossierDefID = uw.C3Repository.InsertDossierDef(objDossierDef);
 
 
                 //Assign DossierDefID to the DossierRecep and Insert Data
@@ -160,7 +160,7 @@ namespace SahadevService.Dossier
                 {
                     DossierRecep objDossierRecep = objDossierDef.DossierRecep;
                     objDossierRecep.DossierDefID = dossierDefID;
-                    uw.SahadevC3Repository.InsertDossierRecep(objDossierRecep);
+                    uw.C3Repository.InsertDossierRecep(objDossierRecep);
                 }
 
                 //Assign DossierDefID to the DossierSch and Insert Data
@@ -168,7 +168,7 @@ namespace SahadevService.Dossier
                 {
                     DossierSch objDossierSch = objDossierDef.DossierSch;
                     objDossierSch.DossierDefID = dossierDefID;
-                    uw.SahadevC3Repository.InsertDossierSch(objDossierSch);
+                    uw.C3Repository.InsertDossierSch(objDossierSch);
                 }
 
                 //Assign DossierDefID to the DossierConf and Insert Data
@@ -176,7 +176,7 @@ namespace SahadevService.Dossier
                 {
                     DossierConf objDossierConf = objDossierDef.DossierConf;
                     objDossierConf.DossierDefID = dossierDefID;
-                    uw.SahadevC3Repository.InsertDossierConf(objDossierConf);
+                    uw.C3Repository.InsertDossierConf(objDossierConf);
 
                 }
 
@@ -185,7 +185,7 @@ namespace SahadevService.Dossier
                 {
                     DossierTagGroup objDossierTagGroup = objDossierDef.DossierTagGroup;
                     objDossierTagGroup.DossierDefID = dossierDefID;
-                    uw.SahadevC3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                    uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
                 }
 
                 //Commit the change 
