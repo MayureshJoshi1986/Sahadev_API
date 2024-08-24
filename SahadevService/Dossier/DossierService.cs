@@ -135,5 +135,70 @@ namespace SahadevService.Dossier
 
         }
 
+
+        /// <summary>
+        /// This method is used to insert DossierDef and DossierConf, DossierRecep, DossierSch, DossierTagGroup
+        /// </summary>
+        /// <param name="objDossierDef">request object DossierDef</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>23-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool InsertDossierDef(DossierDef objDossierDef)
+        {
+            bool bReturn = false;
+            try
+            {
+                //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
+                int dossierDefID = uw.SahadevC3Repository.InsertDossierDef(objDossierDef);
+
+
+                //Assign DossierDefID to the DossierRecep and Insert Data
+                if (objDossierDef.DossierRecep != null)
+                {
+                    DossierRecep objDossierRecep = objDossierDef.DossierRecep;
+                    objDossierRecep.DossierDefID = dossierDefID;
+                    uw.SahadevC3Repository.InsertDossierRecep(objDossierRecep);
+                }
+
+                //Assign DossierDefID to the DossierSch and Insert Data
+                if (objDossierDef.DossierSch != null)
+                {
+                    DossierSch objDossierSch = objDossierDef.DossierSch;
+                    objDossierSch.DossierDefID = dossierDefID;
+                    uw.SahadevC3Repository.InsertDossierSch(objDossierSch);
+                }
+
+                //Assign DossierDefID to the DossierConf and Insert Data
+                if (objDossierDef.DossierConf != null)
+                {
+                    DossierConf objDossierConf = objDossierDef.DossierConf;
+                    objDossierConf.DossierDefID = dossierDefID;
+                    uw.SahadevC3Repository.InsertDossierConf(objDossierConf);
+
+                }
+
+                //Assign DossierDefID to the DossierTagGroup and Insert Data
+                if (objDossierDef.DossierTagGroup != null)
+                {
+                    DossierTagGroup objDossierTagGroup = objDossierDef.DossierTagGroup;
+                    objDossierTagGroup.DossierDefID = dossierDefID;
+                    uw.SahadevC3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                }
+
+                //Commit the change 
+                uw.Commit();
+                bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "InsertDossierDef");
+            }
+            return bReturn;
+        }
+
     }
 }
