@@ -200,5 +200,39 @@ namespace SahadevService.Dossier
             return bReturn;
         }
 
+
+        /// <summary>
+        /// This method is used to Update DossierDef and DossierConf, DossierRecep, DossierSch, DossierTagGroup
+        /// </summary>
+        /// <param name="objDossierDef">request object DossierDef</param>
+        /// <returns>true if successfully Update else false</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDossierDef(DossierDef objDossierDef)
+        {
+            bool bReturn = false;
+            try
+            {
+                uw.C3Repository.UpdateDossierDef(objDossierDef);
+                uw.C3Repository.UpdateDossierRecep(objDossierDef.DossierRecep);
+                uw.C3Repository.UpdateDossierSch(objDossierDef.DossierSch);
+                uw.C3Repository.UpdateDossierConf(objDossierDef.DossierConf);
+                uw.C3Repository.UpdateDossierTagGroup(objDossierDef.DossierTagGroup);
+
+                //Commit the change 
+                uw.Commit();
+                bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "UpdateDossierDef");
+            }
+            return bReturn;
+        }
+
     }
 }

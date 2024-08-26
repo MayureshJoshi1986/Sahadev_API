@@ -36,6 +36,15 @@ namespace SahadevDBLayer.Repository
         int InsertDossierTagGroup(DossierTagGroup objDossierTagGroup);
 
 
+        bool UpdateDossierDef(DossierDef objDossier);
+        bool UpdateDossierRecep(DossierRecep objDossierRecep);
+        bool UpdateDossierSch(DossierSch objDossierSch);
+        bool UpdateDossierConf(DossierConf objDossierConf);
+        bool UpdateDossierTagGroup(DossierTagGroup objDossierTagGroup);
+
+
+
+
     }
 
     internal class C3Repository:RepositoryBase, IC3Repository
@@ -75,6 +84,10 @@ namespace SahadevDBLayer.Repository
             }
 
         }
+
+
+
+        #region Insert
 
 
         /// <summary>
@@ -244,8 +257,198 @@ namespace SahadevDBLayer.Repository
         }
 
 
+        #endregion 
 
 
+
+        #region Update
+
+        /// <summary>
+        /// This method is used to Update DossierDef detail in DossierDef Table
+        /// </summary>
+        /// <param name="objDossierDef">object containing DossierDef</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDossierDef(DossierDef objDossier)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+
+                dbparams.Add("@dossierDefID", objDossier.DossierDefID);
+                dbparams.Add("@clientID", objDossier.ClientID);
+                dbparams.Add("@dossierTypeID", objDossier.DossierTypeID);
+                dbparams.Add("@startDate", objDossier.StartDate);
+                dbparams.Add("@endDate", objDossier.EndDate);
+                dbparams.Add("@scheduleTypeID", objDossier.ScheduleTypeID);
+                dbparams.Add("@title", objDossier.Title);
+                dbparams.Add("@eventTypeID", objDossier.EventTypeID);
+                dbparams.Add("@eventContext", objDossier.EventContext);
+                dbparams.Add("@eventRefURL", objDossier.EventRefURL);
+                dbparams.Add("@eventKQuery", objDossier.EventKQuery);
+                dbparams.Add("@eventTagID", objDossier.EventTagID);
+                dbparams.Add("@platform1ID", objDossier.Platform1ID);
+                dbparams.Add("@platform2ID", objDossier.Platform2ID);
+                dbparams.Add("@platform3ID", objDossier.Platform3ID);
+                dbparams.Add("@statudID", objDossier.StatusID);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierDef_Update]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to Update DossierRecep detail in DossierRecep Table
+        /// </summary>
+        /// <param name="objDossierRecep">object containing DossierRecep</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDossierRecep(DossierRecep objDossierRecep)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierRecepID", objDossierRecep.DossierRecepID);
+                dbparams.Add("@dossierDefID", objDossierRecep.DossierDefID);
+                dbparams.Add("@userID", objDossierRecep.UserID);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierRecep_Update]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+
+        /// <summary>
+        /// This method is used to Update DossierSch detail in DossierSch Table
+        /// </summary>
+        /// <param name="objDossierSch">object containing DossierSch</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDossierSch(DossierSch objDossierSch)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierSchID", objDossierSch.DossierSchID);
+                dbparams.Add("@dossierDefID", objDossierSch.DossierDefID);
+                dbparams.Add("@scheduleTypeID", objDossierSch.ScheduleTypeID);
+                dbparams.Add("@time1", objDossierSch.Time1);
+                dbparams.Add("@time2", objDossierSch.Time2);
+                dbparams.Add("@dayOfWeek", objDossierSch.DayOfWeek);
+                dbparams.Add("@dayOfMonth", objDossierSch.DayOfMonth);
+                dbparams.Add("@lastRub", objDossierSch.LastRun);
+                dbparams.Add("@nextRun", objDossierSch.NextRun);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierSch_Update]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to Update DossierConf detail in DossierConf Table
+        /// </summary>
+        /// <param name="objDossierConf">object containing DossierConf</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDossierConf(DossierConf objDossierConf)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierConfID", objDossierConf.DossierConfID);
+                dbparams.Add("@dossierDefID", objDossierConf.DossierDefID);
+                dbparams.Add("@confJSON", objDossierConf.ConfJSON);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierConf_Update]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+        /// <summary>
+        /// This method is used to Update DossierTagGroup detail in DossierTagGroup Table
+        /// </summary>
+        /// <param name="objDossierTagGroup">object containing DossierTagGroup</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDossierTagGroup(DossierTagGroup objDossierTagGroup)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierDefID", objDossierTagGroup.DossierTagGroupID);
+                dbparams.Add("@dossierDefID", objDossierTagGroup.DossierDefID);
+                dbparams.Add("@tgID", objDossierTagGroup.TGID);
+                dbparams.Add("@tagID", objDossierTagGroup.TagID);
+                dbparams.Add("@typeOfBinding", objDossierTagGroup.TypeOfBinding);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USE_DossierTagGroup_Update]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+
+
+
+        #endregion
 
 
     }
