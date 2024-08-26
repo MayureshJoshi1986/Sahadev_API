@@ -32,7 +32,19 @@ namespace SahadevService.Dossier
     /// </summary>
     interface IDossierService
     {
+        List<Client> GetAllClientsByTagID(string tagGroupName);
+        List<Client> GetAllClientByUserID(int userID);
+        List<User> GetAllUser();
+        bool InsertDossierDef(DossierDef objDossierDef);
+        bool UpdateDossierDef(DossierDef objDossierDef);
+        DossierDef GetDossierDef(int dossierDefID);
+        List<dynamic> GetAllDossier();
+        List<dynamic> GetAllGeneratedDossier();
 
+        dynamic GetGeneratedDossier(int dossierConfID);
+        List<AdditionalURL> GetAlAdditionalURL(int dossierID);
+
+        bool InsertAddtionalURL(AdditionalURL objAdditonalURL);
     }
 
     public class DossierService : IDossierService
