@@ -270,5 +270,138 @@ namespace SahadevService.Dossier
         }
 
 
+        /// <summary>
+        /// This method is used to get All Dossier
+        /// </summary>
+        /// <returns>object containing Dossier</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetAllDossier()
+        {
+            try
+            {
+                dynamic objDossier = uw.C3Repository.GetAllDossier();
+
+                return objDossier;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetAllDossier");
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to get All Generated Dossier 
+        /// </summary>
+        /// <returns>list of object containing All Generated Dossier</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetAllGeneratedDossier()
+        {
+            try
+            {
+                List<dynamic> lstDossiers = uw.C3Repository.GetAllGeneratedDossier();
+                return lstDossiers;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetAllGeneratedDossier");
+                throw ex;
+            }
+
+        }
+
+
+        /// <summary>
+        /// This method is used to get GeneratedDossier of particular configuration
+        /// </summary>
+        /// <returns>list of object containing Dossier</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public dynamic GetGeneratedDossier(int dossierConfID)
+        {
+            try
+            {
+                dynamic objDossier = uw.C3Repository.GetGeneratedDossier(dossierConfID);
+                return objDossier;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetGeneratedDossier");
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to get all AdditonalURL related to a Dossier
+        /// </summary>
+        /// <returns>list of object containing AdditonalURL</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<AdditionalURL> GetAlAdditionalURL(int dossierID)
+        {
+            try
+            {
+                List<AdditionalURL> lstAdditionalURLs = uw.C3Repository.GetAllAdditionalUrl(dossierID);
+                return lstAdditionalURLs;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, " GetAllAdditionalURL");
+                throw ex;
+            }
+
+        }
+        /// <summary>
+        /// This method is used to Insert AdditionalURL in AdditionalURL table
+        /// </summary>
+        /// <param name="objAdditonalUR">request object AdditionalURL</param>
+        /// <returns>true if successfully Update else false</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool InsertAddtionalURL(AdditionalURL objAdditonalURL)
+        {
+            bool bReturn = false;
+            try
+            {
+                uw.C3Repository.InsertAdditonalURl(objAdditonalURL);
+
+                //Commit the change 
+                uw.Commit();
+                bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "InsertAddtionalURL");
+            }
+            return bReturn;
+        }
+
+
+
+
     }
 }

@@ -35,6 +35,8 @@ namespace SahadevDBLayer.Repository
         int InsertDossierConf(DossierConf objDossierConf);
         int InsertDossierTagGroup(DossierTagGroup objDossierTagGroup);
 
+        int InsertAdditonalURl(AdditionalURL objAdditionalURL);
+
 
         bool UpdateDossierDef(DossierDef objDossier);
         bool UpdateDossierRecep(DossierRecep objDossierRecep);
@@ -47,6 +49,15 @@ namespace SahadevDBLayer.Repository
         DossierSch GetDossierSch(int DossierDefID);
         DossierConf GetDossierConf(int DossierDefID);
         DossierTagGroup GetDossierTagGroup(int DossierDefID);
+
+        List<dynamic> GetAllDossier();
+        List<dynamic> GetAllGeneratedDossier();
+        dynamic GetGeneratedDossier(int dossierConfID);
+
+        List<AdditionalURL> GetAllAdditionalUrl(int dossierID);
+
+
+
 
 
     }
@@ -234,6 +245,112 @@ namespace SahadevDBLayer.Repository
 
         }
 
+
+        /// <summary>
+        /// This method is used to fetch All Dossier  from Dossier Table
+        /// </summary>
+        /// <returns>list of object containing Dossier</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public List<dynamic> GetAllDossier()
+        {
+            try
+            {
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_DossierConfiguration_FetchAll]", null, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+        /// <summary>
+        /// This method is used to fetch All Generated Dossier  from Dossier Table
+        /// </summary>
+        /// <returns>list of object containing Dossier</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public List<dynamic> GetAllGeneratedDossier()
+        {
+            try
+            {
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GenratedDossier_FetchAll]", null, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to fetch Generated Dossier  from Dossier Table
+        /// </summary>
+        /// <returns>object containing Dossier</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public dynamic GetGeneratedDossier(int dossierConfID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierConfID", dossierConfID);
+                var data = GetByProcedure<dynamic>(@"[dbo].[USP_GenratedDossier_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to fetch AdditionalUrl of a Dossier  from AdditionalUrl Table
+        /// </summary>
+        /// <returns>object containing AdddionalUrl lIst</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public List<AdditionalURL> GetAllAdditionalUrl(int dossierID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierID", dossierID);
+                var data = GetAllByProcedure<AdditionalURL>(@"[dbo].[USP_AdditionlURL_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
         #endregion
 
 
@@ -398,6 +515,41 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@tagID", objDossierTagGroup.TagID);
                 dbparams.Add("@typeOfBinding", objDossierTagGroup.TypeOfBinding);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierTagGroup_Insert]", dbparams, _transaction);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return iResult;
+
+        }
+
+
+        /// <summary>
+        /// This method is used to insert Additional URL detail in AdditionalURL Table
+        /// </summary>
+        /// <param name="objAdditonalURl">object containing AdditonalURl</param>
+        /// <returns>PK of AdditonalURl if successfully inserted else 0</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public int InsertAdditonalURl(AdditionalURL objAdditionalURL)
+        {
+            int iResult = 0;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@DossierID", objAdditionalURL.DossierID);
+                dbparams.Add("@URL",objAdditionalURL.URL);
+                dbparams.Add("@IsProcessed",objAdditionalURL.IsProcessed);
+                dbparams.Add("@RefLinkID",objAdditionalURL.RefLinkID);
+                dbparams.Add("@TryCount",objAdditionalURL.TryCount);
+                dbparams.Add("@ErrorMsg",objAdditionalURL.ErrorMsg);
+                dbparams.Add("@CreatedBy",objAdditionalURL.CreatedBy);
+
+                iResult = GetByProcedure<int>(@"[dbo].[USP_AdditionlURL_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
             {
