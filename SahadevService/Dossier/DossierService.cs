@@ -114,7 +114,7 @@ namespace SahadevService.Dossier
         /// <summary>
         /// This method is used to get all user
         /// </summary>
-        /// <returns>list of object containing usert</returns>
+        /// <returns>list of object containing user</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
@@ -233,6 +233,42 @@ namespace SahadevService.Dossier
             }
             return bReturn;
         }
+
+
+
+        /// <summary>
+        /// This method is used to get DossierDef Detail with all related Table
+        /// </summary>
+        /// <returns>object containing DossierDef and its related table Detail</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public DossierDef GetDossierDef(int dossierDefID)
+        {
+            try
+            {
+                DossierDef objDossierDef = uw.C3Repository.GetDossierDef(dossierDefID);
+
+                if (objDossierDef != null)
+                {
+                    objDossierDef.DossierRecep = uw.C3Repository.GetDossierRecep(dossierDefID);
+                    objDossierDef.DossierSch = uw.C3Repository.GetDossierSch(dossierDefID);
+                    objDossierDef.DossierConf = uw.C3Repository.GetDossierConf(dossierDefID);
+                    objDossierDef.DossierTagGroup = uw.C3Repository.GetDossierTagGroup(dossierDefID);
+                }
+
+                return objDossierDef;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetDossierDef");
+                throw ex;
+            }
+
+        }
+
 
     }
 }

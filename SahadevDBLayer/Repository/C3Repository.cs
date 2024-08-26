@@ -42,7 +42,11 @@ namespace SahadevDBLayer.Repository
         bool UpdateDossierConf(DossierConf objDossierConf);
         bool UpdateDossierTagGroup(DossierTagGroup objDossierTagGroup);
 
-
+        DossierDef GetDossierDef(int DossierDefID);
+        DossierRecep GetDossierRecep(int DossierDefID);
+        DossierSch GetDossierSch(int DossierDefID);
+        DossierConf GetDossierConf(int DossierDefID);
+        DossierTagGroup GetDossierTagGroup(int DossierDefID);
 
 
     }
@@ -84,6 +88,153 @@ namespace SahadevDBLayer.Repository
             }
 
         }
+
+        #region Fetch
+
+
+        /// <summary>
+        /// This method is used to fetch Dossier detail from DossierDef Table
+        /// </summary>
+        /// <returns>object containing DossierDef detail</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public DossierDef GetDossierDef(int dossierDefID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierDefID", dossierDefID);
+                var data = GetByProcedure<DossierDef>(@"[dbo].[USP_DossierDef_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+
+        /// <summary>
+        /// This method is used to fetch DossierRecep detail from DossierRecep Table
+        /// </summary>
+        /// <returns>object containing DossierRecep detail</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public DossierRecep GetDossierRecep(int dossierDefID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierDefID", dossierDefID);
+                var data = GetByProcedure<DossierRecep>(@"[dbo].[USP_DossierRecep_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+
+
+        /// <summary>
+        /// This method is used to fetch DossierSch detail from DossierSch Table
+        /// </summary>
+        /// <returns>object containing DossierSch detail</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public DossierSch GetDossierSch(int dossierDefID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierDefID", dossierDefID);
+                var data = GetByProcedure<DossierSch>(@"[dbo].[USP_DossierSch_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+
+        /// <summary>
+        /// This method is used to fetch DossieConf detail from DossierConf Table
+        /// </summary>
+        /// <returns>object containing DossierConf detail</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public DossierConf GetDossierConf(int dossierDefID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierDefID", dossierDefID);
+                var data = GetByProcedure<DossierConf>(@"[dbo].[USP_DossierConf_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to fetch DossierTagGroup detail from DossierTagGroup Table
+        /// </summary>
+        /// <returns>list of object containing DossierTagGroup detail</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public DossierTagGroup GetDossierTagGroup(int dossierDefID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierDefID", dossierDefID);
+                var data = GetByProcedure<DossierTagGroup>(@"[dbo].[USE_DossierTagGroup_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        #endregion
 
 
 
