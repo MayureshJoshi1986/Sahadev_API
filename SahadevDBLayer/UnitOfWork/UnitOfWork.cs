@@ -76,7 +76,7 @@ namespace SahadevDBLayer.UnitOfWork
             _C2Connection.Open();
             _C2Transaction = _C2Connection.BeginTransaction();
 
-            _C3Connection = new SqlConnection(_config.GetConnectionString(A2ConnectionSring));
+            _C3Connection = new SqlConnection(_config.GetConnectionString(C3ConnectionSring));
             _C3Connection.Open();
             _C3Transaction = _C3Connection.BeginTransaction();
 

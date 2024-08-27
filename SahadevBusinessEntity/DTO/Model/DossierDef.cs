@@ -23,8 +23,6 @@ namespace SahadevBusinessEntity.DTO.Model
         public int Platform2ID { get; set; }
         public int Platform3ID { get; set; }
         public int StatusID { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
 
         public DossierSch DossierSch { get; set; }
 

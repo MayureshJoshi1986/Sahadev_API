@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System;
 using System.Data;
 using Dapper;
+using SahadevBusinessEntity.DTO.RequestModel;
 
 namespace SahadevDBLayer.Repository
 {
@@ -29,20 +30,18 @@ namespace SahadevDBLayer.Repository
         //List<FeedbackType> GetFeedbackType();
 
         List<string> GetAllTagIDByTagGroupName(string tagGroupName);
-        int InsertDossierDef(DossierDef objDossier);
-        int InsertDossierRecep(DossierRecep objDossierRecep);
-        int InsertDossierSch(DossierSch objDossierSch);
-        int InsertDossierConf(DossierConf objDossierConf);
-        int InsertDossierTagGroup(DossierTagGroup objDossierTagGroup);
-
+        int InsertDossierDef(RQ_DossierDef objDossier);
+        int InsertDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
+        int InsertDossierSch(RQ_DossierSch objRQ_DossierSch);
+        int InsertDossierConf(RQ_DossierConf objRQ_DossierConf);
+        int InsertDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);
         int InsertAdditonalURl(AdditionalURL objAdditionalURL);
 
-
-        bool UpdateDossierDef(DossierDef objDossier);
-        bool UpdateDossierRecep(DossierRecep objDossierRecep);
-        bool UpdateDossierSch(DossierSch objDossierSch);
-        bool UpdateDossierConf(DossierConf objDossierConf);
-        bool UpdateDossierTagGroup(DossierTagGroup objDossierTagGroup);
+        bool UpdateDossierDef(RQ_DossierDef objRQ_Dossier);
+        bool UpdateDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
+        bool UpdateDossierSch(RQ_DossierSch objRQ_DossierSch);
+        bool UpdateDossierConf(RQ_DossierConf objRQ_DossierConf);
+        bool UpdateDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);
 
         DossierDef GetDossierDef(int DossierDefID);
         DossierRecep GetDossierRecep(int DossierDefID);
@@ -55,9 +54,6 @@ namespace SahadevDBLayer.Repository
         dynamic GetGeneratedDossier(int dossierConfID);
 
         List<AdditionalURL> GetAllAdditionalUrl(int dossierID);
-
-
-
 
 
     }
@@ -235,7 +231,7 @@ namespace SahadevDBLayer.Repository
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierDefID", dossierDefID);
-                var data = GetByProcedure<DossierTagGroup>(@"[dbo].[USE_DossierTagGroup_Fetch]", dbparams, _transaction);
+                var data = GetByProcedure<DossierTagGroup>(@"[dbo].[USP_DossierTagGroup_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -361,34 +357,34 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to insert DossierDef detail in DossierDef Table
         /// </summary>
-        /// <param name="objDossierDef">object containing DossierDef</param>
+        /// <param name="objRQ_Dossier">object containing DossierDef</param>
         /// <returns>PK of DossierDef if successfully inserted else 0</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public int InsertDossierDef(DossierDef objDossier)
+        public int InsertDossierDef(RQ_DossierDef objRQ_Dossier)
         {
             int iResult = 0;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@clientID", objDossier.ClientID);
-                dbparams.Add("@dossierTypeID", objDossier.DossierTypeID );
-                dbparams.Add("@startDate", objDossier.StartDate );
-                dbparams.Add("@endDate", objDossier.EndDate);
-                dbparams.Add("@scheduleTypeID",objDossier.ScheduleTypeID );
-                dbparams.Add("@title", objDossier.Title);
-                dbparams.Add("@eventTypeID",objDossier.EventTypeID );
-                dbparams.Add("@eventContext", objDossier.EventContext);
-                dbparams.Add("@eventRefURL", objDossier.EventRefURL );
-                dbparams.Add("@eventKQuery", objDossier.EventKQuery );
-                dbparams.Add("@eventTagID", objDossier.EventTagID);
-                dbparams.Add("@platform1ID", objDossier.Platform1ID);
-                dbparams.Add("@platform2ID", objDossier.Platform2ID);
-                dbparams.Add("@platform3ID", objDossier.Platform3ID );
-                dbparams.Add("@statudID", objDossier.StatusID);
+                dbparams.Add("@clientID", objRQ_Dossier.ClientID);
+                dbparams.Add("@dossierTypeID", objRQ_Dossier.DossierTypeID );
+                dbparams.Add("@startDate", objRQ_Dossier.StartDate );
+                dbparams.Add("@endDate", objRQ_Dossier.EndDate);
+                dbparams.Add("@scheduleTypeID", objRQ_Dossier.ScheduleTypeID );
+                dbparams.Add("@title", objRQ_Dossier.Title);
+                dbparams.Add("@eventTypeID", objRQ_Dossier.EventTypeID );
+                dbparams.Add("@eventContext", objRQ_Dossier.EventContext);
+                dbparams.Add("@eventRefURL", objRQ_Dossier.EventRefURL );
+                dbparams.Add("@eventKQuery", objRQ_Dossier.EventKQuery );
+                dbparams.Add("@eventTagID", objRQ_Dossier.EventTagID);
+                dbparams.Add("@platform1ID", objRQ_Dossier.Platform1ID);
+                dbparams.Add("@platform2ID", objRQ_Dossier.Platform2ID);
+                dbparams.Add("@platform3ID", objRQ_Dossier.Platform3ID );
+                dbparams.Add("@statusID ", objRQ_Dossier.StatusID);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierDef_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
@@ -411,14 +407,14 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public int InsertDossierRecep(DossierRecep objDossierRecep)
+        public int InsertDossierRecep(RQ_DossierRecep objRQ_DossierRecep)
         {
             int iResult = 0;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierDefID", objDossierRecep.DossierDefID );
-                dbparams.Add("@userID", objDossierRecep.UserID);
+                dbparams.Add("@dossierDefID", objRQ_DossierRecep.DossierDefID );
+                dbparams.Add("@userID", objRQ_DossierRecep.UserID);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierRecep_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
@@ -433,27 +429,27 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to insert DossierSch detail in DossierSch Table
         /// </summary>
-        /// <param name="objDossierSch">object containing DossierSch</param>
+        /// <param name="objRQ_DossierSch">object containing DossierSch</param>
         /// <returns>PK of DossierSch if successfully inserted else 0</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public int InsertDossierSch(DossierSch objDossierSch)
+        public int InsertDossierSch(RQ_DossierSch objRQ_DossierSch)
         {
             int iResult = 0;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierDefID", objDossierSch.DossierDefID );
-                dbparams.Add("@scheduleTypeID", objDossierSch.ScheduleTypeID);
-                dbparams.Add("@time1", objDossierSch.Time1 );
-                dbparams.Add("@time2", objDossierSch.Time2 );
-                dbparams.Add("@dayOfWeek", objDossierSch.DayOfWeek );
-                dbparams.Add("@dayOfMonth", objDossierSch.DayOfMonth);
-                dbparams.Add("@lastRub", objDossierSch.LastRun );
-                dbparams.Add("@nextRun", objDossierSch.NextRun);
+                dbparams.Add("@dossierDefID", objRQ_DossierSch.DossierDefID );
+                dbparams.Add("@scheduleTypeID", objRQ_DossierSch.ScheduleTypeID);
+                dbparams.Add("@time1", objRQ_DossierSch.Time1 );
+                dbparams.Add("@time2", objRQ_DossierSch.Time2 );
+                dbparams.Add("@dayOfWeek", objRQ_DossierSch.DayOfWeek );
+                dbparams.Add("@dayOfMonth", objRQ_DossierSch.DayOfMonth);
+                dbparams.Add("@lastRun", objRQ_DossierSch.LastRun );
+                dbparams.Add("@nextRun", objRQ_DossierSch.NextRun);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierSch_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
@@ -469,21 +465,21 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to insert DossierConf detail in DossierConf Table
         /// </summary>
-        /// <param name="objDossierConf">object containing DossierConf</param>
+        /// <param name="objRQ_DossierConf">object containing DossierConf</param>
         /// <returns>PK of DossierConf if successfully inserted else 0</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public int InsertDossierConf(DossierConf objDossierConf)
+        public int InsertDossierConf(RQ_DossierConf objRQ_DossierConf)
         {
             int iResult = 0;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierDefID", objDossierConf.DossierDefID );
-                dbparams.Add("@confJSON", objDossierConf.ConfJSON );
+                dbparams.Add("@dossierDefID", objRQ_DossierConf.DossierDefID );
+                dbparams.Add("@confJSON", objRQ_DossierConf.ConfJSON );
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierConf_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
@@ -497,23 +493,23 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to insert DossierTagGroup detail in DossierTagGroup Table
         /// </summary>
-        /// <param name="objDossierTagGroup">object containing DossierTagGroup</param>
+        /// <param name="objRQ_DossierTagGroup">object containing DossierTagGroup</param>
         /// <returns>PK of DossierTagGroup if successfully inserted else 0</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public int InsertDossierTagGroup(DossierTagGroup objDossierTagGroup)
+        public int InsertDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup)
         {
             int iResult = 0;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierDefID", objDossierTagGroup.DossierDefID);
-                dbparams.Add("@tgID", objDossierTagGroup.TGID);
-                dbparams.Add("@tagID", objDossierTagGroup.TagID);
-                dbparams.Add("@typeOfBinding", objDossierTagGroup.TypeOfBinding);
+                dbparams.Add("@dossierDefID", objRQ_DossierTagGroup.DossierDefID);
+                dbparams.Add("@tgID", objRQ_DossierTagGroup.TGID);
+                dbparams.Add("@tagID", objRQ_DossierTagGroup.TagID);
+                dbparams.Add("@typeOfBinding", objRQ_DossierTagGroup.TypeOfBinding);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierTagGroup_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
@@ -569,36 +565,36 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to Update DossierDef detail in DossierDef Table
         /// </summary>
-        /// <param name="objDossierDef">object containing DossierDef</param>
+        /// <param name="objRQ_Dossier">object containing DossierDef</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool UpdateDossierDef(DossierDef objDossier)
+        public bool UpdateDossierDef(RQ_DossierDef objRQ_Dossier)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
 
-                dbparams.Add("@dossierDefID", objDossier.DossierDefID);
-                dbparams.Add("@clientID", objDossier.ClientID);
-                dbparams.Add("@dossierTypeID", objDossier.DossierTypeID);
-                dbparams.Add("@startDate", objDossier.StartDate);
-                dbparams.Add("@endDate", objDossier.EndDate);
-                dbparams.Add("@scheduleTypeID", objDossier.ScheduleTypeID);
-                dbparams.Add("@title", objDossier.Title);
-                dbparams.Add("@eventTypeID", objDossier.EventTypeID);
-                dbparams.Add("@eventContext", objDossier.EventContext);
-                dbparams.Add("@eventRefURL", objDossier.EventRefURL);
-                dbparams.Add("@eventKQuery", objDossier.EventKQuery);
-                dbparams.Add("@eventTagID", objDossier.EventTagID);
-                dbparams.Add("@platform1ID", objDossier.Platform1ID);
-                dbparams.Add("@platform2ID", objDossier.Platform2ID);
-                dbparams.Add("@platform3ID", objDossier.Platform3ID);
-                dbparams.Add("@statudID", objDossier.StatusID);
+                dbparams.Add("@dossierDefID", objRQ_Dossier.DossierDefID);
+                dbparams.Add("@clientID", objRQ_Dossier.ClientID);
+                dbparams.Add("@dossierTypeID", objRQ_Dossier.DossierTypeID);
+                dbparams.Add("@startDate", objRQ_Dossier.StartDate);
+                dbparams.Add("@endDate", objRQ_Dossier.EndDate);
+                dbparams.Add("@scheduleTypeID", objRQ_Dossier.ScheduleTypeID);
+                dbparams.Add("@title", objRQ_Dossier.Title);
+                dbparams.Add("@eventTypeID", objRQ_Dossier.EventTypeID);
+                dbparams.Add("@eventContext", objRQ_Dossier.EventContext);
+                dbparams.Add("@eventRefURL", objRQ_Dossier.EventRefURL);
+                dbparams.Add("@eventKQuery", objRQ_Dossier.EventKQuery);
+                dbparams.Add("@eventTagID", objRQ_Dossier.EventTagID);
+                dbparams.Add("@platform1ID", objRQ_Dossier.Platform1ID);
+                dbparams.Add("@platform2ID", objRQ_Dossier.Platform2ID);
+                dbparams.Add("@platform3ID", objRQ_Dossier.Platform3ID);
+                dbparams.Add("@statusID", objRQ_Dossier.StatusID);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierDef_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -616,22 +612,22 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to Update DossierRecep detail in DossierRecep Table
         /// </summary>
-        /// <param name="objDossierRecep">object containing DossierRecep</param>
+        /// <param name="objRQ_DossierRecep">object containing DossierRecep</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool UpdateDossierRecep(DossierRecep objDossierRecep)
+        public bool UpdateDossierRecep(RQ_DossierRecep objRQ_DossierRecep)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierRecepID", objDossierRecep.DossierRecepID);
-                dbparams.Add("@dossierDefID", objDossierRecep.DossierDefID);
-                dbparams.Add("@userID", objDossierRecep.UserID);
+                dbparams.Add("@dossierRecepID", objRQ_DossierRecep.DossierRecepID);
+                dbparams.Add("@dossierDefID", objRQ_DossierRecep.DossierDefID);
+                dbparams.Add("@userID", objRQ_DossierRecep.UserID);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierRecep_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -655,21 +651,21 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool UpdateDossierSch(DossierSch objDossierSch)
+        public bool UpdateDossierSch(RQ_DossierSch objRQ_DossierSch)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierSchID", objDossierSch.DossierSchID);
-                dbparams.Add("@dossierDefID", objDossierSch.DossierDefID);
-                dbparams.Add("@scheduleTypeID", objDossierSch.ScheduleTypeID);
-                dbparams.Add("@time1", objDossierSch.Time1);
-                dbparams.Add("@time2", objDossierSch.Time2);
-                dbparams.Add("@dayOfWeek", objDossierSch.DayOfWeek);
-                dbparams.Add("@dayOfMonth", objDossierSch.DayOfMonth);
-                dbparams.Add("@lastRub", objDossierSch.LastRun);
-                dbparams.Add("@nextRun", objDossierSch.NextRun);
+                dbparams.Add("@dossierSchID", objRQ_DossierSch.DossierSchID);
+                dbparams.Add("@dossierDefID", objRQ_DossierSch.DossierDefID);
+                dbparams.Add("@scheduleTypeID", objRQ_DossierSch.ScheduleTypeID);
+                dbparams.Add("@time1", objRQ_DossierSch.Time1);
+                dbparams.Add("@time2", objRQ_DossierSch.Time2);
+                dbparams.Add("@dayOfWeek", objRQ_DossierSch.DayOfWeek);
+                dbparams.Add("@dayOfMonth", objRQ_DossierSch.DayOfMonth);
+                dbparams.Add("@lastRun", objRQ_DossierSch.LastRun);
+                dbparams.Add("@nextRun", objRQ_DossierSch.NextRun);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierSch_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -694,15 +690,15 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool UpdateDossierConf(DossierConf objDossierConf)
+        public bool UpdateDossierConf(RQ_DossierConf objRQ_DossierConf)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierConfID", objDossierConf.DossierConfID);
-                dbparams.Add("@dossierDefID", objDossierConf.DossierDefID);
-                dbparams.Add("@confJSON", objDossierConf.ConfJSON);
+                dbparams.Add("@dossierConfID", objRQ_DossierConf.DossierConfID);
+                dbparams.Add("@dossierDefID", objRQ_DossierConf.DossierDefID);
+                dbparams.Add("@confJSON", objRQ_DossierConf.ConfJSON);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierConf_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -725,18 +721,18 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool UpdateDossierTagGroup(DossierTagGroup objDossierTagGroup)
+        public bool UpdateDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup)
         {
             bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierDefID", objDossierTagGroup.DossierTagGroupID);
-                dbparams.Add("@dossierDefID", objDossierTagGroup.DossierDefID);
-                dbparams.Add("@tgID", objDossierTagGroup.TGID);
-                dbparams.Add("@tagID", objDossierTagGroup.TagID);
-                dbparams.Add("@typeOfBinding", objDossierTagGroup.TypeOfBinding);
-                int iResult = UpdateByProcedure<int>(@"[dbo].[USE_DossierTagGroup_Update]", dbparams, _transaction);
+                dbparams.Add("@dossierTagGroupID", objRQ_DossierTagGroup.DossierTagGroupID);
+                dbparams.Add("@dossierDefID", objRQ_DossierTagGroup.DossierDefID);
+                dbparams.Add("@tgID", objRQ_DossierTagGroup.TGID);
+                dbparams.Add("@tagID", objRQ_DossierTagGroup.TagID);
+                dbparams.Add("@typeOfBinding", objRQ_DossierTagGroup.TypeOfBinding);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierTagGroup_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
             }

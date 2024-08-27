@@ -18,10 +18,6 @@ namespace SahadevBusinessEntity.DTO.Model
         public int DayOfMonth { get; set; }
         public DateTime LastRun { get; set; }
         public DateTime NextRun { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ModifiedOn { get; set; }
-
-        public DossierDef DossierDef { get; set; }
 
         
 

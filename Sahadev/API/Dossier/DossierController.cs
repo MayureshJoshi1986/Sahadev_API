@@ -162,5 +162,114 @@ namespace Sahadev.API.Dossier
                 return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
             }
         }
+
+        /// <summary>
+        /// This API is used to fetch insert dossier def detail 
+        /// </summary>
+        /// <returns>success message if successfully inserted else error message</returns>
+        /// <param name="objRQ_DossierDef">object containing dossier def detail</param>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpPost]
+        [Route("DossierConfiguration_Create")]
+        public IActionResult AddDossierConfiguration([FromBody] RQ_DossierDef objRQ_DossierDef)
+        {
+            try
+            {
+                bool bReturn = SS.DossierService.InsertDossierDef(objRQ_DossierDef);
+                if (bReturn == true)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.SDCOM006, "Dossier Configuration") });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.SDCOM002, "Dossier Configuration") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "AddDossierConfiguration");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+            }
+        }
+
+        /// <summary>
+        /// This API is used to update dossier def and related detail 
+        /// </summary>
+        /// <returns>success message if successfully updated else error message</returns>
+        /// <param name="objRQ_DossierDef">object containing dossier def detail</param>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpPost]
+        [Route("DossierConfiguration_Update")]
+        public IActionResult UpdateDossierConfiguration([FromBody] RQ_DossierDef objRQ_DossierDef)
+        {
+            try
+            {
+                bool bReturn = SS.DossierService.UpdateDossierDef(objRQ_DossierDef);
+                if (bReturn == true)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.SDCOM007, "Dossier Configuration") });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.SDCOM003, "Dossier Configuration") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "UpdateDossierConfiguration");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+            }
+        }
+
+        /// <summary>
+        /// This API is used to fetch dossier configuration detail by DossierDefID
+        /// </summary>
+        /// <returns>object containing dossier configuration detail else error message</returns>
+        /// <param name="dossierDefID">DossierDefID</param>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("DossierConfiguration_Fetch")]
+        public IActionResult GetDossierConfiguration(string dossierDefID)
+        {
+            try
+            {
+
+                DossierDef objDossierDef = SS.DossierService.GetDossierDef(Convert.ToInt32(dossierDefID));
+                if (objDossierDef  != null)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = objDossierDef });
+                }
+                else
+                {
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM005, "Dossier Configuration") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetDossierConfiguration");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+            }
+        }
     }
 }
