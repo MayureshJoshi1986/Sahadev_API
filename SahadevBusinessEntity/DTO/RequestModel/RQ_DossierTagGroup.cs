@@ -12,11 +12,6 @@
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
-using SahadevBusinessEntity.DTO.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace SahadevBusinessEntity.DTO.RequestModel

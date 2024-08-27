@@ -17,6 +17,7 @@ using Dapper;
 using Microsoft.Extensions.Logging;
 using SahadevBusinessEntity.DTO.Model;
 using SahadevBusinessEntity.DTO.RequestModel;
+using SahadevBusinessEntity.DTO.ResultModel;
 using SahadevDBLayer.UnitOfWork;
 using SahadevService.Sentry;
 using System;
@@ -42,9 +43,9 @@ namespace SahadevService.Dossier
         List<dynamic> GetAllGeneratedDossier();
 
         dynamic GetGeneratedDossier(int dossierConfID);
-        List<AdditionalURL> GetAlAdditionalURL(int dossierID);
+        List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID);
 
-        bool InsertAddtionalURL(AdditionalURL objAdditonalURL);
+        bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL);
     }
 
     public class DossierService : IDossierService
@@ -389,6 +390,7 @@ namespace SahadevService.Dossier
         /// This method is used to get DossierDef Detail with all related Table
         /// </summary>
         /// <returns>object containing DossierDef and its related table Detail</returns>
+        /// <param name="dossierDefID">dossierDefID</param>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
@@ -498,20 +500,20 @@ namespace SahadevService.Dossier
 
 
         /// <summary>
-        /// This method is used to get all AdditonalURL related to a Dossier
+        /// This method is used to get all additonal URLs of a dossier
         /// </summary>
-        /// <returns>list of object containing AdditonalURL</returns>
+        /// <returns>list of object containing all additional URLs of a dossier</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<AdditionalURL> GetAlAdditionalURL(int dossierID)
+        public List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID)
         {
             try
             {
-                List<AdditionalURL> lstAdditionalURLs = uw.C3Repository.GetAllAdditionalUrl(dossierID);
-                return lstAdditionalURLs;
+                List<RS_AdditionalURL> lstAdditionalURL = uw.C3Repository.GetAllAdditionalUrl(dossierID);
+                return lstAdditionalURL;
             }
             catch (Exception ex)
             {
@@ -521,30 +523,29 @@ namespace SahadevService.Dossier
 
         }
         /// <summary>
-        /// This method is used to Insert AdditionalURL in AdditionalURL table
+        /// This method is used to insert AdditionalURL in AdditionalURL table
         /// </summary>
-        /// <param name="objAdditonalUR">request object AdditionalURL</param>
-        /// <returns>true if successfully Update else false</returns>
+        /// <param name="objRQ_AdditonalURL">request object containing AdditionalURL</param>
+        /// <returns>true if successfully inserted else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool InsertAddtionalURL(AdditionalURL objAdditonalURL)
+        public bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL)
         {
             bool bReturn = false;
             try
             {
-                uw.C3Repository.InsertAdditonalURl(objAdditonalURL);
+                bReturn = uw.C3Repository.InsertAdditionalURl(objRQ_AdditonalURL);
 
                 //Commit the change 
                 uw.Commit();
-                bReturn = true;
             }
             catch (Exception ex)
             {
                 uw.Rollback();
-                _logger.LogError(ex, _className, "InsertAddtionalURL");
+                _logger.LogError(ex, _className, "InsertAdditionalURL");
             }
             return bReturn;
         }

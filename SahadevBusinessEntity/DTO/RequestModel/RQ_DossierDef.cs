@@ -13,7 +13,6 @@
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
 
-using SahadevBusinessEntity.DTO.Model;
 using System;
 using System.Text.Json.Serialization;
 

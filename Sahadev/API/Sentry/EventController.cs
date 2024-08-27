@@ -74,11 +74,11 @@ namespace Sahadev.API.Sentry
                 bool bReturn = SS.EventService.Add(objRQ_Event);
                 if (bReturn == true)
                 {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.SDCOM006, "event") });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Added, "event") });
                 }
                 else
                 {
-                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM002, "event") });
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.AddFailed, "event") });
                 }
             }
             catch (Exception ex)
@@ -87,7 +87,7 @@ namespace Sahadev.API.Sentry
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "Add");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 
@@ -112,11 +112,11 @@ namespace Sahadev.API.Sentry
                 if (bReturn == true)
                 {
 
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.SDCOM006, "Feedback") });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Added, "Feedback") });
                 }
                 else
                 {
-                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM002, "Feedback") });
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.AddFailed, "Feedback") });
                 }
             }
             catch (Exception ex)
@@ -125,7 +125,7 @@ namespace Sahadev.API.Sentry
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "ShareFeedback");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 
@@ -150,19 +150,19 @@ namespace Sahadev.API.Sentry
                 {
                     string message = string.Empty;
                     if (objRQ_BookMark.Action == "Insert")
-                        message = string.Format(Common.SDCOM006, "BookMark");
+                        message = string.Format(Common.Added, "BookMark");
 
                     else if (objRQ_BookMark.Action == "Update")
-                        message = string.Format(Common.SDCOM007, "BookMark");
+                        message = string.Format(Common.Updated, "BookMark");
 
                     else if (objRQ_BookMark.Action == "Delete")
-                        message = string.Format(Common.SDCOM008, "BookMark");
+                        message = string.Format(Common.Deleted, "BookMark");
 
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = message, });
                 }
                 else
                 {
-                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM002, "BookMark") });
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.AddFailed, "BookMark") });
                 }
             }
             catch (Exception ex)
@@ -171,7 +171,7 @@ namespace Sahadev.API.Sentry
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "UpdateBookMark");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 
@@ -206,7 +206,7 @@ namespace Sahadev.API.Sentry
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "Fetch_FeedbackTypes");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 
@@ -233,7 +233,7 @@ namespace Sahadev.API.Sentry
                 }
                 else
                 {
-                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM002, "DataRequest") });
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.AddFailed, "DataRequest") });
                 }
             }
             catch (Exception ex)
@@ -242,7 +242,7 @@ namespace Sahadev.API.Sentry
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "DownloadData");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 

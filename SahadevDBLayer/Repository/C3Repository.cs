@@ -19,6 +19,7 @@ using System;
 using System.Data;
 using Dapper;
 using SahadevBusinessEntity.DTO.RequestModel;
+using SahadevBusinessEntity.DTO.ResultModel;
 
 namespace SahadevDBLayer.Repository
 {
@@ -35,7 +36,6 @@ namespace SahadevDBLayer.Repository
         int InsertDossierSch(RQ_DossierSch objRQ_DossierSch);
         int InsertDossierConf(RQ_DossierConf objRQ_DossierConf);
         int InsertDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);
-        int InsertAdditonalURl(AdditionalURL objAdditionalURL);
 
         bool UpdateDossierDef(RQ_DossierDef objRQ_Dossier);
         bool UpdateDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
@@ -53,12 +53,12 @@ namespace SahadevDBLayer.Repository
         List<dynamic> GetAllGeneratedDossier();
         dynamic GetGeneratedDossier(int dossierConfID);
 
-        List<AdditionalURL> GetAllAdditionalUrl(int dossierID);
-
+        List<RS_AdditionalURL> GetAllAdditionalUrl(int dossierID);
+        bool InsertAdditionalURl(RQ_AdditionalURL objRQ_AdditionalURL);
 
     }
 
-    internal class C3Repository:RepositoryBase, IC3Repository
+    internal class C3Repository : RepositoryBase, IC3Repository
     {
         private readonly IDbConnection _connection;
         private readonly IDbTransaction _transaction;
@@ -322,22 +322,22 @@ namespace SahadevDBLayer.Repository
 
 
         /// <summary>
-        /// This method is used to fetch AdditionalUrl of a Dossier  from AdditionalUrl Table
+        /// This method is used to fetch all AdditionalUrl of a Dossier from AdditionalUrl Table
         /// </summary>
-        /// <returns>object containing AdddionalUrl lIst</returns>
+        /// <returns>list of object containing AdditionalURL list</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
 
-        public List<AdditionalURL> GetAllAdditionalUrl(int dossierID)
+        public List<RS_AdditionalURL> GetAllAdditionalUrl(int dossierID)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierID", dossierID);
-                var data = GetAllByProcedure<AdditionalURL>(@"[dbo].[USP_AdditionlURL_Fetch]", dbparams, _transaction);
+                var data = GetAllByProcedure<RS_AdditionalURL>(@"[dbo].[USP_AdditionalUrl_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -371,19 +371,19 @@ namespace SahadevDBLayer.Repository
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@clientID", objRQ_Dossier.ClientID);
-                dbparams.Add("@dossierTypeID", objRQ_Dossier.DossierTypeID );
-                dbparams.Add("@startDate", objRQ_Dossier.StartDate );
+                dbparams.Add("@dossierTypeID", objRQ_Dossier.DossierTypeID);
+                dbparams.Add("@startDate", objRQ_Dossier.StartDate);
                 dbparams.Add("@endDate", objRQ_Dossier.EndDate);
-                dbparams.Add("@scheduleTypeID", objRQ_Dossier.ScheduleTypeID );
+                dbparams.Add("@scheduleTypeID", objRQ_Dossier.ScheduleTypeID);
                 dbparams.Add("@title", objRQ_Dossier.Title);
-                dbparams.Add("@eventTypeID", objRQ_Dossier.EventTypeID );
+                dbparams.Add("@eventTypeID", objRQ_Dossier.EventTypeID);
                 dbparams.Add("@eventContext", objRQ_Dossier.EventContext);
-                dbparams.Add("@eventRefURL", objRQ_Dossier.EventRefURL );
-                dbparams.Add("@eventKQuery", objRQ_Dossier.EventKQuery );
+                dbparams.Add("@eventRefURL", objRQ_Dossier.EventRefURL);
+                dbparams.Add("@eventKQuery", objRQ_Dossier.EventKQuery);
                 dbparams.Add("@eventTagID", objRQ_Dossier.EventTagID);
                 dbparams.Add("@platform1ID", objRQ_Dossier.Platform1ID);
                 dbparams.Add("@platform2ID", objRQ_Dossier.Platform2ID);
-                dbparams.Add("@platform3ID", objRQ_Dossier.Platform3ID );
+                dbparams.Add("@platform3ID", objRQ_Dossier.Platform3ID);
                 dbparams.Add("@statusID ", objRQ_Dossier.StatusID);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierDef_Insert]", dbparams, _transaction);
             }
@@ -413,7 +413,7 @@ namespace SahadevDBLayer.Repository
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierDefID", objRQ_DossierRecep.DossierDefID );
+                dbparams.Add("@dossierDefID", objRQ_DossierRecep.DossierDefID);
                 dbparams.Add("@userID", objRQ_DossierRecep.UserID);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierRecep_Insert]", dbparams, _transaction);
             }
@@ -442,13 +442,13 @@ namespace SahadevDBLayer.Repository
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierDefID", objRQ_DossierSch.DossierDefID );
+                dbparams.Add("@dossierDefID", objRQ_DossierSch.DossierDefID);
                 dbparams.Add("@scheduleTypeID", objRQ_DossierSch.ScheduleTypeID);
-                dbparams.Add("@time1", objRQ_DossierSch.Time1 );
-                dbparams.Add("@time2", objRQ_DossierSch.Time2 );
-                dbparams.Add("@dayOfWeek", objRQ_DossierSch.DayOfWeek );
+                dbparams.Add("@time1", objRQ_DossierSch.Time1);
+                dbparams.Add("@time2", objRQ_DossierSch.Time2);
+                dbparams.Add("@dayOfWeek", objRQ_DossierSch.DayOfWeek);
                 dbparams.Add("@dayOfMonth", objRQ_DossierSch.DayOfMonth);
-                dbparams.Add("@lastRun", objRQ_DossierSch.LastRun );
+                dbparams.Add("@lastRun", objRQ_DossierSch.LastRun);
                 dbparams.Add("@nextRun", objRQ_DossierSch.NextRun);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierSch_Insert]", dbparams, _transaction);
             }
@@ -478,8 +478,8 @@ namespace SahadevDBLayer.Repository
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierDefID", objRQ_DossierConf.DossierDefID );
-                dbparams.Add("@confJSON", objRQ_DossierConf.ConfJSON );
+                dbparams.Add("@dossierDefID", objRQ_DossierConf.DossierDefID);
+                dbparams.Add("@confJSON", objRQ_DossierConf.ConfJSON);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierConf_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
@@ -525,33 +525,34 @@ namespace SahadevDBLayer.Repository
         /// This method is used to insert Additional URL detail in AdditionalURL Table
         /// </summary>
         /// <param name="objAdditonalURl">object containing AdditonalURl</param>
-        /// <returns>PK of AdditonalURl if successfully inserted else 0</returns>
+        /// <returns>true if successfully inserted else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public int InsertAdditonalURl(AdditionalURL objAdditionalURL)
+        /// <modifiedon>PJ</modifiedon>
+        /// <modifiedby>27-Aug-2024</modifiedby>
+        /// <modifiedreason>Changed request model and return type from int to bool</modifiedreason>
+        public bool InsertAdditionalURl(RQ_AdditionalURL objRQ_AdditionalURL)
         {
-            int iResult = 0;
+            bool bReturn = false;
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@DossierID", objAdditionalURL.DossierID);
-                dbparams.Add("@URL",objAdditionalURL.URL);
-                dbparams.Add("@IsProcessed",objAdditionalURL.IsProcessed);
-                dbparams.Add("@RefLinkID",objAdditionalURL.RefLinkID);
-                dbparams.Add("@TryCount",objAdditionalURL.TryCount);
-                dbparams.Add("@ErrorMsg",objAdditionalURL.ErrorMsg);
-                dbparams.Add("@CreatedBy",objAdditionalURL.CreatedBy);
-
-                iResult = GetByProcedure<int>(@"[dbo].[USP_AdditionlURL_Insert]", dbparams, _transaction);
+                dbparams.Add("@dossierID", objRQ_AdditionalURL.DossierID);
+                dbparams.Add("@url", objRQ_AdditionalURL.URL);
+                dbparams.Add("@isProcessed", objRQ_AdditionalURL.IsProcessed);
+                dbparams.Add("@refLinkID", objRQ_AdditionalURL.RefLinkID);
+                dbparams.Add("@tryCount", objRQ_AdditionalURL.TryCount);
+                dbparams.Add("@errorMsg", objRQ_AdditionalURL.ErrorMsg);
+                dbparams.Add("@createdBy", objRQ_AdditionalURL.CreatedBy);
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_AdditionalUrl_Insert]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return iResult;
+            return bReturn;
 
         }
 

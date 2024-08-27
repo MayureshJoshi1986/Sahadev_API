@@ -86,7 +86,7 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "GetAllClientByUserID");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 
@@ -123,7 +123,7 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "GetAllClientsByTagID");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 
@@ -159,7 +159,7 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "GetAllUser");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 
@@ -182,11 +182,11 @@ namespace Sahadev.API.Dossier
                 bool bReturn = SS.DossierService.InsertDossierDef(objRQ_DossierDef);
                 if (bReturn == true)
                 {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.SDCOM006, "Dossier Configuration") });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Added, "Dossier Configuration") });
                 }
                 else
                 {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.SDCOM002, "Dossier Configuration") });
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.AddFailed, "Dossier Configuration") });
                 }
             }
             catch (Exception ex)
@@ -195,7 +195,7 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "AddDossierConfiguration");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 
@@ -218,11 +218,11 @@ namespace Sahadev.API.Dossier
                 bool bReturn = SS.DossierService.UpdateDossierDef(objRQ_DossierDef);
                 if (bReturn == true)
                 {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.SDCOM007, "Dossier Configuration") });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Updated, "Dossier Configuration") });
                 }
                 else
                 {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.SDCOM003, "Dossier Configuration") });
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.UpdateFailed, "Dossier Configuration") });
                 }
             }
             catch (Exception ex)
@@ -231,7 +231,7 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "UpdateDossierConfiguration");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
 
@@ -259,7 +259,7 @@ namespace Sahadev.API.Dossier
                 }
                 else
                 {
-                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.SDCOM005, "Dossier Configuration") });
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.RetrievalFailed, "Dossier Configuration") });
                 }
             }
             catch (Exception ex)
@@ -268,7 +268,82 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "GetDossierConfiguration");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.SDCOM001 });
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+
+        /// <summary>
+        /// This API is used to get all additional URLs of a dossier
+        /// </summary>
+        /// <returns>list of object containing all additional URLs of a dossier</returns>
+        /// <param name="dossierID">DossierID</param>
+        /// <createdon>27-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_FetchAdditionalUrl")]
+        public IActionResult GetAllAdditionalURL(string dossierID)
+        {
+            try
+            {
+                List<RS_AdditionalURL> lstAdditionalURL = SS.DossierService.GetAllAdditionalURL(Convert.ToInt32(dossierID));
+                if (lstAdditionalURL !=null && lstAdditionalURL.Count!=0)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstAdditionalURL });
+                }
+                else
+                {
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.RetrievalFailed, "Additional URL") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetAllAdditionalURL");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+
+
+        /// <summary>
+        /// This API is used to insert additional URL in AdditionlURL table
+        /// </summary>
+        /// <returns>success message if successfully inserted else error message</returns>
+        /// <param name="objRQ_AdditionalURL">object containing additional URL</param>
+        /// <createdon>27-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpPost]
+        [Route("Dossier_InsertAdditionalUrl")]
+        public IActionResult AddAdditionalURL([FromBody] RQ_AdditionalURL objRQ_AdditionalURL)
+        {
+            try
+            {
+                bool bReturn = SS.DossierService.InsertAdditionalURL(objRQ_AdditionalURL);
+                if (bReturn == true)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Added, "Additional URL") });
+                }
+                else
+                {
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.AddFailed, "Additional URL") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "AddAdditionalURL");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
     }
