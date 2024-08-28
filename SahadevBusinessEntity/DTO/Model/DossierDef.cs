@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*  --------------------------------------------------------------------------------------------*
+ *  Class Name      :-  DossierDef                                                              *
+ *  --------------------------------------------------------------------------------------------*
+ *  Description     :-  Entity Model for the Dossier DossierDef                                 *
+ *  --------------------------------------------------------------------------------------------*
+ *  Created By      :- Saroj Laddha                                                             *
+ *  --------------------------------------------------------------------------------------------*
+ *  Created Date    :- 24-Aug-2024                                                              *
+ *  --------------------------------------------------------------------------------------------*
+ *  revised By      :-                                                                          *
+ *  revised Details :-                                                                          *
+ *  revised By      :-                                                                          *
+ *  revised Details :-                                                                          *
+ //**********************************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -30,7 +45,7 @@ namespace SahadevBusinessEntity.DTO.Model
 
         public DossierTagGroup DossierTagGroup { get; set; }
 
-        public DossierRecep DossierRecep { get; set; }
+        public List<DossierRecep> DossierReceps { get; set; }
 
         public List<Dossier> Dossiers { get; set; }
     }

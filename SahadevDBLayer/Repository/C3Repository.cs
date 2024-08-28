@@ -30,27 +30,32 @@ namespace SahadevDBLayer.Repository
     {
         //List<FeedbackType> GetFeedbackType();
 
-        List<string> GetAllTagIDByTagGroupName(string tgid);
-        DossierDef GetDossierDef(int DossierDefID);
-        DossierRecep GetDossierRecep(int DossierDefID);
-        DossierSch GetDossierSch(int DossierDefID);
-        DossierConf GetDossierConf(int DossierDefID);
-        DossierTagGroup GetDossierTagGroup(int DossierDefID);
-        List<dynamic> GetAllDossier();
-        List<dynamic> GetAllGeneratedDossier();
-        dynamic GetGeneratedDossier(int dossierConfID);
-        List<RS_AdditionalURL> GetAllAdditionalUrl(int dossierID);
+        List<string> GetAllTagIDByTagGroupName(string tagGroupName);
         int InsertDossierDef(RQ_DossierDef objDossier);
         int InsertDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
         int InsertDossierSch(RQ_DossierSch objRQ_DossierSch);
         int InsertDossierConf(RQ_DossierConf objRQ_DossierConf);
-        int InsertDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);        
-        bool InsertAdditionalURl(RQ_AdditionalURL objRQ_AdditionalURL);
+        int InsertDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);
+
         bool UpdateDossierDef(RQ_DossierDef objRQ_Dossier);
         bool UpdateDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
         bool UpdateDossierSch(RQ_DossierSch objRQ_DossierSch);
         bool UpdateDossierConf(RQ_DossierConf objRQ_DossierConf);
         bool UpdateDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);
+
+        DossierDef GetDossierDef(int DossierDefID);
+        List<DossierRecep> GetAllDossierRecep(int DossierDefID);
+        DossierSch GetDossierSch(int DossierDefID);
+        DossierConf GetDossierConf(int DossierDefID);
+        DossierTagGroup GetDossierTagGroup(int DossierDefID);
+
+        List<dynamic> GetAllDossier();
+        List<dynamic> GetAllGeneratedDossier();
+        dynamic GetGeneratedDossier(int dossierConfID);
+
+        List<RS_AdditionalURL> GetAllAdditionalUrl(int dossierID);
+        bool InsertAdditionalURl(RQ_AdditionalURL objRQ_AdditionalURL);
+
     }
 
     internal class C3Repository : RepositoryBase, IC3Repository
@@ -69,19 +74,19 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to get fetch client detail from All Tag ID from 
         /// </summary>
-        /// <param name="tgid">TagGroupID</param>
+        /// <param name="tagGroupName">providing competitor name or tag group name to fecth all related tags for the company</param>
         /// <returns>list of object containing list of TagID</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<string> GetAllTagIDByTagGroupName(string tgid)
+        public List<string> GetAllTagIDByTagGroupName(string tagGroupName)
         {
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@tgid", tgid);
+                dbparams.Add("@tagGroupName", tagGroupName);
                 var data = GetAllByProcedure<string>(@"[dbo].[USP_Competitor_Fetch]", dbparams, _transaction);
                 return data;
             }
@@ -98,6 +103,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch Dossier detail from DossierDef Table
         /// </summary>
+        ///  <param name="dossierDefID">dossierDefID to Fetch DossierDef </param>
         /// <returns>object containing DossierDef detail</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -127,20 +133,21 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch DossierRecep detail from DossierRecep Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch DossierRecep records for the dossier</param>
         /// <returns>object containing DossierRecep detail</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>@8-08-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Converted into returning single object to lost of object</modifiedreason>
 
-        public DossierRecep GetDossierRecep(int dossierDefID)
+        public List<DossierRecep> GetAllDossierRecep(int dossierDefID)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierDefID", dossierDefID);
-                var data = GetByProcedure<DossierRecep>(@"[dbo].[USP_DossierRecep_Fetch]", dbparams, _transaction);
+                var data = GetAllByProcedure<DossierRecep>(@"[dbo].[USP_DossierRecep_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -157,6 +164,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch DossierSch detail from DossierSch Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch DossierSch record for the dossier</param>
         /// <returns>object containing DossierSch detail</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -186,7 +194,9 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch DossieConf detail from DossierConf Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch DossierConf record for the dossier</param>
         /// <returns>object containing DossierConf detail</returns>
+
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
@@ -214,6 +224,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch DossierTagGroup detail from DossierTagGroup Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch DossierTagGroup record for the dossier</param>
         /// <returns>list of object containing DossierTagGroup detail</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -277,7 +288,7 @@ namespace SahadevDBLayer.Repository
         {
             try
             {
-                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_FetchAll]", null, _transaction);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GenratedDossier_FetchAll]", null, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -292,6 +303,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch Generated Dossier  from Dossier Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch GeneratedDossier record for the dossier</param>
         /// <returns>object containing Dossier</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -305,7 +317,7 @@ namespace SahadevDBLayer.Repository
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierConfID", dossierConfID);
-                var data = GetByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_Fetch]", dbparams, _transaction);
+                var data = GetByProcedure<dynamic>(@"[dbo].[USP_GenratedDossier_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -320,6 +332,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch all AdditionalUrl of a Dossier from AdditionalUrl Table
         /// </summary>
+        /// <param name="dossierID">dossierID to Fetch All AditionalURl record for the dossier</param>
         /// <returns>list of object containing AdditionalURL list</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
