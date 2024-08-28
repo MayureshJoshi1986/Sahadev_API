@@ -10,8 +10,8 @@ namespace SahadevBusinessEntity.Validation
         public EventValidation()
         {
             RuleFor(x => x.ClientID)
-                .NotNull().NotEmpty().WithMessage("Please specify a client id")
-                .LessThanOrEqualTo(0).WithMessage("Please specify a valid clientID");
+                .NotNull().NotEmpty().WithMessage("Please specify a client id");
+                //.LessThan(0).WithMessage("Please specify a valid clientID");
             RuleFor(x => x.EventTypeID)
                 .NotNull().NotEmpty().WithMessage("Please specify a event type id");                
             RuleFor(x => x.EventName)

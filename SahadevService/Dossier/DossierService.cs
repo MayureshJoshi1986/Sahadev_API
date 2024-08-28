@@ -33,19 +33,17 @@ namespace SahadevService.Dossier
     /// </summary>
     interface IDossierService
     {
-        List<Client> GetAllClientsByTagID(string tagGroupName);
-        List<Client> GetAllClientByUserID(int userID);
-        List<User> GetAllUser();
-        bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef);
-        bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef);
+        List<dynamic> GetAllClientsByTagID(string tagGroupName);
+        List<dynamic> GetAllClientByUserID(int userID);
+        List<dynamic> GetAllUser();        
         DossierDef GetDossierDef(int dossierDefID);
         List<dynamic> GetAllDossier();
         List<dynamic> GetAllGeneratedDossier();
-
         dynamic GetGeneratedDossier(int dossierConfID);
-        List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID);
-
+        List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID);        
+        bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef);
         bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL);
+        bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef);
     }
 
     public class DossierService : IDossierService
@@ -67,7 +65,6 @@ namespace SahadevService.Dossier
             this.SS = new ServiceSingleton(this.uw, logger);
         }
 
-
         /// <summary>
         /// This method is used to get all client by TagId
         /// by fecthing first tagID's from mstTagGroupTable against cometitor name (tagGroupName)
@@ -79,14 +76,14 @@ namespace SahadevService.Dossier
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<Client> GetAllClientsByTagID(string tagGroupName)
+        public List<dynamic> GetAllClientsByTagID(string tagGroupName)
         {
             try
             {
                 var lstTagID = uw.C3Repository.GetAllTagIDByTagGroupName(tagGroupName);
                 string strTagID = String.Join(",", lstTagID);
-                var data = uw.C1Repository.GetAllClientByTagID(strTagID);
-                return data;
+                List <dynamic> lstGetAllClientByTagID = uw.C1Repository.GetAllClientByTagID(strTagID);
+                return lstGetAllClientByTagID;
             }
             catch (Exception ex)
             {
@@ -95,7 +92,6 @@ namespace SahadevService.Dossier
             }
 
         }
-
 
         /// <summary>
         /// This method is used to get all client by user id
@@ -106,12 +102,12 @@ namespace SahadevService.Dossier
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<Client> GetAllClientByUserID(int userID)
+        public List<dynamic> GetAllClientByUserID(int userID)
         {
             try
             {
-                var data = uw.C1Repository.GetAllClientByUserID(userID);
-                return data;
+                List<dynamic> lstGetAllClientByUserID = uw.C1Repository.GetAllClientByUserID(userID);
+                return lstGetAllClientByUserID;
             }
             catch (Exception ex)
             {
@@ -120,9 +116,6 @@ namespace SahadevService.Dossier
             }
 
         }
-
-
-
 
         /// <summary>
         /// This method is used to get all user
@@ -133,16 +126,148 @@ namespace SahadevService.Dossier
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<User> GetAllUser()
+        public List<dynamic> GetAllUser()
         {
             try
             {
-                var data = uw.C1Repository.GetAllUser();
-                return data;
+                List<dynamic> lstAllUser = uw.C1Repository.GetAllUser();
+                return lstAllUser;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, _className, "GetAllUser");
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// This method is used to get DossierDef Detail with all related Table
+        /// </summary>
+        /// <returns>object containing DossierDef and its related table Detail</returns>
+        /// <param name="dossierDefID">dossierDefID</param>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public DossierDef GetDossierDef(int dossierDefID)
+        {
+            try
+            {
+                DossierDef objDossierDef = uw.C3Repository.GetDossierDef(dossierDefID);
+
+                if (objDossierDef != null)
+                {
+                    objDossierDef.DossierRecep = uw.C3Repository.GetDossierRecep(dossierDefID);
+                    objDossierDef.DossierSch = uw.C3Repository.GetDossierSch(dossierDefID);
+                    objDossierDef.DossierConf = uw.C3Repository.GetDossierConf(dossierDefID);
+                    objDossierDef.DossierTagGroup = uw.C3Repository.GetDossierTagGroup(dossierDefID);
+                }
+
+                return objDossierDef;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetDossierDef");
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// This method is used to get All Dossier
+        /// </summary>
+        /// <returns>object containing Dossier</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetAllDossier()
+        {
+            try
+            {
+                dynamic objDossier = uw.C3Repository.GetAllDossier();
+
+                return objDossier;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetAllDossier");
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// This method is used to get All Generated Dossier 
+        /// </summary>
+        /// <returns>list of object containing All Generated Dossier</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetAllGeneratedDossier()
+        {
+            try
+            {
+                List<dynamic> lstDossiers = uw.C3Repository.GetAllGeneratedDossier();
+                return lstDossiers;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetAllGeneratedDossier");
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// This method is used to get GeneratedDossier of particular configuration
+        /// </summary>
+        /// <returns>list of object containing Dossier</returns>
+        /// <param name="dossierConfID">DossierConfID</param>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public dynamic GetGeneratedDossier(int dossierConfID)
+        {
+            try
+            {
+                dynamic objDossier = uw.C3Repository.GetGeneratedDossier(dossierConfID);
+                return objDossier;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetGeneratedDossier");
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// This method is used to get all additonal URLs of a dossier
+        /// </summary>
+        /// <returns>list of object containing all additional URLs of a dossier</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID)
+        {
+            try
+            {
+                List<RS_AdditionalURL> lstAdditionalURL = uw.C3Repository.GetAllAdditionalUrl(dossierID);
+                return lstAdditionalURL;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, " GetAllAdditionalURL");
                 throw ex;
             }
 
@@ -212,6 +337,33 @@ namespace SahadevService.Dossier
             return bReturn;
         }
 
+        /// <summary>
+        /// This method is used to insert AdditionalURL in AdditionalURL table
+        /// </summary>
+        /// <param name="objRQ_AdditonalURL">request object containing AdditionalURL</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>26-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL)
+        {
+            bool bReturn = false;
+            try
+            {
+                bReturn = uw.C3Repository.InsertAdditionalURl(objRQ_AdditonalURL);
+
+                //Commit the change 
+                uw.Commit();
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "InsertAdditionalURL");
+            }
+            return bReturn;
+        }
 
         /// <summary>
         /// This method is used to Update DossierDef and DossierConf, DossierRecep, DossierSch, DossierTagGroup
@@ -384,171 +536,7 @@ namespace SahadevService.Dossier
         //    return bReturn;
         //}
 
-
-
-        /// <summary>
-        /// This method is used to get DossierDef Detail with all related Table
-        /// </summary>
-        /// <returns>object containing DossierDef and its related table Detail</returns>
-        /// <param name="dossierDefID">dossierDefID</param>
-        /// <createdon>26-Aug-2024</createdon>
-        /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public DossierDef GetDossierDef(int dossierDefID)
-        {
-            try
-            {
-                DossierDef objDossierDef = uw.C3Repository.GetDossierDef(dossierDefID);
-
-                if (objDossierDef != null)
-                {
-                    objDossierDef.DossierRecep = uw.C3Repository.GetDossierRecep(dossierDefID);
-                    objDossierDef.DossierSch = uw.C3Repository.GetDossierSch(dossierDefID);
-                    objDossierDef.DossierConf = uw.C3Repository.GetDossierConf(dossierDefID);
-                    objDossierDef.DossierTagGroup = uw.C3Repository.GetDossierTagGroup(dossierDefID);
-                }
-
-                return objDossierDef;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, _className, "GetDossierDef");
-                throw ex;
-            }
-
-        }
-
-
-        /// <summary>
-        /// This method is used to get All Dossier
-        /// </summary>
-        /// <returns>object containing Dossier</returns>
-        /// <createdon>26-Aug-2024</createdon>
-        /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public List<dynamic> GetAllDossier()
-        {
-            try
-            {
-                dynamic objDossier = uw.C3Repository.GetAllDossier();
-
-                return objDossier;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, _className, "GetAllDossier");
-                throw ex;
-            }
-
-        }
-
-
-
-        /// <summary>
-        /// This method is used to get All Generated Dossier 
-        /// </summary>
-        /// <returns>list of object containing All Generated Dossier</returns>
-        /// <createdon>26-Aug-2024</createdon>
-        /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public List<dynamic> GetAllGeneratedDossier()
-        {
-            try
-            {
-                List<dynamic> lstDossiers = uw.C3Repository.GetAllGeneratedDossier();
-                return lstDossiers;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, _className, "GetAllGeneratedDossier");
-                throw ex;
-            }
-
-        }
-
-
-        /// <summary>
-        /// This method is used to get GeneratedDossier of particular configuration
-        /// </summary>
-        /// <returns>list of object containing Dossier</returns>
-        /// <createdon>26-Aug-2024</createdon>
-        /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public dynamic GetGeneratedDossier(int dossierConfID)
-        {
-            try
-            {
-                dynamic objDossier = uw.C3Repository.GetGeneratedDossier(dossierConfID);
-                return objDossier;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, _className, "GetGeneratedDossier");
-                throw ex;
-            }
-
-        }
-
-
-
-        /// <summary>
-        /// This method is used to get all additonal URLs of a dossier
-        /// </summary>
-        /// <returns>list of object containing all additional URLs of a dossier</returns>
-        /// <createdon>26-Aug-2024</createdon>
-        /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID)
-        {
-            try
-            {
-                List<RS_AdditionalURL> lstAdditionalURL = uw.C3Repository.GetAllAdditionalUrl(dossierID);
-                return lstAdditionalURL;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, _className, " GetAllAdditionalURL");
-                throw ex;
-            }
-
-        }
-        /// <summary>
-        /// This method is used to insert AdditionalURL in AdditionalURL table
-        /// </summary>
-        /// <param name="objRQ_AdditonalURL">request object containing AdditionalURL</param>
-        /// <returns>true if successfully inserted else false</returns>
-        /// <createdon>26-Aug-2024</createdon>
-        /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL)
-        {
-            bool bReturn = false;
-            try
-            {
-                bReturn = uw.C3Repository.InsertAdditionalURl(objRQ_AdditonalURL);
-
-                //Commit the change 
-                uw.Commit();
-            }
-            catch (Exception ex)
-            {
-                uw.Rollback();
-                _logger.LogError(ex, _className, "InsertAdditionalURL");
-            }
-            return bReturn;
-        }
+        
 
 
 

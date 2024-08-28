@@ -27,12 +27,10 @@ namespace SahadevDBLayer.Repository
     public interface IC1Repository
     {
         List<Client> Get();
+        List<dynamic> GetAllClientByUserID(int userID);
+        List<dynamic> GetAllClientByTagID(string lstTagID);
+        List<dynamic> GetAllUser();
         bool Insert(Client objClient);
-        List<Client> GetAllClientByUserID(int userID);
-
-        List<Client> GetAllClientByTagID(string lstTagID);
-
-        List<User> GetAllUser();
     }
 
     internal class C1Repository : RepositoryBase, IC1Repository
@@ -80,11 +78,11 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<User> GetAllUser()
+        public List<dynamic> GetAllUser()
         {
             try
             {
-                var data = GetAllByProcedure<User>(@"[dbo].[USP_User_Fetch]", null, _transaction);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_User_Fetch]", null, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -100,16 +98,16 @@ namespace SahadevDBLayer.Repository
         /// <returns>list of object containing client</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public List<Client> GetAllClientByUserID(int userID)
+        /// <modifiedon>PJ</modifiedon>
+        /// <modifiedby>28-Aug-2024</modifiedby>
+        /// <modifiedreason>Chanaged return type from List<Client> to List<dynamic></modifiedreason>
+        public List<dynamic> GetAllClientByUserID(int userID)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@userID", userID);
-                var data = GetAllByProcedure<Client>(@"[dbo].[USP_UserClient_Fetch]",dbparams, _transaction);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_UserClient_Fetch]",dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -127,17 +125,17 @@ namespace SahadevDBLayer.Repository
         /// <returns>list of object containing client</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public List<Client> GetAllClientByTagID(string lstTagID)
+        /// <modifiedon>PJ</modifiedon>
+        /// <modifiedby>28-Aug-2024</modifiedby>
+        /// <modifiedreason>Chanaged return type from List<Client> to List<dynamic></modifiedreason>
+        public List<dynamic> GetAllClientByTagID(string lstTagID)
         {
             try
             {
                
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@tagID", lstTagID);
-                var data = GetAllByProcedure<Client>(@"[dbo].[Usp_FetchClient]", dbparams, _transaction);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[Usp_FetchClient]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)

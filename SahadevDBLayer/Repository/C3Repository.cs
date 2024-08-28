@@ -30,32 +30,27 @@ namespace SahadevDBLayer.Repository
     {
         //List<FeedbackType> GetFeedbackType();
 
-        List<string> GetAllTagIDByTagGroupName(string tagGroupName);
-        int InsertDossierDef(RQ_DossierDef objDossier);
-        int InsertDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
-        int InsertDossierSch(RQ_DossierSch objRQ_DossierSch);
-        int InsertDossierConf(RQ_DossierConf objRQ_DossierConf);
-        int InsertDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);
-
-        bool UpdateDossierDef(RQ_DossierDef objRQ_Dossier);
-        bool UpdateDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
-        bool UpdateDossierSch(RQ_DossierSch objRQ_DossierSch);
-        bool UpdateDossierConf(RQ_DossierConf objRQ_DossierConf);
-        bool UpdateDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);
-
+        List<string> GetAllTagIDByTagGroupName(string tgid);
         DossierDef GetDossierDef(int DossierDefID);
         DossierRecep GetDossierRecep(int DossierDefID);
         DossierSch GetDossierSch(int DossierDefID);
         DossierConf GetDossierConf(int DossierDefID);
         DossierTagGroup GetDossierTagGroup(int DossierDefID);
-
         List<dynamic> GetAllDossier();
         List<dynamic> GetAllGeneratedDossier();
         dynamic GetGeneratedDossier(int dossierConfID);
-
         List<RS_AdditionalURL> GetAllAdditionalUrl(int dossierID);
+        int InsertDossierDef(RQ_DossierDef objDossier);
+        int InsertDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
+        int InsertDossierSch(RQ_DossierSch objRQ_DossierSch);
+        int InsertDossierConf(RQ_DossierConf objRQ_DossierConf);
+        int InsertDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);        
         bool InsertAdditionalURl(RQ_AdditionalURL objRQ_AdditionalURL);
-
+        bool UpdateDossierDef(RQ_DossierDef objRQ_Dossier);
+        bool UpdateDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
+        bool UpdateDossierSch(RQ_DossierSch objRQ_DossierSch);
+        bool UpdateDossierConf(RQ_DossierConf objRQ_DossierConf);
+        bool UpdateDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);
     }
 
     internal class C3Repository : RepositoryBase, IC3Repository
@@ -74,18 +69,19 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to get fetch client detail from All Tag ID from 
         /// </summary>
+        /// <param name="tgid">TagGroupID</param>
         /// <returns>list of object containing list of TagID</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<string> GetAllTagIDByTagGroupName(string tagGroupName)
+        public List<string> GetAllTagIDByTagGroupName(string tgid)
         {
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@tagGroupName", tagGroupName);
+                dbparams.Add("@tgid", tgid);
                 var data = GetAllByProcedure<string>(@"[dbo].[USP_Competitor_Fetch]", dbparams, _transaction);
                 return data;
             }
@@ -281,7 +277,7 @@ namespace SahadevDBLayer.Repository
         {
             try
             {
-                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GenratedDossier_FetchAll]", null, _transaction);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_FetchAll]", null, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -309,7 +305,7 @@ namespace SahadevDBLayer.Repository
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierConfID", dossierConfID);
-                var data = GetByProcedure<dynamic>(@"[dbo].[USP_GenratedDossier_Fetch]", dbparams, _transaction);
+                var data = GetByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
