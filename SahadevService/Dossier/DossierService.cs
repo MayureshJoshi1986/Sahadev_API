@@ -33,7 +33,7 @@ namespace SahadevService.Dossier
     /// </summary>
     interface IDossierService
     {
-        List<dynamic> GetAllClientsByTagID(string tagGroupName);
+        List<dynamic> GetAllClientsByTagID(int tgID);
         List<dynamic> GetAllClientByUserID(int userID);
         List<dynamic> GetAllUser();        
         DossierDef GetDossierDef(int dossierDefID);
@@ -76,11 +76,11 @@ namespace SahadevService.Dossier
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<dynamic> GetAllClientsByTagID(string tagGroupName)
+        public List<dynamic> GetAllClientsByTagID(int tgID)
         {
             try
             {
-                var lstTagID = uw.C3Repository.GetAllTagIDByTagGroupName(tagGroupName);
+                var lstTagID = uw.C3Repository.GetAllTagIDByTagGroupName(tgID);
                 string strTagID = String.Join(",", lstTagID);
                 List <dynamic> lstGetAllClientByTagID = uw.C1Repository.GetAllClientByTagID(strTagID);
                 return lstGetAllClientByTagID;

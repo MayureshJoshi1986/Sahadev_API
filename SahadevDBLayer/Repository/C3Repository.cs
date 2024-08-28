@@ -30,7 +30,7 @@ namespace SahadevDBLayer.Repository
     {
         //List<FeedbackType> GetFeedbackType();
 
-        List<string> GetAllTagIDByTagGroupName(string tagGroupName);
+        List<string> GetAllTagIDByTagGroupName(int tgID);
         int InsertDossierDef(RQ_DossierDef objDossier);
         int InsertDossierRecep(RQ_DossierRecep objRQ_DossierRecep);
         int InsertDossierSch(RQ_DossierSch objRQ_DossierSch);
@@ -81,12 +81,12 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<string> GetAllTagIDByTagGroupName(string tagGroupName)
+        public List<string> GetAllTagIDByTagGroupName(int tgID)
         {
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@tagGroupName", tagGroupName);
+                dbparams.Add("@tgID", tgID);
                 var data = GetAllByProcedure<string>(@"[dbo].[USP_Competitor_Fetch]", dbparams, _transaction);
                 return data;
             }
@@ -288,7 +288,7 @@ namespace SahadevDBLayer.Repository
         {
             try
             {
-                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GenratedDossier_FetchAll]", null, _transaction);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_FetchAll]", null, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -317,7 +317,7 @@ namespace SahadevDBLayer.Repository
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierConfID", dossierConfID);
-                var data = GetByProcedure<dynamic>(@"[dbo].[USP_GenratedDossier_Fetch]", dbparams, _transaction);
+                var data = GetByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)

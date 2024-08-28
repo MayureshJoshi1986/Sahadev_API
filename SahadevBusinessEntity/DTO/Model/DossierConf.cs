@@ -25,5 +25,7 @@ namespace SahadevBusinessEntity.DTO.Model
         public int DossierConfID { get; set; }
         public int DossierDefID  { get; set; }
         public string ConfJSON { get; set; }
+
+        public DossierDef DossierDef { get; set; }
     }
 }

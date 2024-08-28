@@ -27,5 +27,7 @@ namespace SahadevBusinessEntity.DTO.Model
         public int DossierDefID { get; set; }
         public int UserID { get; set; }
 
+        public DossierDef DossierDef { get; set; }
+
     }
 }

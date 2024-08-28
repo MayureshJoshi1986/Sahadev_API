@@ -102,12 +102,12 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason></modifiedreason>
         [HttpGet]
         [Route("Dossier_CompetitorFetch")]
-        public IActionResult GetAllClientsByTagID(string tagGroupName)
+        public IActionResult GetAllClientsByTagID(int tgID)
         {
             try
             {
 
-                List<dynamic> lstClient = SS.DossierService.GetAllClientsByTagID(tagGroupName);
+                List<dynamic> lstClient = SS.DossierService.GetAllClientsByTagID(tgID);
                 if (lstClient != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstClient });

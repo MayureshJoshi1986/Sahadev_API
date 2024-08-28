@@ -34,6 +34,8 @@ namespace SahadevBusinessEntity.DTO.Model
         public DateTime LastRun { get; set; }
         public DateTime NextRun { get; set; }
 
+        public DossierDef DossierDef { get; set; }
+
         
 
     }

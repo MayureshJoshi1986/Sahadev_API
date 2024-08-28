@@ -28,5 +28,7 @@ namespace SahadevBusinessEntity.DTO.Model
         public int TGID { get; set; }
         public int TagID { get; set; }
         public int TypeOfBinding { get; set; }
+
+        DossierDef DossierDef { get; set; }
     }
 }
