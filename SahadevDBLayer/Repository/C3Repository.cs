@@ -44,7 +44,7 @@ namespace SahadevDBLayer.Repository
         bool UpdateDossierTagGroup(RQ_DossierTagGroup objRQ_DossierTagGroup);
 
         DossierDef GetDossierDef(int DossierDefID);
-        DossierRecep GetDossierRecep(int DossierDefID);
+        List<DossierRecep> GetAllDossierRecep(int DossierDefID);
         DossierSch GetDossierSch(int DossierDefID);
         DossierConf GetDossierConf(int DossierDefID);
         DossierTagGroup GetDossierTagGroup(int DossierDefID);
@@ -74,6 +74,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to get fetch client detail from All Tag ID from 
         /// </summary>
+        /// <param name="tagGroupName">providing competitor name or tag group name to fecth all related tags for the company</param>
         /// <returns>list of object containing list of TagID</returns>
         /// <createdon>23-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -102,6 +103,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch Dossier detail from DossierDef Table
         /// </summary>
+        ///  <param name="dossierDefID">dossierDefID to Fetch DossierDef </param>
         /// <returns>object containing DossierDef detail</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -131,20 +133,21 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch DossierRecep detail from DossierRecep Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch DossierRecep records for the dossier</param>
         /// <returns>object containing DossierRecep detail</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>@8-08-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Converted into returning single object to lost of object</modifiedreason>
 
-        public DossierRecep GetDossierRecep(int dossierDefID)
+        public List<DossierRecep> GetAllDossierRecep(int dossierDefID)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierDefID", dossierDefID);
-                var data = GetByProcedure<DossierRecep>(@"[dbo].[USP_DossierRecep_Fetch]", dbparams, _transaction);
+                var data = GetAllByProcedure<DossierRecep>(@"[dbo].[USP_DossierRecep_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -161,6 +164,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch DossierSch detail from DossierSch Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch DossierSch record for the dossier</param>
         /// <returns>object containing DossierSch detail</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -190,7 +194,9 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch DossieConf detail from DossierConf Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch DossierConf record for the dossier</param>
         /// <returns>object containing DossierConf detail</returns>
+
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
@@ -218,6 +224,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch DossierTagGroup detail from DossierTagGroup Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch DossierTagGroup record for the dossier</param>
         /// <returns>list of object containing DossierTagGroup detail</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -296,6 +303,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch Generated Dossier  from Dossier Table
         /// </summary>
+        /// <param name="dossierDefID">dossierDefID to Fetch GeneratedDossier record for the dossier</param>
         /// <returns>object containing Dossier</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -324,6 +332,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// This method is used to fetch all AdditionalUrl of a Dossier from AdditionalUrl Table
         /// </summary>
+        /// <param name="dossierID">dossierID to Fetch All AditionalURl record for the dossier</param>
         /// <returns>list of object containing AdditionalURL list</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>

@@ -404,7 +404,7 @@ namespace SahadevService.Dossier
 
                 if (objDossierDef != null)
                 {
-                    objDossierDef.DossierRecep = uw.C3Repository.GetDossierRecep(dossierDefID);
+                    objDossierDef.DossierReceps = uw.C3Repository.GetAllDossierRecep(dossierDefID);
                     objDossierDef.DossierSch = uw.C3Repository.GetDossierSch(dossierDefID);
                     objDossierDef.DossierConf = uw.C3Repository.GetDossierConf(dossierDefID);
                     objDossierDef.DossierTagGroup = uw.C3Repository.GetDossierTagGroup(dossierDefID);

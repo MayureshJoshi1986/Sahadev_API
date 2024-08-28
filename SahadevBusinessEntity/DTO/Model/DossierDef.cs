@@ -30,7 +30,7 @@ namespace SahadevBusinessEntity.DTO.Model
 
         public DossierTagGroup DossierTagGroup { get; set; }
 
-        public DossierRecep DossierRecep { get; set; }
+        public List<DossierRecep> DossierReceps { get; set; }
 
         public List<Dossier> Dossiers { get; set; }
     }
