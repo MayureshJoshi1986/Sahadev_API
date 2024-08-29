@@ -128,7 +128,6 @@ namespace Sahadev
                 //endpoints.MapGet("/", async context => await context.Response.WriteAsync("Hello World!"));
             });
 
-
             app.UseReDoc(c =>
             {
                 c.DocumentTitle = "REDOC API Documentation";

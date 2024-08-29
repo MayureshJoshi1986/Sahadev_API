@@ -2921,3 +2921,1511 @@
    at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
  
 2024-08-29 15:22:23.401 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:24:43.054 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-29 15:24:43.167 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-29 15:24:43.673 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-29 15:24:43.971 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:24:43.980 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:24:44.119 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:24:44.178 +05:30 [Information] | Message : Received HTTP response after 195.2513ms - InternalServerError | Exception :  
+2024-08-29 15:24:44.179 +05:30 [Information] | Message : End processing HTTP request after 217.7941ms - InternalServerError | Exception :  
+2024-08-29 15:24:44.265 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:24:59.484 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:24:59.484 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:24:59.495 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:24:59.498 +05:30 [Information] | Message : Received HTTP response after 13.934ms - InternalServerError | Exception :  
+2024-08-29 15:24:59.498 +05:30 [Information] | Message : End processing HTTP request after 14.639ms - InternalServerError | Exception :  
+2024-08-29 15:24:59.500 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:24:59.511 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:25:14.551 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:25:14.551 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:25:14.561 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:25:14.564 +05:30 [Information] | Message : Received HTTP response after 12.7636ms - InternalServerError | Exception :  
+2024-08-29 15:25:14.565 +05:30 [Information] | Message : End processing HTTP request after 13.6897ms - InternalServerError | Exception :  
+2024-08-29 15:25:14.566 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:25:14.569 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:25:29.591 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:25:29.592 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:25:29.622 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:25:29.630 +05:30 [Information] | Message : Received HTTP response after 38.8799ms - InternalServerError | Exception :  
+2024-08-29 15:25:29.631 +05:30 [Information] | Message : End processing HTTP request after 40.3897ms - InternalServerError | Exception :  
+2024-08-29 15:25:29.633 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:25:29.639 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:25:44.667 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:25:44.667 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:25:44.683 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:25:44.686 +05:30 [Information] | Message : Received HTTP response after 18.3759ms - InternalServerError | Exception :  
+2024-08-29 15:25:44.686 +05:30 [Information] | Message : End processing HTTP request after 19.2609ms - InternalServerError | Exception :  
+2024-08-29 15:25:44.688 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:25:44.691 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:25:59.705 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:25:59.705 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:25:59.728 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:25:59.732 +05:30 [Information] | Message : Received HTTP response after 26.6303ms - InternalServerError | Exception :  
+2024-08-29 15:25:59.733 +05:30 [Information] | Message : End processing HTTP request after 27.5323ms - InternalServerError | Exception :  
+2024-08-29 15:25:59.734 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:25:59.738 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:26:14.751 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:26:14.751 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:26:14.773 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:26:14.776 +05:30 [Information] | Message : Received HTTP response after 25.0373ms - InternalServerError | Exception :  
+2024-08-29 15:26:14.777 +05:30 [Information] | Message : End processing HTTP request after 25.7188ms - InternalServerError | Exception :  
+2024-08-29 15:26:14.778 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:26:14.781 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:26:29.798 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:26:29.798 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:26:29.808 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:26:29.811 +05:30 [Information] | Message : Received HTTP response after 12.8447ms - InternalServerError | Exception :  
+2024-08-29 15:26:29.811 +05:30 [Information] | Message : End processing HTTP request after 13.6084ms - InternalServerError | Exception :  
+2024-08-29 15:26:29.822 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:26:29.825 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:26:44.844 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:26:44.844 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:26:44.869 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:26:44.872 +05:30 [Information] | Message : Received HTTP response after 27.6297ms - InternalServerError | Exception :  
+2024-08-29 15:26:44.872 +05:30 [Information] | Message : End processing HTTP request after 28.1212ms - InternalServerError | Exception :  
+2024-08-29 15:26:44.874 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:26:44.877 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:26:59.883 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:26:59.883 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:26:59.899 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:26:59.903 +05:30 [Information] | Message : Received HTTP response after 19.6325ms - InternalServerError | Exception :  
+2024-08-29 15:26:59.903 +05:30 [Information] | Message : End processing HTTP request after 20.1508ms - InternalServerError | Exception :  
+2024-08-29 15:26:59.904 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:26:59.907 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:27:14.914 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:27:14.914 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:27:14.930 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:27:14.932 +05:30 [Information] | Message : Received HTTP response after 18.4003ms - InternalServerError | Exception :  
+2024-08-29 15:27:14.933 +05:30 [Information] | Message : End processing HTTP request after 18.8413ms - InternalServerError | Exception :  
+2024-08-29 15:27:14.934 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:27:14.937 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:27:29.945 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:27:29.945 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:27:29.962 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:27:29.965 +05:30 [Information] | Message : Received HTTP response after 19.1995ms - InternalServerError | Exception :  
+2024-08-29 15:27:29.965 +05:30 [Information] | Message : End processing HTTP request after 19.5898ms - InternalServerError | Exception :  
+2024-08-29 15:27:29.966 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:27:29.968 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:27:44.982 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:27:44.983 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:27:44.998 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:27:45.006 +05:30 [Information] | Message : Received HTTP response after 23.7796ms - InternalServerError | Exception :  
+2024-08-29 15:27:45.007 +05:30 [Information] | Message : End processing HTTP request after 24.2547ms - InternalServerError | Exception :  
+2024-08-29 15:27:45.008 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:27:45.010 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:28:00.024 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:28:00.024 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:28:00.041 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:28:00.044 +05:30 [Information] | Message : Received HTTP response after 20.2652ms - InternalServerError | Exception :  
+2024-08-29 15:28:00.045 +05:30 [Information] | Message : End processing HTTP request after 20.7643ms - InternalServerError | Exception :  
+2024-08-29 15:28:00.046 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:28:00.049 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:28:15.059 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:28:15.059 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:28:15.075 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:28:15.078 +05:30 [Information] | Message : Received HTTP response after 18.765ms - InternalServerError | Exception :  
+2024-08-29 15:28:15.078 +05:30 [Information] | Message : End processing HTTP request after 19.2038ms - InternalServerError | Exception :  
+2024-08-29 15:28:15.079 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:28:15.081 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:28:30.090 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:28:30.090 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:28:30.099 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:28:30.100 +05:30 [Information] | Message : Received HTTP response after 9.7451ms - InternalServerError | Exception :  
+2024-08-29 15:28:30.100 +05:30 [Information] | Message : End processing HTTP request after 9.996ms - InternalServerError | Exception :  
+2024-08-29 15:28:30.101 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:28:30.102 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:28:45.115 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:28:45.115 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:28:45.137 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:28:45.139 +05:30 [Information] | Message : Received HTTP response after 24.0524ms - InternalServerError | Exception :  
+2024-08-29 15:28:45.139 +05:30 [Information] | Message : End processing HTTP request after 24.4526ms - InternalServerError | Exception :  
+2024-08-29 15:28:45.140 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:28:45.142 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:29:00.158 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:29:00.158 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:29:00.173 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:29:00.174 +05:30 [Information] | Message : Received HTTP response after 16.7605ms - InternalServerError | Exception :  
+2024-08-29 15:29:00.175 +05:30 [Information] | Message : End processing HTTP request after 17.0681ms - InternalServerError | Exception :  
+2024-08-29 15:29:00.176 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:29:00.178 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:29:15.194 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:29:15.194 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:29:15.207 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:29:15.210 +05:30 [Information] | Message : Received HTTP response after 15.8801ms - InternalServerError | Exception :  
+2024-08-29 15:29:15.210 +05:30 [Information] | Message : End processing HTTP request after 16.1934ms - InternalServerError | Exception :  
+2024-08-29 15:29:15.211 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:29:15.213 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:29:30.234 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:29:30.235 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:29:30.245 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:29:30.246 +05:30 [Information] | Message : Received HTTP response after 11.4114ms - InternalServerError | Exception :  
+2024-08-29 15:29:30.246 +05:30 [Information] | Message : End processing HTTP request after 11.7272ms - InternalServerError | Exception :  
+2024-08-29 15:29:30.247 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:29:30.247 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:29:45.267 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:29:45.267 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:29:45.280 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:29:45.282 +05:30 [Information] | Message : Received HTTP response after 14.2843ms - InternalServerError | Exception :  
+2024-08-29 15:29:45.282 +05:30 [Information] | Message : End processing HTTP request after 14.6895ms - InternalServerError | Exception :  
+2024-08-29 15:29:45.289 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:29:45.291 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:30:00.300 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:30:00.300 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:30:00.308 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:30:00.310 +05:30 [Information] | Message : Received HTTP response after 9.6906ms - InternalServerError | Exception :  
+2024-08-29 15:30:00.310 +05:30 [Information] | Message : End processing HTTP request after 10.0196ms - InternalServerError | Exception :  
+2024-08-29 15:30:00.311 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:30:00.313 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:30:15.324 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:30:15.324 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:30:15.344 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:30:15.351 +05:30 [Information] | Message : Received HTTP response after 27.6156ms - InternalServerError | Exception :  
+2024-08-29 15:30:15.352 +05:30 [Information] | Message : End processing HTTP request after 28.0219ms - InternalServerError | Exception :  
+2024-08-29 15:30:15.353 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:30:15.356 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:30:30.368 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:30:30.368 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:30:30.376 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:30:30.378 +05:30 [Information] | Message : Received HTTP response after 10.0168ms - InternalServerError | Exception :  
+2024-08-29 15:30:30.378 +05:30 [Information] | Message : End processing HTTP request after 10.2469ms - InternalServerError | Exception :  
+2024-08-29 15:30:30.379 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:30:30.381 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:30:45.405 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:30:45.405 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:30:45.433 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:30:45.437 +05:30 [Information] | Message : Received HTTP response after 31.0136ms - InternalServerError | Exception :  
+2024-08-29 15:30:45.437 +05:30 [Information] | Message : End processing HTTP request after 31.3951ms - InternalServerError | Exception :  
+2024-08-29 15:30:45.442 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:30:45.444 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:31:00.453 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:31:00.453 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:31:00.465 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:31:00.467 +05:30 [Information] | Message : Received HTTP response after 14.0801ms - InternalServerError | Exception :  
+2024-08-29 15:31:00.467 +05:30 [Information] | Message : End processing HTTP request after 14.4259ms - InternalServerError | Exception :  
+2024-08-29 15:31:00.469 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:31:00.470 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:31:15.482 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:31:15.482 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:31:15.497 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:31:15.500 +05:30 [Information] | Message : Received HTTP response after 17.371ms - InternalServerError | Exception :  
+2024-08-29 15:31:15.500 +05:30 [Information] | Message : End processing HTTP request after 17.7456ms - InternalServerError | Exception :  
+2024-08-29 15:31:15.501 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:31:15.503 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:31:30.527 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:31:30.527 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:31:30.539 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:31:30.545 +05:30 [Information] | Message : Received HTTP response after 18.0422ms - InternalServerError | Exception :  
+2024-08-29 15:31:30.545 +05:30 [Information] | Message : End processing HTTP request after 18.3942ms - InternalServerError | Exception :  
+2024-08-29 15:31:30.546 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:31:30.548 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:31:45.559 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:31:45.559 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:31:45.571 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:31:45.578 +05:30 [Information] | Message : Received HTTP response after 18.4125ms - InternalServerError | Exception :  
+2024-08-29 15:31:45.578 +05:30 [Information] | Message : End processing HTTP request after 18.765ms - InternalServerError | Exception :  
+2024-08-29 15:31:45.579 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:31:45.581 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:32:00.588 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:32:00.589 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:32:00.603 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:32:00.605 +05:30 [Information] | Message : Received HTTP response after 16.9413ms - InternalServerError | Exception :  
+2024-08-29 15:32:00.606 +05:30 [Information] | Message : End processing HTTP request after 17.3216ms - InternalServerError | Exception :  
+2024-08-29 15:32:00.607 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:32:00.609 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:32:15.625 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:32:15.625 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:32:15.640 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:32:15.644 +05:30 [Information] | Message : Received HTTP response after 19.2878ms - InternalServerError | Exception :  
+2024-08-29 15:32:15.645 +05:30 [Information] | Message : End processing HTTP request after 19.622ms - InternalServerError | Exception :  
+2024-08-29 15:32:15.646 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:32:15.647 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:32:30.662 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:32:30.662 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:32:30.671 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:32:30.673 +05:30 [Information] | Message : Received HTTP response after 10.8558ms - InternalServerError | Exception :  
+2024-08-29 15:32:30.673 +05:30 [Information] | Message : End processing HTTP request after 11.0779ms - InternalServerError | Exception :  
+2024-08-29 15:32:30.674 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:32:30.676 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:32:45.681 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:32:45.681 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:32:45.694 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:32:45.695 +05:30 [Information] | Message : Received HTTP response after 14.123ms - InternalServerError | Exception :  
+2024-08-29 15:32:45.695 +05:30 [Information] | Message : End processing HTTP request after 14.2905ms - InternalServerError | Exception :  
+2024-08-29 15:32:45.695 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:32:45.696 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:33:00.713 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:33:00.713 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:33:00.720 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:33:00.721 +05:30 [Information] | Message : Received HTTP response after 8.4857ms - InternalServerError | Exception :  
+2024-08-29 15:33:00.721 +05:30 [Information] | Message : End processing HTTP request after 8.7605ms - InternalServerError | Exception :  
+2024-08-29 15:33:00.722 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:33:00.724 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:33:15.736 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:33:15.736 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:33:15.748 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:33:15.754 +05:30 [Information] | Message : Received HTTP response after 17.9137ms - InternalServerError | Exception :  
+2024-08-29 15:33:15.755 +05:30 [Information] | Message : End processing HTTP request after 18.2053ms - InternalServerError | Exception :  
+2024-08-29 15:33:15.755 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:33:15.757 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:33:30.770 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:33:30.770 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:33:30.781 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:33:30.783 +05:30 [Information] | Message : Received HTTP response after 12.8359ms - InternalServerError | Exception :  
+2024-08-29 15:33:30.783 +05:30 [Information] | Message : End processing HTTP request after 13.1121ms - InternalServerError | Exception :  
+2024-08-29 15:33:30.784 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:33:30.785 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:33:45.797 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:33:45.797 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:33:45.808 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:33:45.810 +05:30 [Information] | Message : Received HTTP response after 12.8791ms - InternalServerError | Exception :  
+2024-08-29 15:33:45.810 +05:30 [Information] | Message : End processing HTTP request after 13.1567ms - InternalServerError | Exception :  
+2024-08-29 15:33:45.811 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:33:45.812 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:34:00.823 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:34:00.823 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:34:00.835 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:34:00.837 +05:30 [Information] | Message : Received HTTP response after 13.1881ms - InternalServerError | Exception :  
+2024-08-29 15:34:00.837 +05:30 [Information] | Message : End processing HTTP request after 13.4566ms - InternalServerError | Exception :  
+2024-08-29 15:34:00.838 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:34:00.839 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:34:15.856 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:34:15.856 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:34:15.866 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:34:15.868 +05:30 [Information] | Message : Received HTTP response after 11.4424ms - InternalServerError | Exception :  
+2024-08-29 15:34:15.868 +05:30 [Information] | Message : End processing HTTP request after 11.7211ms - InternalServerError | Exception :  
+2024-08-29 15:34:15.869 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:34:15.870 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:34:30.874 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:34:30.875 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:34:30.883 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:34:30.884 +05:30 [Information] | Message : Received HTTP response after 9.5192ms - InternalServerError | Exception :  
+2024-08-29 15:34:30.884 +05:30 [Information] | Message : End processing HTTP request after 9.7795ms - InternalServerError | Exception :  
+2024-08-29 15:34:30.885 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:34:30.886 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:34:45.906 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:34:45.906 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:34:45.943 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:34:45.944 +05:30 [Information] | Message : Received HTTP response after 37.9908ms - InternalServerError | Exception :  
+2024-08-29 15:34:45.944 +05:30 [Information] | Message : End processing HTTP request after 38.2866ms - InternalServerError | Exception :  
+2024-08-29 15:34:45.945 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:35:00.955 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:35:00.955 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:35:00.962 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:35:00.963 +05:30 [Information] | Message : Received HTTP response after 8.1783ms - InternalServerError | Exception :  
+2024-08-29 15:35:00.964 +05:30 [Information] | Message : End processing HTTP request after 8.3847ms - InternalServerError | Exception :  
+2024-08-29 15:35:00.964 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:35:00.966 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:35:15.977 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:35:15.978 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:35:15.988 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:35:15.989 +05:30 [Information] | Message : Received HTTP response after 11.796ms - InternalServerError | Exception :  
+2024-08-29 15:35:15.990 +05:30 [Information] | Message : End processing HTTP request after 12.0777ms - InternalServerError | Exception :  
+2024-08-29 15:35:15.990 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:35:15.992 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:35:31.005 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:35:31.005 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:35:31.014 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:35:31.019 +05:30 [Information] | Message : Received HTTP response after 13.893ms - InternalServerError | Exception :  
+2024-08-29 15:35:31.019 +05:30 [Information] | Message : End processing HTTP request after 14.2179ms - InternalServerError | Exception :  
+2024-08-29 15:35:31.020 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:35:31.022 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:35:46.035 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:35:46.035 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:35:46.042 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 15
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:35:46.042 +05:30 [Information] | Message : Received HTTP response after 7.1572ms - InternalServerError | Exception :  
+2024-08-29 15:35:46.042 +05:30 [Information] | Message : End processing HTTP request after 7.2598ms - InternalServerError | Exception :  
+2024-08-29 15:35:46.043 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:35:46.043 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:37:25.350 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-29 15:37:25.477 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-29 15:37:26.010 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-29 15:37:26.445 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:37:26.450 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:37:26.607 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:37:26.667 +05:30 [Information] | Message : Received HTTP response after 212.7194ms - InternalServerError | Exception :  
+2024-08-29 15:37:26.668 +05:30 [Information] | Message : End processing HTTP request after 241.4663ms - InternalServerError | Exception :  
+2024-08-29 15:37:26.768 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:37:42.005 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:37:42.005 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:37:42.010 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:37:42.011 +05:30 [Information] | Message : Received HTTP response after 5.9173ms - InternalServerError | Exception :  
+2024-08-29 15:37:42.011 +05:30 [Information] | Message : End processing HTTP request after 6.2458ms - InternalServerError | Exception :  
+2024-08-29 15:37:42.011 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:37:42.016 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:37:54.056 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-29 15:37:54.183 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-29 15:37:54.638 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-29 15:37:54.940 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:37:54.948 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:37:55.099 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:37:55.148 +05:30 [Information] | Message : Received HTTP response after 195.6075ms - InternalServerError | Exception :  
+2024-08-29 15:37:55.148 +05:30 [Information] | Message : End processing HTTP request after 213.8825ms - InternalServerError | Exception :  
+2024-08-29 15:37:55.233 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:38:20.573 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-29 15:38:20.684 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-29 15:38:21.253 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-29 15:38:21.680 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:38:21.684 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:38:21.851 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:38:21.912 +05:30 [Information] | Message : Received HTTP response after 224.3226ms - InternalServerError | Exception :  
+2024-08-29 15:38:21.913 +05:30 [Information] | Message : End processing HTTP request after 250.8394ms - InternalServerError | Exception :  
+2024-08-29 15:38:22.014 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:38:54.864 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-29 15:38:54.972 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-29 15:38:55.441 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-29 15:38:55.865 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:38:55.873 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:38:56.049 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:38:56.109 +05:30 [Information] | Message : Received HTTP response after 233.6485ms - InternalServerError | Exception :  
+2024-08-29 15:38:56.110 +05:30 [Information] | Message : End processing HTTP request after 256.7486ms - InternalServerError | Exception :  
+2024-08-29 15:38:56.222 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:40:00.801 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-29 15:40:00.912 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-29 15:40:01.367 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-29 15:40:01.690 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:40:01.698 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:40:01.861 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:40:01.915 +05:30 [Information] | Message : Received HTTP response after 214.4843ms - InternalServerError | Exception :  
+2024-08-29 15:40:01.916 +05:30 [Information] | Message : End processing HTTP request after 235.2891ms - InternalServerError | Exception :  
+2024-08-29 15:40:02.009 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:40:17.281 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:40:17.282 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:40:17.292 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:40:17.296 +05:30 [Information] | Message : Received HTTP response after 13.5033ms - InternalServerError | Exception :  
+2024-08-29 15:40:17.296 +05:30 [Information] | Message : End processing HTTP request after 14.8675ms - InternalServerError | Exception :  
+2024-08-29 15:40:17.298 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:40:17.310 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:40:32.359 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:40:32.360 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:40:32.375 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:40:32.378 +05:30 [Information] | Message : Received HTTP response after 18.4527ms - InternalServerError | Exception :  
+2024-08-29 15:40:32.378 +05:30 [Information] | Message : End processing HTTP request after 19.2022ms - InternalServerError | Exception :  
+2024-08-29 15:40:32.380 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:40:32.383 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:40:47.391 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:40:47.391 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:40:47.404 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:40:47.408 +05:30 [Information] | Message : Received HTTP response after 17.2296ms - InternalServerError | Exception :  
+2024-08-29 15:40:47.409 +05:30 [Information] | Message : End processing HTTP request after 18.0813ms - InternalServerError | Exception :  
+2024-08-29 15:40:47.410 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
+2024-08-29 15:40:47.413 +05:30 [Information] | Message : Notification is sent on same window time. | Exception :  
+2024-08-29 15:43:19.954 +05:30 [Information] | Message : Application Started. | Exception :  
+2024-08-29 15:43:20.063 +05:30 [Information] | Message : Initializing UI Database | Exception :  
+2024-08-29 15:43:20.507 +05:30 [Information] | Message : Saving healthchecks configuration to database | Exception :  
+2024-08-29 15:43:20.789 +05:30 [Information] | Message : Start processing HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:43:20.793 +05:30 [Information] | Message : Sending HTTP request "GET" http://localhost:55006/healthz | Exception :  
+2024-08-29 15:43:20.968 +05:30 [Error] | Message : An unhandled exception has occurred while executing the request. | Exception : System.ArgumentNullException: Value cannot be null. (Parameter 'sqlserverconnectionstring')
+   at HealthChecks.SqlServer.SqlServerHealthCheck..ctor(String sqlserverconnectionstring, String sql, Action`1 beforeOpenConnectionConfigurer) in /_/src/HealthChecks.SqlServer/SqlServerHealthCheck.cs:line 14
+   at Microsoft.Extensions.DependencyInjection.SqlServerHealthCheckBuilderExtensions.<>c__DisplayClass3_0.<AddSqlServer>b__0(IServiceProvider sp) in /_/src/HealthChecks.SqlServer/DependencyInjection/SqlServerHealthCheckBuilderExtensions.cs:line 75
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.RunCheckAsync(HealthCheckRegistration registration, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Diagnostics.HealthChecks.DefaultHealthCheckService.CheckHealthAsync(Func`2 predicate, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckMiddleware.InvokeAsync(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ 
+2024-08-29 15:43:21.024 +05:30 [Information] | Message : Received HTTP response after 228.172ms - InternalServerError | Exception :  
+2024-08-29 15:43:21.025 +05:30 [Information] | Message : End processing HTTP request after 244.5291ms - InternalServerError | Exception :  
+2024-08-29 15:43:21.128 +05:30 [Error] | Message : GetHealthReport threw an exception when trying to get report from /healthz configured with name default api. | Exception : Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonReader.ReadAndMoveToContent()
+   at Newtonsoft.Json.JsonReader.ReadForType(JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at System.Net.Http.HttpResponseMessageExtensions.As[TContent](HttpResponseMessage response)
+   at HealthChecks.UI.Core.HostedService.HealthCheckReportCollector.GetHealthReport(HealthCheckConfiguration configuration)
+ 
