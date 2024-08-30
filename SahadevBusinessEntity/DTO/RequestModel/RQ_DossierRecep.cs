@@ -24,8 +24,8 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("dossier_recep_id")]
         public int DossierRecepID { get; set; }
 
-        [JsonPropertyName("dossier_def_id")]
-        public int DossierDefID { get; set; }
+        //[JsonPropertyName("dossier_def_id")]
+        //public int DossierDefID { get; set; }
         [JsonPropertyName("user_id")]
         public int UserID { get; set; }
     }
