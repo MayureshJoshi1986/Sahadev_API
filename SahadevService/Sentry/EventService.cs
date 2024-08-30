@@ -54,13 +54,14 @@ namespace SahadevService.Sentry
         /// <param name="objRQ_Event">request object containing Event detail</param>
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>17-Aug-2024</createdon>
-        /// <createdby>PJ</createdby>
-        /// <modifiedon>17-Aug-2024</modifiedon>
-        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <createdby>Saroj Laddha</createdby>
         /// <modifiedreason></modifiedreason>
         /// <modifiedon>23-Aug-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changed request model from Event to RQ_Event</modifiedreason>
+        /// <modifiedon>30-08-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Mapping of the Request Model to Business Model</modifiedreason>
         public bool Add(RQ_Event objRQ_Event)
         {
             bool bReturn = false;
@@ -80,13 +81,33 @@ namespace SahadevService.Sentry
 
                 objTag.TagID = TagID;
 
+
+                //Mapping Rquest Event Object to Event Business Model 
+
+                Event objEvent = new Event();
+                objEvent.EventName = objRQ_Event.EventName;
+                objEvent.Description = objRQ_Event.Description;
+                objEvent.EventTypeID = objRQ_Event.EventTypeID;
+                objEvent.ClientID = objRQ_Event.ClientID;
+                objEvent.RefArticleURL = objRQ_Event.RefArticleURL;
+                objEvent.Keywords = objRQ_Event.Keywords;
+                objEvent.Query = objRQ_Event.Query;
+                objEvent.Platform1 = objRQ_Event.Platform1;
+                objEvent.Platform2 = objRQ_Event.Platform2;
+                objEvent.Platform3 = objRQ_Event.Platform3;
+                objEvent.Platform4 = objRQ_Event.Platform4;
+                objEvent.StartDate = objRQ_Event.StartDate;
+                objEvent.EndDate = objRQ_Event.EndDate;
+                objEvent.StatusID = objRQ_Event.StatusID;
+
+
                 //Assign TagId to the Event
-                objRQ_Event.TagID = TagID;
+                objEvent.TagID = TagID;
 
                 //Insert Event anf get event Id
 
-                int EventID = uw.C2Repository.InsertEvent(objRQ_Event);
-                objRQ_Event.EventID = EventID;
+                int EventID = uw.C2Repository.InsertEvent(objEvent);
+                objEvent.EventID = EventID;
 
                 //DO entry in Client Topic
 
@@ -178,12 +199,25 @@ namespace SahadevService.Sentry
         /// <modifiedon>23-Aug-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changed request model from Feedback to RQ_Feedback</modifiedreason>
+        /// <modifiedon>30-08-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Mapping of the Request Model to Business Model</modifiedreason>
         public bool InsertFeedback(RQ_Feedback objRQ_Feedback)
         {
             bool bReturn = false;
             try
             {
-                bReturn = uw.C2Repository.InsertFeedback(objRQ_Feedback);
+                //Mapping of Request Object to Feedback Business Model
+                Feedback objFeedback = new Feedback();
+                objFeedback.EventID = objRQ_Feedback.EventID;
+                objFeedback.UserID = objRQ_Feedback.UserID;
+                objFeedback.PlatformID = objRQ_Feedback.PlatformID;
+                objFeedback.FTID = objRQ_Feedback.FTID;
+                objFeedback.RecordID = objRQ_Feedback.RecordID;
+                objFeedback.ScreenName = objRQ_Feedback.ScreenName;
+                objFeedback.Description= objRQ_Feedback.FeedbackDescription;
+
+                bReturn = uw.C2Repository.InsertFeedback(objFeedback);
                 uw.Commit();
             }
             catch (Exception ex)
@@ -204,21 +238,34 @@ namespace SahadevService.Sentry
         /// <modifiedon>23-Aug-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changed request model from BookMark to RQ_BookMark</modifiedreason>
+        /// <modifiedon>30-08-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Mapping of the Request Model to Business Model</modifiedreason>
         public bool InsertUpdateBookMark(RQ_BookMark objRQ_BookMark)
         {
             bool bReturn = false;
             try
             {
+                //mapping Request Model to BookMark Business model
+
+                BookMark objBookMark = new BookMark();
+                objBookMark.BookMarkID = objRQ_BookMark.BookMarkID;
+                objBookMark.EventID = objRQ_BookMark.EventID;
+                objBookMark.UserID = objRQ_BookMark.UserID;
+                objBookMark.PlatformID = objRQ_BookMark.PlatformID;
+                objBookMark.RecordID = objRQ_BookMark.RecordID;
+
+
                 switch (objRQ_BookMark.Action)
                 {
                     case "Insert":
-                        bReturn = uw.C2Repository.InsertBookMark(objRQ_BookMark);
+                        bReturn = uw.C2Repository.InsertBookMark(objBookMark);
                         break;
                     case "Update":
-                        bReturn = uw.C2Repository.UpdateBookMark(objRQ_BookMark);
+                        bReturn = uw.C2Repository.UpdateBookMark(objBookMark);
                         break;
                     case "Delete":
-                        bReturn = uw.C2Repository.DeleteBookMark(objRQ_BookMark);
+                        bReturn = uw.C2Repository.DeleteBookMark(objBookMark);
                         break;
 
                 }
@@ -269,12 +316,25 @@ namespace SahadevService.Sentry
         /// <modifiedon>23-Aug-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changed request model from DataRequest to RQ_DataRequest</modifiedreason>
+        /// <modifiedon>30-08-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Mapping of the Request Model to Business Model</modifiedreason>
         public bool InsertDataRequest(RQ_DataRequest objRQ_DataRequest)
         {
             bool bReturn = false;
             try
-            {
-                bReturn = uw.C2Repository.InsertDataRequest(objRQ_DataRequest);
+            {   //mapping of Request Model to DataRequest Business Model
+                DataRequest objDataRequest = new DataRequest();
+                objDataRequest.UserID = objRQ_DataRequest.UserID;
+                objDataRequest.EventID = objRQ_DataRequest.EventID;
+                objDataRequest.PlatformID = objRQ_DataRequest.PlatformID;
+                objDataRequest.StartDate   =Convert.ToDateTime(objRQ_DataRequest.StartDate);
+                objDataRequest.EndDate = Convert.ToDateTime(objRQ_DataRequest.EndDate);
+                objDataRequest.FilterJson = objRQ_DataRequest.FilterJson;
+                objDataRequest.StatusID = objRQ_DataRequest.StatusID;
+
+
+                bReturn = uw.C2Repository.InsertDataRequest(objDataRequest);
                 uw.Commit();
 
             }

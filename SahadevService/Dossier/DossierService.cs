@@ -35,12 +35,12 @@ namespace SahadevService.Dossier
     {
         List<dynamic> GetAllClientsByTagID(int tgID);
         List<dynamic> GetAllClientByUserID(int userID);
-        List<dynamic> GetAllUser();        
+        List<dynamic> GetAllUser();
         DossierDef GetDossierDef(int dossierDefID);
         List<dynamic> GetAllDossier();
         List<dynamic> GetAllGeneratedDossier();
         dynamic GetGeneratedDossier(int dossierConfID);
-        List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID);        
+        List<AdditionalURL> GetAllAdditionalURL(int dossierID);
         bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef);
         bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL);
         bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef);
@@ -82,7 +82,7 @@ namespace SahadevService.Dossier
             {
                 var lstTagID = uw.C3Repository.GetAllTagIDByTagGroupName(tgID);
                 string strTagID = String.Join(",", lstTagID);
-                List <dynamic> lstGetAllClientByTagID = uw.C1Repository.GetAllClientByTagID(strTagID);
+                List<dynamic> lstGetAllClientByTagID = uw.C1Repository.GetAllClientByTagID(strTagID);
                 return lstGetAllClientByTagID;
             }
             catch (Exception ex)
@@ -144,8 +144,8 @@ namespace SahadevService.Dossier
         /// <summary>
         /// This method is used to get DossierDef Detail with all related Table
         /// </summary>
-        /// <returns>object containing DossierDef and its related table Detail</returns>
         /// <param name="dossierDefID">dossierDefID</param>
+        /// <returns>object containing DossierDef and its related table Detail</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
@@ -226,9 +226,9 @@ namespace SahadevService.Dossier
 
         /// <summary>
         /// This method is used to get GeneratedDossier of particular configuration
-        /// </summary>
-        /// <returns>list of object containing Dossier</returns>
+        /// </summary> 
         /// <param name="dossierConfID">DossierConfID</param>
+        /// <returns>list of object containing Dossier</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
@@ -252,17 +252,18 @@ namespace SahadevService.Dossier
         /// <summary>
         /// This method is used to get all additonal URLs of a dossier
         /// </summary>
+        /// <param name="dossierID">dossierID</param>
         /// <returns>list of object containing all additional URLs of a dossier</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID)
+        public List<AdditionalURL> GetAllAdditionalURL(int dossierID)
         {
             try
             {
-                List<RS_AdditionalURL> lstAdditionalURL = uw.C3Repository.GetAllAdditionalUrl(dossierID);
+                List<AdditionalURL> lstAdditionalURL = uw.C3Repository.GetAllAdditionalUrl(dossierID);
                 return lstAdditionalURL;
             }
             catch (Exception ex)
@@ -273,69 +274,7 @@ namespace SahadevService.Dossier
 
         }
 
-        /// <summary>
-        /// This method is used to insert DossierDef and DossierConf, DossierRecep, DossierSch, DossierTagGroup
-        /// </summary>
-        /// <param name="objRQ_DossierDef">request object DossierDef</param>
-        /// <returns>true if successfully inserted else false</returns>
-        /// <createdon>23-Aug-2024</createdon>
-        /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon>PJ</modifiedon>
-        /// <modifiedby>27-Aug-2024</modifiedby>
-        /// <modifiedreason>Changed request model and handled condition accordingly</modifiedreason>
-        public bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef)
-        {
-            bool bReturn = false;
-            try
-            {
-                //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
-                int dossierDefID = uw.C3Repository.InsertDossierDef(objRQ_DossierDef);
 
-                //Insert into DossierRecep table
-                RQ_DossierRecep objRQ_DossierRecep = new RQ_DossierRecep();
-                objRQ_DossierRecep.DossierDefID = dossierDefID;
-                objRQ_DossierRecep.UserID = objRQ_DossierDef.UserID;
-                uw.C3Repository.InsertDossierRecep(objRQ_DossierRecep);
-
-                //Insert into DossierSch table
-                RQ_DossierSch objRQ_DossierSch = new RQ_DossierSch();
-                objRQ_DossierSch.DossierDefID = dossierDefID;
-                objRQ_DossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
-                objRQ_DossierSch.Time1 = objRQ_DossierDef.Time1;
-                objRQ_DossierSch.Time2 = objRQ_DossierDef.Time2;
-                objRQ_DossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
-                objRQ_DossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
-                objRQ_DossierSch.LastRun = objRQ_DossierDef.LastRun;
-                objRQ_DossierSch.NextRun = objRQ_DossierDef.NextRun;
-                uw.C3Repository.InsertDossierSch(objRQ_DossierSch);
-
-                if (!string.IsNullOrEmpty(objRQ_DossierDef.ConfJSON))
-                {
-                    //Insert into DossierConf table
-                    RQ_DossierConf objRQ_DossierConf = new RQ_DossierConf();
-                    objRQ_DossierConf.DossierDefID = dossierDefID;
-                    objRQ_DossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
-                    uw.C3Repository.InsertDossierConf(objRQ_DossierConf);
-                }
-
-                //Insert into DossierTagGroup table
-                RQ_DossierTagGroup objRQ_DossierTagGroup = new RQ_DossierTagGroup();
-                objRQ_DossierTagGroup.DossierDefID = dossierDefID;
-                objRQ_DossierTagGroup.TGID = objRQ_DossierDef.TGID;
-                objRQ_DossierTagGroup.TagID = objRQ_DossierDef.TagID;
-                objRQ_DossierTagGroup.TypeOfBinding = objRQ_DossierDef.TypeOfBinding;
-                uw.C3Repository.InsertDossierTagGroup(objRQ_DossierTagGroup);
-
-                uw.Commit();
-                bReturn = true;
-            }
-            catch (Exception ex)
-            {
-                uw.Rollback();
-                _logger.LogError(ex, _className, "InsertDossierDef");
-            }
-            return bReturn;
-        }
 
         /// <summary>
         /// This method is used to insert AdditionalURL in AdditionalURL table
@@ -344,15 +283,26 @@ namespace SahadevService.Dossier
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>29-08-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Mapping of the Request Model to Business Model</modifiedreason>
         public bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL)
         {
             bool bReturn = false;
             try
             {
-                bReturn = uw.C3Repository.InsertAdditionalURl(objRQ_AdditonalURL);
+
+                //mapping of the Request model RQ_AdditionalURL to Business model AdditionalURL
+                AdditionalURL objAdditionalURL = new AdditionalURL();
+                objAdditionalURL.URL = objRQ_AdditonalURL.URL;
+                objAdditionalURL.DossierID = objAdditionalURL.DossierID;
+                objAdditionalURL.IsProcessed = objAdditionalURL.IsProcessed;
+                objAdditionalURL.RefLinkID = objAdditionalURL.RefLinkID;
+                objAdditionalURL.TryCount = objAdditionalURL.TryCount;
+                objAdditionalURL.ErrorMsg = objAdditionalURL.ErrorMsg;
+                objAdditionalURL.CreatedBy = objAdditionalURL.CreatedBy;
+
+                bReturn = uw.C3Repository.InsertAdditionalURl(objAdditionalURL);
 
                 //Commit the change 
                 uw.Commit();
@@ -365,6 +315,97 @@ namespace SahadevService.Dossier
             return bReturn;
         }
 
+
+
+        /// <summary>
+        /// This method is used to insert DossierDef and DossierConf, DossierRecep, DossierSch, DossierTagGroup
+        /// </summary>
+        /// <param name="objRQ_DossierDef">request object DossierDef</param>
+        /// <returns>true if successfully inserted else false</returns>
+        /// <createdon>23-Aug-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon>PJ</modifiedon>
+        /// <modifiedby>27-Aug-2024</modifiedby>
+        /// <modifiedreason>Changed request model and handled condition accordingly</modifiedreason>
+        /// <modifiedon>29-08-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Mapping Request model to business model</modifiedreason>
+        public bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef)
+        {
+            bool bReturn = false;
+            try
+            {
+
+                //Mapping Request Model to Business Model
+
+                //Mapping of DossierDef
+                DossierDef objDossierDef = new DossierDef();
+                objDossierDef.ClientID = objRQ_DossierDef.ClientID;
+                objDossierDef.DossierTypeID = objRQ_DossierDef.DossierTypeID;
+                objDossierDef.StartDate = objRQ_DossierDef.StartDate;
+                objDossierDef.EndDate = objRQ_DossierDef.EndDate;
+                objDossierDef.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
+                objDossierDef.Title = objRQ_DossierDef.Title;
+                objDossierDef.EventTypeID = objRQ_DossierDef.EventTypeID;
+                objDossierDef.EventContext = objRQ_DossierDef.EventContext;
+                objDossierDef.EventRefURL = objRQ_DossierDef.EventRefURL;
+                objDossierDef.EventKQuery = objRQ_DossierDef.EventKQuery;
+                objDossierDef.EventTagID = objRQ_DossierDef.EventTagID;
+                objDossierDef.Platform1ID = objRQ_DossierDef.Platform1ID;
+                objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
+                objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
+                objDossierDef.StatusID = objRQ_DossierDef.StatusID;
+
+
+                //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
+                int dossierDefID = uw.C3Repository.InsertDossierDef(objDossierDef);
+                objDossierDef.DossierDefID = dossierDefID;
+
+                //Mapping Of DossierSch
+                DossierSch objDossierSch = new DossierSch();
+                objDossierSch.DossierDefID = dossierDefID;
+                objDossierSch.ScheduleTypeID =objRQ_DossierDef.ScheduleTypeID;
+                objDossierSch.Time1 = Convert.ToDateTime(objRQ_DossierDef.Time1);
+                objDossierSch.Time2 = Convert.ToDateTime(objRQ_DossierDef.Time2);
+                objDossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
+                objDossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
+                objDossierSch.LastRun = objRQ_DossierDef.LastRun;
+                objDossierSch.NextRun = objRQ_DossierDef.NextRun;
+
+                uw.C3Repository.InsertDossierSch(objDossierSch);
+
+
+                //Mapping of DossierConf 
+
+                DossierConf objDossierConf = new DossierConf();
+                objDossierConf.DossierDefID = dossierDefID;
+                objDossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
+
+                uw.C3Repository.InsertDossierConf(objDossierConf);
+
+                //Multiple entries with for loop //mapping is remaining
+                DossierRecep objDossierRecep = new DossierRecep();
+                uw.C3Repository.InsertDossierRecep(objDossierRecep);
+
+
+                //multiple entries with for loop //mapping is remaining
+                DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+
+
+                //Commit the change 
+                uw.Commit();
+                bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "InsertDossierDef");
+            }
+            return bReturn;
+        }
+
+
         /// <summary>
         /// This method is used to Update DossierDef and DossierConf, DossierRecep, DossierSch, DossierTagGroup
         /// </summary>
@@ -375,48 +416,70 @@ namespace SahadevService.Dossier
         /// <modifiedon>PJ</modifiedon>
         /// <modifiedby>27-Aug-2024</modifiedby>
         /// <modifiedreason>Changed request model and handled condition accordingly</modifiedreason>
+        /// <modifiedon>29-08-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Mapping Request model to business model</modifiedreason>
         public bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef)
         {
             bool bReturn = false;
             try
             {
-                uw.C3Repository.UpdateDossierDef(objRQ_DossierDef);
+                //Mapping Request Model to Business Model
 
-                //Update DossierRecep
-                RQ_DossierRecep objRQ_DossierRecep = new RQ_DossierRecep();
-                objRQ_DossierRecep.DossierRecepID = objRQ_DossierDef.DossierRecepID;
-                objRQ_DossierRecep.DossierDefID = objRQ_DossierDef.DossierDefID;
-                objRQ_DossierRecep.UserID = objRQ_DossierDef.UserID;
-                uw.C3Repository.UpdateDossierRecep(objRQ_DossierRecep);
+                //Mapping of DossierDef
+                DossierDef objDossierDef = new DossierDef();
+                objDossierDef.DossierDefID = objRQ_DossierDef.DossierDefID;
+                objDossierDef.ClientID = objRQ_DossierDef.ClientID;
+                objDossierDef.DossierTypeID = objRQ_DossierDef.DossierTypeID;
+                objDossierDef.StartDate = objRQ_DossierDef.StartDate;
+                objDossierDef.EndDate = objRQ_DossierDef.EndDate;
+                objDossierDef.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
+                objDossierDef.Title = objRQ_DossierDef.Title;
+                objDossierDef.EventTypeID = objRQ_DossierDef.EventTypeID;
+                objDossierDef.EventContext = objRQ_DossierDef.EventContext;
+                objDossierDef.EventRefURL = objRQ_DossierDef.EventRefURL;
+                objDossierDef.EventKQuery = objRQ_DossierDef.EventKQuery;
+                objDossierDef.EventTagID = objRQ_DossierDef.EventTagID;
+                objDossierDef.Platform1ID = objRQ_DossierDef.Platform1ID;
+                objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
+                objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
+                objDossierDef.StatusID = objRQ_DossierDef.StatusID;
 
-                //Update DossierSch
-                RQ_DossierSch objRQ_DossierSch = new RQ_DossierSch();
-                objRQ_DossierSch.DossierSchID = objRQ_DossierDef.DossierSchID;
-                objRQ_DossierSch.DossierDefID = objRQ_DossierDef.DossierDefID;
-                objRQ_DossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
-                objRQ_DossierSch.Time1 = objRQ_DossierDef.Time1;
-                objRQ_DossierSch.Time2 = objRQ_DossierDef.Time2;
-                objRQ_DossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
-                objRQ_DossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
-                objRQ_DossierSch.LastRun = objRQ_DossierDef.LastRun;
-                objRQ_DossierSch.NextRun = objRQ_DossierDef.NextRun;
-                uw.C3Repository.UpdateDossierSch(objRQ_DossierSch);
+                uw.C3Repository.UpdateDossierDef(objDossierDef);
 
-                //Update DossierConf 
-                RQ_DossierConf objRQ_DossierConf = new RQ_DossierConf();
-                objRQ_DossierConf.DossierConfID = objRQ_DossierDef.DossierConfID;
-                objRQ_DossierConf.DossierDefID = objRQ_DossierDef.DossierDefID;
-                objRQ_DossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
-                uw.C3Repository.UpdateDossierConf(objRQ_DossierConf);
 
-                //Update DossierTagGroup 
-                RQ_DossierTagGroup objRQ_DossierTagGroup = new RQ_DossierTagGroup();
-                objRQ_DossierTagGroup.DossierTagGroupID = objRQ_DossierDef.DossierTagGroupID;
-                objRQ_DossierTagGroup.DossierDefID = objRQ_DossierDef.DossierConfID;
-                objRQ_DossierTagGroup.TGID = objRQ_DossierDef.TGID;
-                objRQ_DossierTagGroup.TagID = objRQ_DossierDef.TagID;
-                objRQ_DossierTagGroup.TypeOfBinding = objRQ_DossierDef.TypeOfBinding;
-                uw.C3Repository.UpdateDossierTagGroup(objRQ_DossierTagGroup);
+
+                //Mapping Of DossierSch
+                DossierSch objDossierSch = new DossierSch();
+                objDossierSch.DossierDefID = objRQ_DossierDef.DossierDefID;
+                objDossierSch.DossierSchID = objRQ_DossierDef.DossierSchID;
+                objDossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
+                objDossierSch.Time1 = Convert.ToDateTime(objRQ_DossierDef.Time1);
+                objDossierSch.Time2 = Convert.ToDateTime(objRQ_DossierDef.Time2);
+                objDossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
+                objDossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
+                objDossierSch.LastRun = objRQ_DossierDef.LastRun;
+                objDossierSch.NextRun = objRQ_DossierDef.NextRun;
+
+                uw.C3Repository.UpdateDossierSch(objDossierSch);
+
+                //Mapping of DossierConf 
+
+                DossierConf objDossierConf = new DossierConf();
+                objDossierConf.DossierDefID = objRQ_DossierDef.DossierDefID;
+                objDossierConf.DossierConfID = objRQ_DossierDef.DossierConfID;
+                objDossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
+
+                uw.C3Repository.UpdateDossierConf(objDossierConf);
+
+
+                //Multiple entries with for loop //mapping is remaining
+                DossierRecep objDossierRecep = new DossierRecep();
+                uw.C3Repository.UpdateDossierRecep(objDossierRecep);
+
+                //multiple entries with for loop //mapping is remaining
+                DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                uw.C3Repository.UpdateDossierTagGroup(objDossierTagGroup);
 
                 //Commit the change 
                 uw.Commit();
@@ -430,6 +493,9 @@ namespace SahadevService.Dossier
             return bReturn;
         }
 
+
+
+
         ///// <summary>
         ///// This method is used to insert DossierDef and DossierConf, DossierRecep, DossierSch, DossierTagGroup
         ///// </summary>
@@ -437,10 +503,10 @@ namespace SahadevService.Dossier
         ///// <returns>true if successfully inserted else false</returns>
         ///// <createdon>23-Aug-2024</createdon>
         ///// <createdby>Saroj Laddha</createdby>
-        ///// <modifiedon></modifiedon>
-        ///// <modifiedby></modifiedby>
-        ///// <modifiedreason></modifiedreason>
-        //public bool InsertDossierDef(DossierDef objRQ_DossierDef)
+        ///// <modifiedon>PJ</modifiedon>
+        ///// <modifiedby>27-Aug-2024</modifiedby>
+        ///// <modifiedreason>Changed request model and handled condition accordingly</modifiedreason>
+        //public bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef)
         //{
         //    bool bReturn = false;
         //    try
@@ -448,41 +514,41 @@ namespace SahadevService.Dossier
         //        //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
         //        int dossierDefID = uw.C3Repository.InsertDossierDef(objRQ_DossierDef);
 
+        //        //Insert into DossierRecep table
+        //        RQ_DossierRecep objRQ_DossierRecep = new RQ_DossierRecep();
+        //        objRQ_DossierRecep.DossierDefID = dossierDefID;
+        //        objRQ_DossierRecep.UserID = objRQ_DossierDef.UserID;
+        //        uw.C3Repository.InsertDossierRecep(objRQ_DossierRecep);
 
-        //        //Assign DossierDefID to the DossierRecep and Insert Data
-        //        if (objRQ_DossierDef.DossierRecep != null)
+        //        //Insert into DossierSch table
+        //        RQ_DossierSch objRQ_DossierSch = new RQ_DossierSch();
+        //        objRQ_DossierSch.DossierDefID = dossierDefID;
+        //        objRQ_DossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
+        //        objRQ_DossierSch.Time1 = objRQ_DossierDef.Time1;
+        //        objRQ_DossierSch.Time2 = objRQ_DossierDef.Time2;
+        //        objRQ_DossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
+        //        objRQ_DossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
+        //        objRQ_DossierSch.LastRun = objRQ_DossierDef.LastRun;
+        //        objRQ_DossierSch.NextRun = objRQ_DossierDef.NextRun;
+        //        uw.C3Repository.InsertDossierSch(objRQ_DossierSch);
+
+        //        if (!string.IsNullOrEmpty(objRQ_DossierDef.ConfJSON))
         //        {
-        //            //DossierRecep objDossierRecep = objRQ_DossierDef.DossierRecep;
-        //            objRQ_DossierDef.DossierRecep.DossierDefID = dossierDefID;
-        //            uw.C3Repository.InsertDossierRecep(objRQ_DossierDef.DossierRecep);
+        //            //Insert into DossierConf table
+        //            RQ_DossierConf objRQ_DossierConf = new RQ_DossierConf();
+        //            objRQ_DossierConf.DossierDefID = dossierDefID;
+        //            objRQ_DossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
+        //            uw.C3Repository.InsertDossierConf(objRQ_DossierConf);
         //        }
 
-        //        //Assign DossierDefID to the DossierSch and Insert Data
-        //        if (objRQ_DossierDef.DossierSch != null)
-        //        {
-        //            //DossierSch objDossierSch = objDossierDef.DossierSch;
-        //            objRQ_DossierDef.DossierSch.DossierDefID = dossierDefID;
-        //            uw.C3Repository.InsertDossierSch(objRQ_DossierDef.DossierSch);
-        //        }
+        //        //Insert into DossierTagGroup table
+        //        RQ_DossierTagGroup objRQ_DossierTagGroup = new RQ_DossierTagGroup();
+        //        objRQ_DossierTagGroup.DossierDefID = dossierDefID;
+        //        objRQ_DossierTagGroup.TGID = objRQ_DossierDef.TGID;
+        //        objRQ_DossierTagGroup.TagID = objRQ_DossierDef.TagID;
+        //        objRQ_DossierTagGroup.TypeOfBinding = objRQ_DossierDef.TypeOfBinding;
+        //        uw.C3Repository.InsertDossierTagGroup(objRQ_DossierTagGroup);
 
-        //        //Assign DossierDefID to the DossierConf and Insert Data
-        //        if (objRQ_DossierDef.DossierConf != null)
-        //        {
-        //            //DossierConf objDossierConf = objDossierDef.DossierConf;
-        //            objRQ_DossierDef.DossierConf.DossierDefID = dossierDefID;
-        //            uw.C3Repository.InsertDossierConf(objRQ_DossierDef.DossierConf);
-
-        //        }
-
-        //        //Assign DossierDefID to the DossierTagGroup and Insert Data
-        //        if (objRQ_DossierDef.DossierTagGroup != null)
-        //        {
-        //            //DossierTagGroup objDossierTagGroup = objDossierDef.DossierTagGroup;
-        //            objRQ_DossierDef.DossierTagGroup.DossierDefID = dossierDefID;
-        //            uw.C3Repository.InsertDossierTagGroup(objRQ_DossierDef.DossierTagGroup);
-        //        }
-
-        //        //Commit the change 
         //        uw.Commit();
         //        bReturn = true;
         //    }
@@ -492,7 +558,7 @@ namespace SahadevService.Dossier
         //        _logger.LogError(ex, _className, "InsertDossierDef");
         //    }
         //    return bReturn;
-        //}
+        ////}
 
 
         ///// <summary>
@@ -502,9 +568,9 @@ namespace SahadevService.Dossier
         ///// <returns>true if successfully Update else false</returns>
         ///// <createdon>26-Aug-2024</createdon>
         ///// <createdby>Saroj Laddha</createdby>
-        ///// <modifiedon></modifiedon>
-        ///// <modifiedby></modifiedby>
-        ///// <modifiedreason></modifiedreason>
+        ///// <modifiedon>PJ</modifiedon>
+        ///// <modifiedby>27-Aug-2024</modifiedby>
+        ///// <modifiedreason>Changed request model and handled condition accordingly</modifiedreason>
         //public bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef)
         //{
         //    bool bReturn = false;
@@ -512,17 +578,41 @@ namespace SahadevService.Dossier
         //    {
         //        uw.C3Repository.UpdateDossierDef(objRQ_DossierDef);
 
-        //        objRQ_DossierDef.DossierRecep.DossierDefID = objRQ_DossierDef.DossierDefID;
-        //        uw.C3Repository.UpdateDossierRecep(objRQ_DossierDef.DossierRecep);
+        //        //Update DossierRecep
+        //        RQ_DossierRecep objRQ_DossierRecep = new RQ_DossierRecep();
+        //        objRQ_DossierRecep.DossierRecepID = objRQ_DossierDef.DossierRecepID;
+        //        objRQ_DossierRecep.DossierDefID = objRQ_DossierDef.DossierDefID;
+        //        objRQ_DossierRecep.UserID = objRQ_DossierDef.UserID;
+        //        uw.C3Repository.UpdateDossierRecep(objRQ_DossierRecep);
 
-        //        objRQ_DossierDef.DossierSch.DossierDefID = objRQ_DossierDef.DossierDefID;
-        //        uw.C3Repository.UpdateDossierSch(objRQ_DossierDef.DossierSch);
+        //        //Update DossierSch
+        //        RQ_DossierSch objRQ_DossierSch = new RQ_DossierSch();
+        //        objRQ_DossierSch.DossierSchID = objRQ_DossierDef.DossierSchID;
+        //        objRQ_DossierSch.DossierDefID = objRQ_DossierDef.DossierDefID;
+        //        objRQ_DossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
+        //        objRQ_DossierSch.Time1 = objRQ_DossierDef.Time1;
+        //        objRQ_DossierSch.Time2 = objRQ_DossierDef.Time2;
+        //        objRQ_DossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
+        //        objRQ_DossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
+        //        objRQ_DossierSch.LastRun = objRQ_DossierDef.LastRun;
+        //        objRQ_DossierSch.NextRun = objRQ_DossierDef.NextRun;
+        //        uw.C3Repository.UpdateDossierSch(objRQ_DossierSch);
 
-        //        objRQ_DossierDef.DossierConf.DossierDefID = objRQ_DossierDef.DossierDefID;
-        //        uw.C3Repository.UpdateDossierConf(objRQ_DossierDef.DossierConf);
+        //        //Update DossierConf 
+        //        RQ_DossierConf objRQ_DossierConf = new RQ_DossierConf();
+        //        objRQ_DossierConf.DossierConfID = objRQ_DossierDef.DossierConfID;
+        //        objRQ_DossierConf.DossierDefID = objRQ_DossierDef.DossierDefID;
+        //        objRQ_DossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
+        //        uw.C3Repository.UpdateDossierConf(objRQ_DossierConf);
 
-        //        objRQ_DossierDef.DossierTagGroup.DossierDefID = objRQ_DossierDef.DossierDefID;
-        //        uw.C3Repository.UpdateDossierTagGroup(objRQ_DossierDef.DossierTagGroup);
+        //        //Update DossierTagGroup 
+        //        RQ_DossierTagGroup objRQ_DossierTagGroup = new RQ_DossierTagGroup();
+        //        objRQ_DossierTagGroup.DossierTagGroupID = objRQ_DossierDef.DossierTagGroupID;
+        //        objRQ_DossierTagGroup.DossierDefID = objRQ_DossierDef.DossierConfID;
+        //        objRQ_DossierTagGroup.TGID = objRQ_DossierDef.TGID;
+        //        objRQ_DossierTagGroup.TagID = objRQ_DossierDef.TagID;
+        //        objRQ_DossierTagGroup.TypeOfBinding = objRQ_DossierDef.TypeOfBinding;
+        //        uw.C3Repository.UpdateDossierTagGroup(objRQ_DossierTagGroup);
 
         //        //Commit the change 
         //        uw.Commit();
@@ -535,13 +625,6 @@ namespace SahadevService.Dossier
         //    }
         //    return bReturn;
         //}
-
-        
-
-    
-
-
-
 
     }
 }

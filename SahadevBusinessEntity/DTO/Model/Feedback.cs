@@ -1,47 +1,35 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :- RQ_DataRequest                                                           *
+ *  Class Name      :-  Feedback                                                                *
  *  --------------------------------------------------------------------------------------------*
- *  Description     :- DataRequest model                                                   *
+ *  Description     :-  Feedback Entity Model for the Feedback                                  *
  *  --------------------------------------------------------------------------------------------*
  *  Created By      :- Saroj Laddha                                                             *
  *  --------------------------------------------------------------------------------------------*
- *  Created Date    :- 18-Aug-2024                                                              *
+ *  Created Date    :- 30-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
+
 using System;
-using System.Text.Json.Serialization;
+using System.Collections.Generic;
+using System.Text;
 
-namespace SahadevBusinessEntity.DTO.RequestModel
+namespace SahadevBusinessEntity.DTO.Model
 {
-    /// <summary>
-    /// Request model for DataRequest
-    /// </summary>
-    public class RQ_DataRequest
+    public  class Feedback
     {
-        //public int DataRequestID {  get; set; }
-        [JsonPropertyName("user_id")]
+        public int FeedbackID { get; set; }
+        public int EventID  { get; set; }
         public int UserID { get; set; }
-
-        [JsonPropertyName("event_id")]
-        public int EventID { get; set; }
-
-        [JsonPropertyName("platform_id")]
-        public int PlatformID { get; set; }
-
-        [JsonPropertyName("status_id")]
-        public int StatusID { get; set; }
-
-        [JsonPropertyName("filter_json")]
-        public string FilterJson { get; set; }
-
-        [JsonPropertyName("start_date")]
-        public DateTime? StartDate { get; set; }
-
-        [JsonPropertyName("end_date")]
-        public DateTime? EndDate { get; set; }
+        public int PlatformID  { get; set; }
+        public int FTID { get; set; }
+        public int RecordID { get; set; }
+        public string ScreenName {  get; set; }
+        public string Description {  get; set; }
+        public DateTime CreatedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
     }
 }

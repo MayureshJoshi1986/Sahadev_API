@@ -46,6 +46,8 @@ namespace SahadevBusinessEntity.DTO.Model
         /// </summary>
         public DateTime ModifiedAt { get; set; }
 
+        public List<Event> Events { get; set; }
+
 
 
     }
