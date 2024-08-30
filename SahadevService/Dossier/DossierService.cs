@@ -35,12 +35,12 @@ namespace SahadevService.Dossier
     {
         List<dynamic> GetAllClientsByTagID(int tgID);
         List<dynamic> GetAllClientByUserID(int userID);
-        List<dynamic> GetAllUser();        
+        List<dynamic> GetAllUser();
         DossierDef GetDossierDef(int dossierDefID);
         List<dynamic> GetAllDossier();
         List<dynamic> GetAllGeneratedDossier();
         dynamic GetGeneratedDossier(int dossierConfID);
-        List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID);        
+        List<RS_AdditionalURL> GetAllAdditionalURL(int dossierID);
         bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef);
         bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL);
         bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef);
@@ -82,7 +82,7 @@ namespace SahadevService.Dossier
             {
                 var lstTagID = uw.C3Repository.GetAllTagIDByTagGroupName(tgID);
                 string strTagID = String.Join(",", lstTagID);
-                List <dynamic> lstGetAllClientByTagID = uw.C1Repository.GetAllClientByTagID(strTagID);
+                List<dynamic> lstGetAllClientByTagID = uw.C1Repository.GetAllClientByTagID(strTagID);
                 return lstGetAllClientByTagID;
             }
             catch (Exception ex)
@@ -283,48 +283,82 @@ namespace SahadevService.Dossier
         /// <modifiedon>PJ</modifiedon>
         /// <modifiedby>27-Aug-2024</modifiedby>
         /// <modifiedreason>Changed request model and handled condition accordingly</modifiedreason>
+        /// <modifiedon>PJ</modifiedon>
+        /// <modifiedby>30-Aug-2024</modifiedby>
+        /// <modifiedreason></modifiedreason>
         public bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef)
         {
             bool bReturn = false;
             try
             {
                 //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
-                int dossierDefID = uw.C3Repository.InsertDossierDef(objRQ_DossierDef);
+                DossierDef objDossierDef = new DossierDef();
+                objDossierDef.DossierDefID = objRQ_DossierDef.DossierDefID;
+                objDossierDef.ClientID = objRQ_DossierDef.ClientID;
+                objDossierDef.DossierTypeID = objRQ_DossierDef.DossierTypeID;
+                objDossierDef.StartDate = objRQ_DossierDef.StartDate;
+                objDossierDef.EndDate = objRQ_DossierDef.EndDate;
+                objDossierDef.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
+                objDossierDef.Title = objRQ_DossierDef.Title;
+                objDossierDef.EventTypeID = objRQ_DossierDef.EventTypeID;
+                objDossierDef.EventContext = objRQ_DossierDef.EventContext;
+                objDossierDef.EventRefURL = objRQ_DossierDef.EventRefURL;
+                objDossierDef.EventKQuery = objRQ_DossierDef.EventKQuery;
+                objDossierDef.EventTagID = objRQ_DossierDef.EventTagID;
+                objDossierDef.Platform1ID = objRQ_DossierDef.Platform1ID;
+                objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
+                objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
+                objDossierDef.StatusID = objRQ_DossierDef.StatusID;
+                int dossierDefID = uw.C3Repository.InsertDossierDef(objDossierDef);
 
                 //Insert into DossierRecep table
-                RQ_DossierRecep objRQ_DossierRecep = new RQ_DossierRecep();
-                objRQ_DossierRecep.DossierDefID = dossierDefID;
-                objRQ_DossierRecep.UserID = objRQ_DossierDef.UserID;
-                uw.C3Repository.InsertDossierRecep(objRQ_DossierRecep);
+                foreach (var objRecipient in objRQ_DossierDef.Recipient)
+                {
+                    DossierRecep objDossierRecep = new DossierRecep();
+                    objDossierRecep.DossierDefID = dossierDefID;
+                    objDossierRecep.UserID = objRecipient.UserID;
+                    uw.C3Repository.InsertDossierRecep(objDossierRecep);
+                }
 
                 //Insert into DossierSch table
-                RQ_DossierSch objRQ_DossierSch = new RQ_DossierSch();
-                objRQ_DossierSch.DossierDefID = dossierDefID;
-                objRQ_DossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
-                objRQ_DossierSch.Time1 = objRQ_DossierDef.Time1;
-                objRQ_DossierSch.Time2 = objRQ_DossierDef.Time2;
-                objRQ_DossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
-                objRQ_DossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
-                objRQ_DossierSch.LastRun = objRQ_DossierDef.LastRun;
-                objRQ_DossierSch.NextRun = objRQ_DossierDef.NextRun;
-                uw.C3Repository.InsertDossierSch(objRQ_DossierSch);
+                DossierSch objDossierSch = new DossierSch();
+                objDossierSch.DossierDefID = dossierDefID;
+                objDossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
+                objDossierSch.Time1 = objRQ_DossierDef.Time1;
+                objDossierSch.Time2 = objRQ_DossierDef.Time2;
+                objDossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
+                objDossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
+                objDossierSch.LastRun = objRQ_DossierDef.LastRun;
+                objDossierSch.NextRun = objRQ_DossierDef.NextRun;
+                uw.C3Repository.InsertDossierSch(objDossierSch);
 
+                //Insert into DossierConf table
                 if (!string.IsNullOrEmpty(objRQ_DossierDef.ConfJSON))
                 {
-                    //Insert into DossierConf table
-                    RQ_DossierConf objRQ_DossierConf = new RQ_DossierConf();
-                    objRQ_DossierConf.DossierDefID = dossierDefID;
-                    objRQ_DossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
-                    uw.C3Repository.InsertDossierConf(objRQ_DossierConf);
+                    DossierConf objDossierConf = new DossierConf();
+                    objDossierConf.DossierDefID = dossierDefID;
+                    objDossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
+                    uw.C3Repository.InsertDossierConf(objDossierConf);
                 }
 
                 //Insert into DossierTagGroup table
-                RQ_DossierTagGroup objRQ_DossierTagGroup = new RQ_DossierTagGroup();
-                objRQ_DossierTagGroup.DossierDefID = dossierDefID;
-                objRQ_DossierTagGroup.TGID = objRQ_DossierDef.TGID;
-                objRQ_DossierTagGroup.TagID = objRQ_DossierDef.TagID;
-                objRQ_DossierTagGroup.TypeOfBinding = objRQ_DossierDef.TypeOfBinding;
-                uw.C3Repository.InsertDossierTagGroup(objRQ_DossierTagGroup);
+                //RQ_DossierTagGroup objRQ_DossierTagGroup = new RQ_DossierTagGroup();
+                //objRQ_DossierTagGroup.DossierDefID = dossierDefID;
+                //objRQ_DossierTagGroup.TGID = objRQ_DossierDef.TGID;
+                //objRQ_DossierTagGroup.TagID = objRQ_DossierDef.TagID;
+                //objRQ_DossierTagGroup.TypeOfBinding = objRQ_DossierDef.TypeOfBinding;
+                //uw.C3Repository.InsertDossierTagGroup(objRQ_DossierTagGroup);
+
+                //Insert into DossierTagGroup table
+                foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                {
+                    DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                    objDossierTagGroup.DossierDefID = dossierDefID;
+                    objDossierTagGroup.TGID = objTagGroup.TGID;
+                    objDossierTagGroup.TagID = objTagGroup.TagID;
+                    objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
+                    uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                }
 
                 uw.Commit();
                 bReturn = true;
@@ -375,48 +409,78 @@ namespace SahadevService.Dossier
         /// <modifiedon>PJ</modifiedon>
         /// <modifiedby>27-Aug-2024</modifiedby>
         /// <modifiedreason>Changed request model and handled condition accordingly</modifiedreason>
+        /// <modifiedon>PJ</modifiedon>
+        /// <modifiedby>30-Aug-2024</modifiedby>
+        /// <modifiedreason></modifiedreason>
         public bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef)
         {
             bool bReturn = false;
             try
             {
-                uw.C3Repository.UpdateDossierDef(objRQ_DossierDef);
+                DossierDef objDossierDef = new DossierDef();
+                objDossierDef.DossierDefID = objRQ_DossierDef.DossierDefID;
+                objDossierDef.ClientID = objRQ_DossierDef.ClientID;
+                objDossierDef.DossierTypeID = objRQ_DossierDef.DossierTypeID;
+                objDossierDef.StartDate = objRQ_DossierDef.StartDate;
+                objDossierDef.EndDate = objRQ_DossierDef.EndDate;
+                objDossierDef.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
+                objDossierDef.Title = objRQ_DossierDef.Title;
+                objDossierDef.EventTypeID = objRQ_DossierDef.EventTypeID;
+                objDossierDef.EventContext = objRQ_DossierDef.EventContext;
+                objDossierDef.EventRefURL = objRQ_DossierDef.EventRefURL;
+                objDossierDef.EventKQuery = objRQ_DossierDef.EventKQuery;
+                objDossierDef.EventTagID = objRQ_DossierDef.EventTagID;
+                objDossierDef.Platform1ID = objRQ_DossierDef.Platform1ID;
+                objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
+                objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
+                objDossierDef.StatusID = objRQ_DossierDef.StatusID;
+                uw.C3Repository.UpdateDossierDef(objDossierDef);
 
                 //Update DossierRecep
-                RQ_DossierRecep objRQ_DossierRecep = new RQ_DossierRecep();
-                objRQ_DossierRecep.DossierRecepID = objRQ_DossierDef.DossierRecepID;
-                objRQ_DossierRecep.DossierDefID = objRQ_DossierDef.DossierDefID;
-                objRQ_DossierRecep.UserID = objRQ_DossierDef.UserID;
-                uw.C3Repository.UpdateDossierRecep(objRQ_DossierRecep);
+                foreach (var objRecipient in objRQ_DossierDef.Recipient)
+                {
+                    DossierRecep objDossierRecep = new DossierRecep();
+                    objDossierRecep.DossierRecepID = objRecipient.DossierRecepID;
+                    objDossierRecep.DossierDefID = objRQ_DossierDef.DossierDefID;
+                    objDossierRecep.UserID = objRecipient.UserID;
+                    uw.C3Repository.UpdateDossierRecep(objDossierRecep);
+                }
 
                 //Update DossierSch
-                RQ_DossierSch objRQ_DossierSch = new RQ_DossierSch();
-                objRQ_DossierSch.DossierSchID = objRQ_DossierDef.DossierSchID;
-                objRQ_DossierSch.DossierDefID = objRQ_DossierDef.DossierDefID;
-                objRQ_DossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
-                objRQ_DossierSch.Time1 = objRQ_DossierDef.Time1;
-                objRQ_DossierSch.Time2 = objRQ_DossierDef.Time2;
-                objRQ_DossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
-                objRQ_DossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
-                objRQ_DossierSch.LastRun = objRQ_DossierDef.LastRun;
-                objRQ_DossierSch.NextRun = objRQ_DossierDef.NextRun;
-                uw.C3Repository.UpdateDossierSch(objRQ_DossierSch);
+                DossierSch objDossierSch = new DossierSch();
+                objDossierSch.DossierSchID = objRQ_DossierDef.DossierSchID;
+                objDossierSch.DossierDefID = objRQ_DossierDef.DossierDefID;
+                objDossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
+                objDossierSch.Time1 = objRQ_DossierDef.Time1;
+                objDossierSch.Time2 = objRQ_DossierDef.Time2;
+                objDossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
+                objDossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
+                objDossierSch.LastRun = objRQ_DossierDef.LastRun;
+                objDossierSch.NextRun = objRQ_DossierDef.NextRun;
+                uw.C3Repository.UpdateDossierSch(objDossierSch);
 
                 //Update DossierConf 
-                RQ_DossierConf objRQ_DossierConf = new RQ_DossierConf();
-                objRQ_DossierConf.DossierConfID = objRQ_DossierDef.DossierConfID;
-                objRQ_DossierConf.DossierDefID = objRQ_DossierDef.DossierDefID;
-                objRQ_DossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
-                uw.C3Repository.UpdateDossierConf(objRQ_DossierConf);
+                if (!string.IsNullOrEmpty(objRQ_DossierDef.ConfJSON))
+                {
+                    DossierConf objDossierConf = new DossierConf();
+                    objDossierConf.DossierConfID = objRQ_DossierDef.DossierConfID;
+                    objDossierConf.DossierDefID = objRQ_DossierDef.DossierDefID;
+                    objDossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
+                    uw.C3Repository.UpdateDossierConf(objDossierConf);
+                }
 
-                //Update DossierTagGroup 
-                RQ_DossierTagGroup objRQ_DossierTagGroup = new RQ_DossierTagGroup();
-                objRQ_DossierTagGroup.DossierTagGroupID = objRQ_DossierDef.DossierTagGroupID;
-                objRQ_DossierTagGroup.DossierDefID = objRQ_DossierDef.DossierConfID;
-                objRQ_DossierTagGroup.TGID = objRQ_DossierDef.TGID;
-                objRQ_DossierTagGroup.TagID = objRQ_DossierDef.TagID;
-                objRQ_DossierTagGroup.TypeOfBinding = objRQ_DossierDef.TypeOfBinding;
-                uw.C3Repository.UpdateDossierTagGroup(objRQ_DossierTagGroup);
+                //Update DossierTagGroup
+                foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                {
+                    DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                    objDossierTagGroup.DossierTagGroupID = objTagGroup.DossierTagGroupID;
+                    objDossierTagGroup.DossierDefID = objRQ_DossierDef.DossierDefID;
+                    objDossierTagGroup.TGID = objTagGroup.TGID;
+                    objDossierTagGroup.TagID = objTagGroup.TagID;
+                    objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
+                    uw.C3Repository.UpdateDossierTagGroup(objDossierTagGroup);
+                }
+
 
                 //Commit the change 
                 uw.Commit();
@@ -536,9 +600,9 @@ namespace SahadevService.Dossier
         //    return bReturn;
         //}
 
-        
 
-    
+
+
 
 
 

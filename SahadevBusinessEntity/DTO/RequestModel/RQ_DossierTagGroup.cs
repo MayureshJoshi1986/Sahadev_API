@@ -23,10 +23,10 @@ namespace SahadevBusinessEntity.DTO.RequestModel
     {
         [JsonPropertyName("dossier_tag_group_id")]
         public int DossierTagGroupID { get; set; }
-        [JsonPropertyName("dossier_def_id")]
-        public int DossierDefID { get; set; }
+        //[JsonPropertyName("dossier_def_id")]
+        //public int DossierDefID { get; set; }
 
-        [JsonPropertyName("taggroup_id")]
+        [JsonPropertyName("tag_group_id")]
         public int TGID { get; set; }
 
         [JsonPropertyName("tag_id")]

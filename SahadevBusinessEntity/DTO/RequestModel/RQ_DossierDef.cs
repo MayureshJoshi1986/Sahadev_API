@@ -13,7 +13,9 @@
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
 
+using SahadevBusinessEntity.DTO.Model;
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace SahadevBusinessEntity.DTO.RequestModel
@@ -76,7 +78,7 @@ namespace SahadevBusinessEntity.DTO.RequestModel
 
         [JsonPropertyName("dossier_sch_id")]
         public int DossierSchID { get; set; }
-        
+
         [JsonPropertyName("time1")]
         public string Time1 { get; set; }
 
@@ -104,26 +106,32 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         public string ConfJSON { get; set; }
         #endregion
 
-        #region DossierTagGroup
-        [JsonPropertyName("dossier_tag_group_id")]
-        public int DossierTagGroupID { get; set; }
+        [JsonPropertyName("tag_group")]
+        public List<RQ_DossierTagGroup> TagGroup { get; set; }
 
-        [JsonPropertyName("taggroup_id")]
-        public int TGID { get; set; }
+        [JsonPropertyName("recipient")]
+        public List<RQ_DossierRecep> Recipient { get; set; }
 
-        [JsonPropertyName("tag_id")]
-        public int TagID { get; set; }
+        #region DossierTagGroup        
+        //[JsonPropertyName("dossier_tag_group_id")]
+        //public int DossierTagGroupID { get; set; }
 
-        [JsonPropertyName("type_of_binding")]
-        public int TypeOfBinding { get; set; }
+        //[JsonPropertyName("taggroup_id")]
+        //public int TGID { get; set; }
+
+        //[JsonPropertyName("tag_id")]
+        //public int TagID { get; set; }
+
+        //[JsonPropertyName("type_of_binding")]
+        //public int TypeOfBinding { get; set; }
         #endregion
 
         #region DossierRecep
-        [JsonPropertyName("dossier_recep_id")]
-        public int DossierRecepID { get; set; }
+        //[JsonPropertyName("dossier_recep_id")]
+        //public int DossierRecepID { get; set; }
 
-        [JsonPropertyName("user_id")]
-        public int UserID { get; set; }
+        //[JsonPropertyName("user_id")]
+        //public int UserID { get; set; }
         #endregion
 
         //public RQ_DossierSch DossierSch { get; set; }
