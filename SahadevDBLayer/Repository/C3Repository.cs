@@ -47,11 +47,11 @@ namespace SahadevDBLayer.Repository
         List<DossierRecep> GetAllDossierRecep(int DossierDefID);
         DossierSch GetDossierSch(int DossierDefID);
         DossierConf GetDossierConf(int DossierDefID);
-        DossierTagGroup GetDossierTagGroup(int DossierDefID);
+        List<DossierTagGroup> GetDossierTagGroup(int DossierDefID);
 
-        List<dynamic> GetAllDossier();
-        List<dynamic> GetAllGeneratedDossier();
-        dynamic GetGeneratedDossier(int dossierConfID);
+        List<dynamic> GetAllDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate =null, DateTime? EndDate = null);
+        dynamic GetGeneratedDossier(int dossierDefID);
 
         List<AdditionalURL> GetAllAdditionalUrl(int dossierID);
         bool InsertAdditionalURl(AdditionalURL objAdditionalURL);
@@ -232,13 +232,13 @@ namespace SahadevDBLayer.Repository
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
 
-        public DossierTagGroup GetDossierTagGroup(int dossierDefID)
+        public List<DossierTagGroup> GetDossierTagGroup(int dossierDefID)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierDefID", dossierDefID);
-                var data = GetByProcedure<DossierTagGroup>(@"[dbo].[USP_DossierTagGroup_Fetch]", dbparams, _transaction);
+                var data = GetAllByProcedure<DossierTagGroup>(@"[dbo].[USP_DossierTagGroup_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -259,11 +259,17 @@ namespace SahadevDBLayer.Repository
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
 
-        public List<dynamic> GetAllDossier()
+        public List<dynamic> GetAllDossier(int UserID,int ClientID,int StatusID,  DateTime? StartDate = null, DateTime? EndDate = null)
         {
             try
             {
-                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_DossierConfiguration_FetchAll]", null, _transaction);
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@userID", UserID);
+                dbparams.Add("@ClientID", ClientID);
+                dbparams.Add("@StatusID", StatusID);
+                dbparams.Add("@startDate", StartDate);
+                dbparams.Add("@endDate", EndDate);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_DossierConfiguration_FetchAll]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -284,11 +290,17 @@ namespace SahadevDBLayer.Repository
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
 
-        public List<dynamic> GetAllGeneratedDossier()
+        public List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             try
             {
-                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_FetchAll]", null, _transaction);
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@userID", UserID);
+                dbparams.Add("@ClientID", ClientID);
+                dbparams.Add("@StatusID", StatusID);
+                dbparams.Add("@startDate", StartDate);
+                dbparams.Add("@endDate", EndDate);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_FetchAll]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -311,12 +323,12 @@ namespace SahadevDBLayer.Repository
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
 
-        public dynamic GetGeneratedDossier(int dossierConfID)
+        public dynamic GetGeneratedDossier(int dossierDefID)
         {
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@dossierConfID", dossierConfID);
+                dbparams.Add("@dossierDefID", dossierDefID);
                 var data = GetByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_Fetch]", dbparams, _transaction);
                 return data;
             }

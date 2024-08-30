@@ -37,9 +37,9 @@ namespace SahadevService.Dossier
         List<dynamic> GetAllClientByUserID(int userID);
         List<dynamic> GetAllUser();
         DossierDef GetDossierDef(int dossierDefID);
-        List<dynamic> GetAllDossier();
-        List<dynamic> GetAllGeneratedDossier();
-        dynamic GetGeneratedDossier(int dossierConfID);
+        List<dynamic> GetAllDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        dynamic GetGeneratedDossier(int dossierDefID);
         List<AdditionalURL> GetAllAdditionalURL(int dossierID);
         bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef);
         bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL);
@@ -181,14 +181,14 @@ namespace SahadevService.Dossier
         /// <returns>object containing Dossier</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public List<dynamic> GetAllDossier()
+        /// <modifiedon>30-aug-2024</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>get dossier according to userId, client,status and Active </modifiedreason>
+        public List<dynamic> GetAllDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             try
             {
-                dynamic objDossier = uw.C3Repository.GetAllDossier();
+                dynamic objDossier = uw.C3Repository.GetAllDossier(UserID,ClientID,StatusID,StartDate,EndDate);
 
                 return objDossier;
             }
@@ -206,14 +206,14 @@ namespace SahadevService.Dossier
         /// <returns>list of object containing All Generated Dossier</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public List<dynamic> GetAllGeneratedDossier()
+        /// <modifiedon>30-aug-2024</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>get dossier according to userId, client,status and Active </modifiedreason>
+        public List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID,  DateTime? StartDate = null, DateTime? EndDate = null)
         {
             try
             {
-                List<dynamic> lstDossiers = uw.C3Repository.GetAllGeneratedDossier();
+                List<dynamic> lstDossiers = uw.C3Repository.GetAllGeneratedDossier(UserID,ClientID,StatusID,StartDate,EndDate);
                 return lstDossiers;
             }
             catch (Exception ex)
@@ -377,20 +377,36 @@ namespace SahadevService.Dossier
 
                 //Mapping of DossierConf 
 
-                DossierConf objDossierConf = new DossierConf();
-                objDossierConf.DossierDefID = dossierDefID;
-                objDossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
+                //Insert into DossierConf table
+                if (!string.IsNullOrEmpty(objRQ_DossierDef.ConfJSON))
+                {
+                    DossierConf objDossierConf = new DossierConf();
+                    objDossierConf.DossierDefID = dossierDefID;
+                    objDossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
+                    uw.C3Repository.InsertDossierConf(objDossierConf);
+                }
 
-                uw.C3Repository.InsertDossierConf(objDossierConf);
+                //Multiple entries with for loop 
+                //Insert into DossierRecep table
+                foreach (var objRecipient in objRQ_DossierDef.Recipient)
+                {
+                    DossierRecep objDossierRecep = new DossierRecep();
+                    objDossierRecep.DossierDefID = dossierDefID;
+                    objDossierRecep.UserID = objRecipient.UserID;
+                    uw.C3Repository.InsertDossierRecep(objDossierRecep);
+                }
 
-                //Multiple entries with for loop //mapping is remaining
-                DossierRecep objDossierRecep = new DossierRecep();
-                uw.C3Repository.InsertDossierRecep(objDossierRecep);
-
-
-                //multiple entries with for loop //mapping is remaining
-                DossierTagGroup objDossierTagGroup = new DossierTagGroup();
-                uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                //multiple entries with for loop 
+                //Insert into DossierTagGroup table
+                foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                {
+                    DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                    objDossierTagGroup.DossierDefID = dossierDefID;
+                    objDossierTagGroup.TGID = objTagGroup.TGID;
+                    objDossierTagGroup.TagID = objTagGroup.TagID;
+                    objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
+                    uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                }
 
 
                 //Commit the change 
@@ -464,22 +480,42 @@ namespace SahadevService.Dossier
                 uw.C3Repository.UpdateDossierSch(objDossierSch);
 
                 //Mapping of DossierConf 
+                //Update DossierConf 
+                if (!string.IsNullOrEmpty(objRQ_DossierDef.ConfJSON))
+                {
+                    DossierConf objDossierConf = new DossierConf();
+                    objDossierConf.DossierConfID = objRQ_DossierDef.DossierConfID;
+                    objDossierConf.DossierDefID = objRQ_DossierDef.DossierDefID;
+                    objDossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
+                    uw.C3Repository.UpdateDossierConf(objDossierConf);
+                }
 
-                DossierConf objDossierConf = new DossierConf();
-                objDossierConf.DossierDefID = objRQ_DossierDef.DossierDefID;
-                objDossierConf.DossierConfID = objRQ_DossierDef.DossierConfID;
-                objDossierConf.ConfJSON = objRQ_DossierDef.ConfJSON;
 
-                uw.C3Repository.UpdateDossierConf(objDossierConf);
+                //Multiple entries with for loop 
 
+                //Update DossierRecep
+                foreach (var objRecipient in objRQ_DossierDef.Recipient)
+                {
+                    DossierRecep objDossierRecep = new DossierRecep();
+                    objDossierRecep.DossierRecepID = objRecipient.DossierRecepID;
+                    objDossierRecep.DossierDefID = objRQ_DossierDef.DossierDefID;
+                    objDossierRecep.UserID = objRecipient.UserID;
+                    uw.C3Repository.UpdateDossierRecep(objDossierRecep);
+                }
 
-                //Multiple entries with for loop //mapping is remaining
-                DossierRecep objDossierRecep = new DossierRecep();
-                uw.C3Repository.UpdateDossierRecep(objDossierRecep);
+                //multiple entries with for loop 
+                //Update DossierTagGroup
+                foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                {
+                    DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                    objDossierTagGroup.DossierTagGroupID = objTagGroup.DossierTagGroupID;
+                    objDossierTagGroup.DossierDefID = objRQ_DossierDef.DossierDefID;
+                    objDossierTagGroup.TGID = objTagGroup.TGID;
+                    objDossierTagGroup.TagID = objTagGroup.TagID;
+                    objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
+                    uw.C3Repository.UpdateDossierTagGroup(objDossierTagGroup);
+                }
 
-                //multiple entries with for loop //mapping is remaining
-                DossierTagGroup objDossierTagGroup = new DossierTagGroup();
-                uw.C3Repository.UpdateDossierTagGroup(objDossierTagGroup);
 
                 //Commit the change 
                 uw.Commit();

@@ -21,7 +21,7 @@ namespace SahadevBusinessEntity.DTO.Model
 {
     public class AdditionalURL
     {
-        public int AdditionaURLlID { get; set; }
+        public int AdditionalURLID { get; set; }
         public string URL { get; set; }
         public int DossierID { get; set; }
         public bool IsProcessed { get; set; }

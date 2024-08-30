@@ -43,7 +43,7 @@ namespace SahadevBusinessEntity.DTO.Model
 
         public DossierConf DossierConf { get; set; }
 
-        public DossierTagGroup DossierTagGroup { get; set; }
+        public List<DossierTagGroup> DossierTagGroup { get; set; }
 
         public List<DossierRecep> DossierReceps { get; set; }
 
