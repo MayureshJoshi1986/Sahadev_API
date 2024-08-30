@@ -202,7 +202,11 @@ namespace Sahadev.API.Dossier
         /// <summary>
         /// This API is used to fetch all dossier configurations
         /// </summary>
-        ///<param name="UserID">fetch all dossier for the User</param>
+        /// <param name="userID">UserID</param>
+        /// <param name="clientID">ID of client</param>
+        /// <param name="statusID">StatusID of dossier</param>
+        /// <param name="dtStartDate">StartDate of dossier</param>
+        /// <param name="dtEndDate">End of dossier</param>
         /// <returns>list of object containing dossier configuration</returns>
         /// <createdon>28-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
@@ -211,11 +215,11 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason></modifiedreason>
         [HttpGet]
         [Route("DossierConfiguration_FetchAll")]
-        public IActionResult GetAllDossier(int UserID, int ClientID, int StatusID)
+        public IActionResult GetAllDossier(DateTime? dtStartDate, DateTime? dtEndDate, int clientID = 0, int statusID = 1, int userID=0)
         {
             try
             {
-                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(UserID, ClientID, StatusID);
+                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(userID, clientID, statusID, dtStartDate, dtEndDate);
                 if (lstGetAllDossier != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstGetAllDossier });
@@ -239,7 +243,11 @@ namespace Sahadev.API.Dossier
         /// <summary>
         /// This API is used to fetch all generated dossiers
         /// </summary>
-        ///<param name="UserID">fetch all generated dossier for the User</param>
+        /// <param name="userID">UserID</param>
+        /// <param name="clientID">ID of client</param>
+        /// <param name="statusID">StatusID of dossier</param>
+        /// <param name="dtStartDate">StartDate of dossier</param>
+        /// <param name="dtEndDate">End of dossier</param>
         /// <returns>list of object containing all dossier generated </returns>
         /// <createdon>28-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
@@ -248,11 +256,11 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason></modifiedreason>
         [HttpGet]
         [Route("Dossier_GeneratedDossierlist_FetchAll")]
-        public IActionResult GetAllGeneratedDossier(int UserID, int ClientID, int StatusID)
+        public IActionResult GetAllGeneratedDossier(DateTime? dtStartDate, DateTime? dtEndDate, int clientID = 0, int statusID = 1, int userID = 0)
         {
             try
             {
-                dynamic lstGetAllGeneratedDossier = SS.DossierService.GetAllGeneratedDossier(UserID, ClientID, StatusID);
+                dynamic lstGetAllGeneratedDossier = SS.DossierService.GetAllGeneratedDossier(userID, clientID, statusID, dtStartDate, dtEndDate);
                 if (lstGetAllGeneratedDossier != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstGetAllGeneratedDossier });
