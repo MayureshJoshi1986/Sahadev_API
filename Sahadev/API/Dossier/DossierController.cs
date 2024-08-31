@@ -311,7 +311,7 @@ namespace Sahadev.API.Dossier
                 //For error user Log.LogError methods
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
-                _logger.LogError(ex, _className, "GetDossierByDossierConfID");
+                _logger.LogError(ex, _className, "GetDossierByDossierDefID");
                 return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
