@@ -22,6 +22,10 @@ using SahadevDBLayer.UnitOfWork;
 using SahadevService.Sentry;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Dynamic;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 using System.Transactions;
@@ -44,6 +48,18 @@ namespace SahadevService.Dossier
         bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef);
         bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL);
         bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef);
+
+
+
+
+        bool MoveToTrash(List<string> dossierLinkMapID);
+        bool SaveToDraft(List<string> dossierLinkMapID);
+        bool UpdateDataAfterEdit(List<RQ_DossierReviewLinks> lstLinksToUpdate, int platformID);
+
+
+        dynamic GetAllDossierReviewDataDetails(int dossierID, int plateformID);
+        dynamic GetAllDossierDraftDataDetails(int dossierID, int plateformID);
+        dynamic GetAllDossierTrashDataDetails(int dossierID, int plateformID);
     }
 
     public class DossierService : IDossierService
@@ -188,7 +204,7 @@ namespace SahadevService.Dossier
         {
             try
             {
-                dynamic objDossier = uw.C3Repository.GetAllDossier(UserID,ClientID,StatusID,StartDate,EndDate);
+                dynamic objDossier = uw.C3Repository.GetAllDossier(UserID, ClientID, StatusID, StartDate, EndDate);
 
                 return objDossier;
             }
@@ -209,11 +225,11 @@ namespace SahadevService.Dossier
         /// <modifiedon>30-aug-2024</modifiedon>
         /// <modifiedby>Saroj Laddha</modifiedby>
         /// <modifiedreason>get dossier according to userId, client,status and Active </modifiedreason>
-        public List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID,  DateTime? StartDate = null, DateTime? EndDate = null)
+        public List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             try
             {
-                List<dynamic> lstDossiers = uw.C3Repository.GetAllGeneratedDossier(UserID,ClientID,StatusID,StartDate,EndDate);
+                List<dynamic> lstDossiers = uw.C3Repository.GetAllGeneratedDossier(UserID, ClientID, StatusID, StartDate, EndDate);
                 return lstDossiers;
             }
             catch (Exception ex)
@@ -273,6 +289,246 @@ namespace SahadevService.Dossier
             }
 
         }
+
+
+        /// <summary>
+        /// To fetch the Data links Details for the review
+        /// </summary>
+        /// <param name="linkID">To fetch the link Details</param>
+        /// <param name="platformID"> To fetch the link Details of particular platform (Print, online) based on ID</param>
+        /// <returns>list of object containing Data links Details for the review</returns>
+        /// <createdon>06-Sep-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public dynamic GetAllDossierReviewDataDetails(int dossierID, int platformID)
+        {
+            dynamic lstlinkDetails = null;
+            try
+            {
+                //fetch the link Id's from DossierLinkMap table for verify 
+                List<dynamic> lstReviewLinks = uw.C3Repository.GetAllDossierReviewDataLinks(dossierID, platformID);
+                if (lstReviewLinks != null)
+                {
+                    // extract link ID's
+                    List<string> lstLinkID = lstReviewLinks.Select(x => ((int)x.LinkID).ToString()).ToList();
+
+                    // make a single comma seperated string 
+                    string strLinkID = String.Join(",", lstLinkID);
+
+                    //fetch the link details from the E Database 
+                    List<dynamic> lstReviewLinkDetails = uw.ERepository.GetAllDossierReviewDataDetails(platformID, strLinkID);
+
+                    //joining both records as we would require DossierMapLinkID from the Sehdev_C2_2 Database to perdorm draft , trash , or update links
+                    // and with all necessary details from the E Database
+                    lstlinkDetails = lstReviewLinkDetails.Join(lstReviewLinks,
+                                  linkDetail => linkDetail.LinkID,
+                                  links => links.LinkID,
+                                  (linkDetail, links) =>
+                                  {
+
+                                      // to handle new columns added in Table and SP's  dynamically 
+                                      // no requirement to do any change in code for getting data of a new column. this code will handle all 
+                                      // the new columns added in SP's
+                                      dynamic expando = new ExpandoObject();
+                                      var dictionary = (IDictionary<string, object>)expando;
+
+                                      //add all properties from the first object
+                                      if (links != null)
+                                      {
+                                          foreach (var item in links)
+                                          {
+                                              
+                                              dictionary[item.Key] = item.Value;
+                                          }
+                                      }
+
+                                      //add all properties from the second object
+                                      if (linkDetail != null)
+                                      {
+                                          foreach (var item in linkDetail)
+                                          {
+                                              dictionary[item.Key] = item.Value;
+                                          }
+                                      }
+                                      return expando;
+
+                                  }).ToList();
+
+
+
+                }
+
+                return lstlinkDetails;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetAllDossierReviewDataDetails");
+                throw ex;
+            }
+
+
+        }
+
+        /// <summary>
+        /// To fetch the Data links Details that saved to draft
+        /// </summary>
+        /// <param name="dossierID">To fetch the links Details of a dossier</param>
+        /// <param name="platformID"> To fetch the link Details of particular platform (Print, online) based on ID</param>
+        /// <returns>list of object containing link Details that are Saved To draft</returns>
+        /// <createdon>06-Sep-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public dynamic GetAllDossierDraftDataDetails(int dossierID, int platformID)
+        {
+            dynamic lstlinkDetails = null;
+            try
+            {
+                //fetch the link Id's from DossierLinkMap table for verify Draft Data
+                List<dynamic> lstReviewDraftLinks = uw.C3Repository.GetAllDossierReviewDraftDataLinks(dossierID, platformID);
+                if (lstReviewDraftLinks != null)
+                {
+                    // extract link ID's
+                    List<string> lstLinkID = lstReviewDraftLinks.Select(x => ((int)x.LinkID).ToString()).ToList();
+
+                    // make a single comma seperated string 
+                    string strLinkID = String.Join(",", lstLinkID);
+
+                    //fetch the link details from the E Database 
+                    List<dynamic> lstReviewDraftLinkDetails = uw.ERepository.GetAllDossierDraftDataDetails(platformID, strLinkID);
+
+                    //joining both records as we would require DossierMapLinkID from the Sehdev_C2_2 Database to perform actions
+                    // and with all necessary details from the E Database
+                    lstlinkDetails = lstReviewDraftLinkDetails.Join(lstReviewDraftLinks,
+                                  linkDetail => linkDetail.LinkID,
+                                  links => links.LinkID,
+                                  (linkDetail, links) =>
+                                  {
+
+                                      // to handle new columns added in Table and SP's  dynamically 
+                                      // no requirement to do any change in code for getting data of a new column. this code will handle all 
+                                      // the new columns added in SP's
+                                      dynamic expando = new ExpandoObject();
+                                      var dictionary = (IDictionary<string, object>)expando;
+
+                                      //add all properties from the first object
+                                      if (links != null)
+                                      {
+                                          foreach (var item in links)
+                                          {
+
+                                              dictionary[item.Key] = item.Value;
+                                          }
+                                      }
+
+                                      //add all properties from the second object
+                                      if (linkDetail != null)
+                                      {
+                                          foreach (var item in linkDetail)
+                                          {
+                                              dictionary[item.Key] = item.Value;
+                                          }
+                                      }
+                                      return expando;
+
+                                  }).ToList();
+
+
+
+                }
+
+                return lstlinkDetails;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetAllDossierDraftDataDetails");
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// To fetch the Data link Details that moved to trash 
+        /// </summary>
+        /// <param name="dossierID">To fetch the links Detail of a link of a dossier</param>
+        /// <param name="platformID"> To fetch the link of particular platform (Print, online) based on ID</param>
+        /// <returns>list of object containing link Details that are moved To trash</returns>
+        /// <createdon>06-Sep-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public dynamic GetAllDossierTrashDataDetails(int dossierID, int platformID)
+        {
+
+            dynamic lstlinkDetails = null;
+            try
+            {
+                //fetch the link Id's from DossierLinkMap table for showing Links That are deleted
+                List<dynamic> lstDeletedLinks = uw.C3Repository.GetAllDossierTrashDataLinks(dossierID, platformID);
+                if (lstDeletedLinks != null)
+                {
+                    // extract link ID's
+                    List<string> lstLinkID = lstDeletedLinks.Select(x => ((int)x.LinkID).ToString()).ToList();
+
+                    // make a single comma seperated string 
+                    string strLinkID = String.Join(",", lstLinkID);
+
+                    //fetch the deleted links details from the E Database 
+                    List<dynamic> lstDeletedLinkDetails = uw.ERepository.GetAllDossierTrashDataDetails(platformID, strLinkID);
+
+                    //joining both records as we would require DossierMapLinkID from the Sehdev_C2_2 Database to perform actions
+                    // and with all necessary details from the E Database
+                    lstlinkDetails = lstDeletedLinkDetails.Join(lstDeletedLinks,
+                                  linkDetail => linkDetail.LinkID,
+                                  links => links.LinkID,
+                                  (linkDetail, links) =>
+                                  {
+
+                                      // to handle new columns added in Table and SP's  dynamically 
+                                      // no requirement to do any change in code for getting data of a new column. this code will handle all 
+                                      // the new columns added in SP's
+                                      dynamic expando = new ExpandoObject();
+                                      var dictionary = (IDictionary<string, object>)expando;
+
+                                      //add all properties from the first object
+                                      if (links != null)
+                                      {
+                                          foreach (var item in links)
+                                          {
+
+                                              dictionary[item.Key] = item.Value;
+                                          }
+                                      }
+
+                                      //add all properties from the second object
+                                      if (linkDetail != null)
+                                      {
+                                          foreach (var item in linkDetail)
+                                          {
+                                              dictionary[item.Key] = item.Value;
+                                          }
+                                      }
+                                      return expando;
+
+                                  }).ToList();
+
+
+
+                }
+
+                return lstlinkDetails;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetAllDossierTrashDataDetails");
+                throw ex;
+            }
+        }
+
 
 
 
@@ -364,7 +620,7 @@ namespace SahadevService.Dossier
                 //Mapping Of DossierSch
                 DossierSch objDossierSch = new DossierSch();
                 objDossierSch.DossierDefID = dossierDefID;
-                objDossierSch.ScheduleTypeID =objRQ_DossierDef.ScheduleTypeID;
+                objDossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
                 objDossierSch.Time1 = Convert.ToDateTime(objRQ_DossierDef.Time1);
                 objDossierSch.Time2 = Convert.ToDateTime(objRQ_DossierDef.Time2);
                 objDossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
@@ -528,6 +784,95 @@ namespace SahadevService.Dossier
             }
             return bReturn;
         }
+
+
+        /// <summary>
+        /// This method is used to Update DossierLinkMap table To mark the IsDeleted = 1 to move data to trash
+        /// </summary>
+        /// <param name="dossierLinkMapID">object containing dossierLinkMapID to Update the record as deleted</param>
+        /// <returns>true if successfully Update else false</returns>
+        /// <createdon>06-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        public bool MoveToTrash(List<string> dossierLinkMapID)
+        {
+            bool bReturn = false;
+            try
+            {
+                string strLinkID = String.Join(",", dossierLinkMapID);
+                bReturn = uw.C3Repository.MoveToTrash(strLinkID);
+
+                //Commit the change 
+                uw.Commit();
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "MoveToTrash");
+            }
+            return bReturn;
+        }
+
+        /// <summary>
+        /// This method is used to Update DossierLinkMap table To mark the IsDraft = 1 to move data to Draft
+        /// </summary>
+        /// <param name="dossierLinkMapID">object containing dossierLinkMapID to Update the record as Draft</param>
+        /// <returns>true if successfully Updated else false</returns>
+        /// <createdon>06-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        public bool SaveToDraft(List<string> dossierLinkMapID)
+        {
+            bool bReturn = false;
+            try
+            {
+                string strLinkID = String.Join(",", dossierLinkMapID);
+
+                bReturn = uw.C3Repository.SaveToDraft(strLinkID);
+                //Commit the change 
+                uw.Commit();
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "SaveToDraft");
+            }
+            return bReturn;
+
+        }
+
+        /// <summary>
+        /// This method is used to Update DossierLinkMap table To mark the IsEdit = 1 for records edit and also update DossierEdit 
+        /// table to save the old and new updated values
+        /// </summary>
+        /// <param name="lstLinksToUpdate">object containing dossierLinkMapID to Update the record and contains old to new record change history json</param>
+        /// <param name="platformID">records of a particular platform</param>
+        /// <returns>true if successfully Updated else false</returns>
+        /// <createdon>07-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        public bool UpdateDataAfterEdit(List<RQ_DossierReviewLinks> lstLinksToUpdate , int platformID)
+        {
+            bool bReturn = false;
+            try
+            {
+                foreach (var link in lstLinksToUpdate)
+                {
+
+                    bReturn = uw.C3Repository.UpdateDataAfterEdit(link.DossierLinkMapID, link.EditsJson);
+
+                    bReturn = uw.ERepository.UpadateDataAfterEdit(platformID, link.LinkID, link.Sentiment, link.ArticleMention);
+                }
+
+                //Commit the change 
+                uw.Commit();
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "UpdateDataAfterEdit");
+            }
+            return bReturn;
+
+        }
+
 
 
 

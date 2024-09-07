@@ -56,6 +56,15 @@ namespace SahadevDBLayer.Repository
         List<AdditionalURL> GetAllAdditionalUrl(int dossierID);
         bool InsertAdditionalURl(AdditionalURL objAdditionalURL);
 
+
+        List<dynamic> GetAllDossierReviewDataLinks(int dossierID, int platformID);
+        List<dynamic> GetAllDossierTrashDataLinks(int dossierID,int platformID);
+        List<dynamic> GetAllDossierReviewDraftDataLinks(int dossierID, int platformID);
+
+        bool MoveToTrash(string dossierLinkMapID);
+        bool SaveToDraft(string dossierLinkMapID);
+        bool UpdateDataAfterEdit(int dossierLinkMapID, string editJson);
+
     }
 
     internal class C3Repository : RepositoryBase, IC3Repository
@@ -96,6 +105,95 @@ namespace SahadevDBLayer.Repository
             }
 
         }
+
+
+        /// <summary>
+        /// To fetch the Data links that moved to trash 
+        /// </summary>
+        /// <param name="dossierID">To fetch the links of particular dossier</param>
+        /// <param name="platformID"> To fetch the link of particular platform (Print, online) based on ID</param>
+        /// <returns>list of object containing list of LinkID's  and DossierLinkMapID that are moved To trash</returns>
+        /// <createdon>06-Sep-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetAllDossierTrashDataLinks(int dossierID, int platformID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierID", dossierID);
+                dbparams.Add("@platformID", platformID);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_Review_FetchTrashLinks]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// To fetch the Data links that are moved to draft for the review
+        /// </summary>
+        /// <param name="dossierID">To fetch the links of particular dossier</param>
+        /// <param name="platformID"> To fetch the link of particular platform (Print, online) based on ID</param>
+        /// <returns>list of object containing list of LinkID's  and DossierLinkMapID that are moved To draft for the review</returns>
+        /// <createdon>06-Sep-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetAllDossierReviewDraftDataLinks(int dossierID, int platformID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierID", dossierID);
+                dbparams.Add("@platformID", platformID);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_Review_FetchDossierDraftLinks]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+        /// <summary>
+        /// To fetch the initial Review Data link to verify
+        /// </summary>
+        /// <param name="dossierID">To fetch the links of particular dossier</param>
+        /// <param name="platformID"> To fetch the link of particular platform (Print, online) based on ID</param>
+        /// <returns>list of object containing list of LinkID's  and DossierLinkMapID for the verifcation</returns>
+        /// <createdon>06-Sep-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetAllDossierReviewDataLinks(int dossierID, int platformID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierID", dossierID);
+                dbparams.Add("@platformID", platformID);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_Review_FetchReviewDataLinks]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
 
         #region Fetch
 
@@ -591,7 +689,7 @@ namespace SahadevDBLayer.Repository
         /// This method is used to Update DossierDef detail in DossierDef Table
         /// </summary>
         /// <param name="objDossier">object containing DossierDef</param>
-        /// <returns>true if successfully inserted else false</returns>
+        /// <returns>true if successfully Updated else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>29-08-24</modifiedon>
@@ -638,7 +736,7 @@ namespace SahadevDBLayer.Repository
         /// This method is used to Update DossierRecep detail in DossierRecep Table
         /// </summary>
         /// <param name="objDossierRecep">object containing DossierRecep</param>
-        /// <returns>true if successfully inserted else false</returns>
+        /// <returns>true if successfully Updated else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>29-08-24</modifiedon>
@@ -670,7 +768,7 @@ namespace SahadevDBLayer.Repository
         /// This method is used to Update DossierSch detail in DossierSch Table
         /// </summary>
         /// <param name="objDossierSch">object containing DossierSch</param>
-        /// <returns>true if successfully inserted else false</returns>
+        /// <returns>true if successfully Updated else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>29-08-24</modifiedon>
@@ -709,7 +807,7 @@ namespace SahadevDBLayer.Repository
         /// This method is used to Update DossierConf detail in DossierConf Table
         /// </summary>
         /// <param name="objDossierConf">object containing DossierConf</param>
-        /// <returns>true if successfully inserted else false</returns>
+        /// <returns>true if successfully Updated else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>29-08-24</modifiedon>
@@ -740,7 +838,7 @@ namespace SahadevDBLayer.Repository
         /// This method is used to Update DossierTagGroup detail in DossierTagGroup Table
         /// </summary>
         /// <param name="objDossierTagGroup">object containing DossierTagGroup</param>
-        /// <returns>true if successfully inserted else false</returns>
+        /// <returns>true if successfully Updated else false</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>29-08-24</modifiedon>
@@ -769,6 +867,92 @@ namespace SahadevDBLayer.Repository
 
         }
 
+
+
+        /// <summary>
+        /// This method is used to Update DossierLinkMap table To mark the IsDeleted = 1 to move data to trash
+        /// </summary>
+        /// <param name="dossierLinkMapID">object containing dossierLinkMapID to Update the record as deleted</param>
+        /// <returns>true if successfully Updated else false</returns>
+        /// <createdon>06-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        public bool MoveToTrash(string dossierLinkMapID)
+        {
+
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierLinkMapID", dossierLinkMapID);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_Review_MoveToTrash]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+
+        /// <summary>
+        /// This method is used to Update DossierLinkMap table To mark the IsDraft = 1 to move data to Draft
+        /// </summary>
+        /// <param name="dossierLinkMapID">object containing dossierLinkMapID to Update the record as Draft</param>
+        /// <returns>true if successfully Updated else false</returns>
+        /// <createdon>06-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        public bool SaveToDraft(string dossierLinkMapID)
+        {
+
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierLinkMapID", dossierLinkMapID);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_Review_SaveDraft]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+
+        /// <summary>
+        /// This method is used to Update DossierLinkMap table To mark the IsEdit = 1 for records edit and also update DossierEdit 
+        /// table to save the old and new updated values
+        /// </summary>
+        /// <param name="dossierLinkMapID">object containing dossierLinkMapID to Update the record</param>
+        /// <param name="editJson">contains old to new record change history json</param>
+        /// <returns>true if successfully Updated else false</returns>
+        /// <createdon>06-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        public bool UpdateDataAfterEdit(int dossierLinkMapID, string editJson)
+        {
+
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierLinkMapID", dossierLinkMapID);
+                dbparams.Add("@editsJSON", editJson);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_Review_UpdateDataAfterEdit]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+        }
 
 
 

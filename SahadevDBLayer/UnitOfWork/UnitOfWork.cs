@@ -49,6 +49,13 @@ namespace SahadevDBLayer.UnitOfWork
         private IC3Repository _C3Repository;
 
 
+        //Configuration for EDatabase
+        private IDbConnection _EConnection;
+        private IDbTransaction _ETransaction;
+        public static string EConnectionSring = "EConnectionSring";
+        private IERepository _ERepository;
+
+
 
         //public UnitOfWork(DBContext.DBContext db, IConfiguration config)
         //{
@@ -80,6 +87,10 @@ namespace SahadevDBLayer.UnitOfWork
             _C3Connection.Open();
             _C3Transaction = _C3Connection.BeginTransaction();
 
+            _EConnection = new SqlConnection(_config.GetConnectionString(EConnectionSring));
+            _EConnection.Open();
+            _ETransaction = _EConnection.BeginTransaction();
+
         }
 
         #region Repository Singleton
@@ -108,7 +119,13 @@ namespace SahadevDBLayer.UnitOfWork
             get { return _C3Repository ?? (_C3Repository = new C3Repository(_C3Connection, _C3Transaction)); }
         }
 
-        
+
+        public IERepository ERepository
+        {
+            get { return _ERepository ?? (_ERepository = new ERepository(_EConnection, _ETransaction)); }
+        }
+
+
         #endregion
 
         #region Transaction 
@@ -120,6 +137,8 @@ namespace SahadevDBLayer.UnitOfWork
             _C1Transaction.Rollback();
             _C2Transaction.Rollback();
             _C3Transaction.Rollback();
+            _ETransaction.Rollback();
+            
         }
         public void Commit()
         {
@@ -128,7 +147,8 @@ namespace SahadevDBLayer.UnitOfWork
                 _A2Transaction.Commit();
                 _C1Transaction.Commit();
                 _C2Transaction.Commit();
-                _C3Transaction.Commit();                                                                                                                                               
+                _C3Transaction.Commit();   
+                _ETransaction.Commit();
             }
             catch
             {
@@ -136,6 +156,7 @@ namespace SahadevDBLayer.UnitOfWork
                 _C1Transaction.Rollback();
                 _C2Transaction.Rollback();
                 _C3Transaction.Rollback();
+                _ETransaction.Rollback();
                 throw;
             }
             finally
@@ -144,11 +165,13 @@ namespace SahadevDBLayer.UnitOfWork
                 _C1Transaction.Dispose();
                 _C2Transaction.Dispose();
                 _C3Transaction.Dispose();
+                _ETransaction.Dispose();
 
                 _A2Transaction = _A2Connection.BeginTransaction();
                 _C1Transaction = _C1Connection.BeginTransaction();
                 _C2Transaction = _C2Connection.BeginTransaction();
                 _C3Transaction = _C3Connection.BeginTransaction();
+                _ETransaction = _EConnection.BeginTransaction();
 
                 disposed = true;
 
@@ -162,6 +185,7 @@ namespace SahadevDBLayer.UnitOfWork
             _C1Repository = null;
             _C2Repository = null;
             _C3Repository = null;
+            _ETransaction = null;
         }
 
         private void Dispose(bool disposing)
@@ -213,6 +237,12 @@ namespace SahadevDBLayer.UnitOfWork
                     {
                         _C3Connection.Dispose();
                         _C3Connection = null;
+                    }
+
+                    if (_EConnection != null)
+                    {
+                        _EConnection.Dispose();
+                        _EConnection = null;
                     }
                 }
                 disposed = true;

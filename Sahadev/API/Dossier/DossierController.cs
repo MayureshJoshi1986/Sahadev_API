@@ -127,6 +127,9 @@ namespace Sahadev.API.Dossier
             }
         }
 
+
+
+
         /// <summary>
         /// This API is used to fetch all Users
         /// </summary>
@@ -215,7 +218,7 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason></modifiedreason>
         [HttpGet]
         [Route("DossierConfiguration_FetchAll")]
-        public IActionResult GetAllDossier(DateTime? dtStartDate, DateTime? dtEndDate, int clientID = 0, int statusID = 1, int userID=0)
+        public IActionResult GetAllDossier(DateTime? dtStartDate, DateTime? dtEndDate, int clientID = 0, int statusID = 1, int userID = 0)
         {
             try
             {
@@ -456,6 +459,233 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "UpdateDossierConfiguration");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+
+        /// <summary>
+        /// This apoTo fetch the initial Review Data link Details to verify
+        /// </summary>
+        /// <param name="dossierID">To fetch the links of particular dossier</param>
+        /// <param name="platformID"> To fetch the link of particular platform (Print, online) based on ID</param>
+        /// <returns>list of object containing list of Link Details for the verifcation</returns>
+        /// <createdon>07-Sep-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_Review_FetchData")]
+        public IActionResult GetAllDossierReviewDataDetails(int dossierID, int platformID)
+        {
+            try
+            {
+
+                dynamic lstReviewDataDetails = SS.DossierService.GetAllDossierReviewDataDetails(dossierID, platformID);
+                if (lstReviewDataDetails != null)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstReviewDataDetails });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Links not found for the review" });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetAllDossierReviewDataDetails");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+
+
+        /// <summary>
+        /// This API is used To fetch the Data links Details that are moved to draft for the review
+        /// </summary>
+        /// <param name="dossierID">To fetch the links of particular dossier</param>
+        /// <param name="platformID"> To fetch the link of particular platform (Print, online) based on ID</param>
+        /// <returns>list of object containing list of Link Details that are moved To draft for the review</returns>
+        /// <createdon>07-Sep-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_Review_FetchDossierDetails")]
+        public IActionResult GetAllDossierDraftDataDetails(int dossierID, int platformID)
+        {
+            try
+            {
+
+                dynamic lstReviewDraftDetails = SS.DossierService.GetAllDossierDraftDataDetails(dossierID, platformID);
+                if (lstReviewDraftDetails != null)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstReviewDraftDetails });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Draft Links not found for the review" });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetAllDossierDraftDataDetails");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+
+
+        /// <summary>
+        /// This API is used To fetch the Data links that moved to trash 
+        /// </summary>
+        /// <param name="dossierID">To fetch the links of particular dossier</param>
+        /// <param name="platformID"> To fetch the link of particular platform (Print, online) based on ID</param>
+        /// <returns>list of object containing list of Link Details that are moved To trash</returns>
+        /// <createdon>07-Sep-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_Review_ShowTrash")]
+        public IActionResult GetAllDossierTrashDataDetails(int dossierID, int platformID)
+        {
+            try
+            {
+
+                dynamic lstDeletedDataDetails = SS.DossierService.GetAllDossierTrashDataDetails(dossierID, platformID);
+                if (lstDeletedDataDetails != null)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstDeletedDataDetails });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Deleted Links not found for the review" });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetAllDossierTrashDataDetails");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// This API is used to Update DossierLinkMap table To mark the IsDraft = 1 to move data to Draft
+        /// </summary>
+        /// <param name="dossierLinkMapID">string list containing dossierLinkMapIDs to Update the record as Draft</param>
+        ///<returns>success message if successfully updated else error message</returns>
+        /// <createdon>07-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        [HttpPost]
+        [Route("Dossier_Review_SaveDraft")]
+        public IActionResult SaveToDraft([FromBody] List<string> dossierLinkMapID)
+        {
+            try
+            {
+                bool bReturn = SS.DossierService.SaveToDraft(dossierLinkMapID);
+                if (bReturn == true)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Updated, "Dossier for Draft Links") });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.UpdateFailed, "Dossier for Draft Links") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "SaveToDraft");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+
+        /// <summary>
+        /// This API is used to Update DossierLinkMap table To mark isDeleted = 1 for the links that are moved to trash
+        /// </summary>
+        /// <param name="dossierLinkMapID">string list containing dossierLinkMapIDs to Update the record that are supposed to move to trash</param>
+        ///<returns>success message if successfully updated else error message</returns>
+        /// <createdon>07-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        [HttpPost]
+        [Route("Dossier_Review_MoveToTrash")]
+        public IActionResult MoveToTrash([FromBody] List<string> dossierLinkMapID)
+        {
+            try
+            {
+                bool bReturn = SS.DossierService.MoveToTrash(dossierLinkMapID);
+                if (bReturn == true)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Updated, "Dossier for Deleted Links") });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.UpdateFailed, "Dossier for Deleted Links") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "MoveToTrash");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// This API is used to Update DossierLinkMap table To mark the IsEdit = 1 for records edit and also update DossierEdit 
+        /// table to save the old and new updated values
+        /// </summary>
+        /// <param name="lstLinksToUpdate">object containing dossierLinkMapID to Update the record and contains old to new record change history json</param>
+        /// <param name="platformID">for which platform Data need to be updated</param>
+        /// <returns>true if successfully Updated else false</returns>
+        /// <createdon>07-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        [HttpPost]
+        [Route("Dossier_Review_UpdateDataAfterEdit")]
+        public IActionResult UpdateDataAfterEdit([FromBody] List<RQ_DossierReviewLinks> lstLinksToUpdate,  int platformID)
+        {
+            try
+            {
+                bool bReturn = SS.DossierService.UpdateDataAfterEdit(lstLinksToUpdate,platformID);
+                if (bReturn == true)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Updated, "Dossier Review links") });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.UpdateFailed, "Dossier Review links") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "UpdateDataAfterEdit");
                 return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
