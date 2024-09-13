@@ -63,7 +63,7 @@ namespace SahadevDBLayer.Repository
 
         bool MoveToTrash(string dossierLinkMapID);
         bool SaveToDraft(string dossierLinkMapID);
-        bool UpdateDataAfterEdit(int dossierLinkMapID, string editJson);
+        bool UpdateDataAfterEdit(int dossierLinkMapID, string editJson, int dossierID);
 
     }
 
@@ -934,7 +934,7 @@ namespace SahadevDBLayer.Repository
         /// <returns>true if successfully Updated else false</returns>
         /// <createdon>06-SEP-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        public bool UpdateDataAfterEdit(int dossierLinkMapID, string editJson)
+        public bool UpdateDataAfterEdit(int dossierLinkMapID, string editJson, int dossierID)
         {
 
             bool bReturn = false;
@@ -943,6 +943,7 @@ namespace SahadevDBLayer.Repository
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierLinkMapID", dossierLinkMapID);
                 dbparams.Add("@editsJSON", editJson);
+                dbparams.Add("@dossierID", dossierID);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_Review_UpdateDataAfterEdit]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;

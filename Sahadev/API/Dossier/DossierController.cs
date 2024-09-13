@@ -635,11 +635,11 @@ namespace Sahadev.API.Dossier
                 bool bReturn = SS.DossierService.MoveToTrash(dossierLinkMapID);
                 if (bReturn == true)
                 {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Updated, "Dossier for Deleted Links") });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Deleted, "Dossier Links") });
                 }
                 else
                 {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.UpdateFailed, "Dossier for Deleted Links") });
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.DeleteFailed, "Dossier Links") });
                 }
             }
             catch (Exception ex)

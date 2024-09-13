@@ -856,7 +856,7 @@ namespace SahadevService.Dossier
                 foreach (var link in lstLinksToUpdate)
                 {
 
-                    bReturn = uw.C3Repository.UpdateDataAfterEdit(link.DossierLinkMapID, link.EditsJson);
+                    bReturn = uw.C3Repository.UpdateDataAfterEdit(link.DossierLinkMapID, link.EditsJson , link.DossierID);
 
                     bReturn = uw.ERepository.UpadateDataAfterEdit(platformID, link.LinkID, link.Sentiment, link.ArticleMention);
                 }

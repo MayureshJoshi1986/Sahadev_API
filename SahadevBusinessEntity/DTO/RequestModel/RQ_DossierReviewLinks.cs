@@ -40,6 +40,9 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("link_Id")]
         public int LinkID { get; set; }
 
+        [JsonPropertyName("dossier_Id")]
+        public int DossierID { get; set; }
+
 
        
     }
