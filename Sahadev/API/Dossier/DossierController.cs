@@ -7,9 +7,9 @@
 *  -------------------------------------------------------------------------------------------*
 *  CreatedBy      :- PJ                                                                       *
 *  -------------------------------------------------------------------------------------------*
-*  ModifiedOn     :-                                                                          *
-*  ModifiedBy     :-                                                                          *
-*  ModifiedReason :-                                                                          *
+*  ModifiedOn     :- 26-Sept-2024                                                             *
+*  ModifiedBy     :- PJ                                                                       *
+*  ModifiedReason :- Added new methods GetAllDossierScheduleType & GetAllDossierEventType     *
 *  -------------------------------------------------------------------------------------------*
 *  ModifiedOn     :-                                                                          *
 *  ModifiedBy     :-                                                                          *
@@ -213,16 +213,16 @@ namespace Sahadev.API.Dossier
         /// <returns>list of object containing dossier configuration</returns>
         /// <createdon>28-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>26-Sep-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
         [HttpGet]
         [Route("DossierConfiguration_FetchAll")]
-        public IActionResult GetAllDossier(DateTime? dtStartDate, DateTime? dtEndDate, int clientID = 0, int statusID = 1, int userID = 0)
+        public IActionResult GetAllDossier(DateTime? dtStartDate, DateTime? dtEndDate, [FromQuery] int[] clientID, int statusID = 1, int userID = 0)
         {
             try
             {
-                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(userID, clientID, statusID, dtStartDate, dtEndDate);
+                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(userID, clientID , statusID, dtStartDate, dtEndDate);
                 if (lstGetAllDossier != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstGetAllDossier });
@@ -254,12 +254,12 @@ namespace Sahadev.API.Dossier
         /// <returns>list of object containing all dossier generated </returns>
         /// <createdon>28-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>26-Sep-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
         [HttpGet]
         [Route("Dossier_GeneratedDossierlist_FetchAll")]
-        public IActionResult GetAllGeneratedDossier(DateTime? dtStartDate, DateTime? dtEndDate, int clientID = 0, int statusID = 1, int userID = 0)
+        public IActionResult GetAllGeneratedDossier(DateTime? dtStartDate, DateTime? dtEndDate, [FromQuery] int[] clientID, int statusID = 1, int userID = 0)
         {
             try
             {
@@ -459,6 +459,76 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "UpdateDossierConfiguration");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+        /// <summary>
+        /// This API is used to fetch all dossier schedule type for dropdown
+        /// </summary>
+        /// <returns>list of object containing dossier schedule type</returns>
+        /// <createdon>26-Sept-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("DossierScheduleType_FetchAll")]
+        public IActionResult GetAllDossierScheduleType()
+        {
+            try
+            {
+                dynamic lstDossierScheduleType = SS.DossierService.GetAllDossierScheduleType();
+                if (lstDossierScheduleType != null)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstDossierScheduleType });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Data not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetAllDossierScheduleType");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+        /// <summary>
+        /// This API is used to fetch all dossier event type for dropdown
+        /// </summary>
+        /// <returns>list of object containing dossier event type</returns>
+        /// <createdon>26-Sept-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("DossierEventType_FetchAll")]
+        public IActionResult GetAllDossierEventType()
+        {
+            try
+            {
+                dynamic lstDossierEventType = SS.DossierService.GetAllDossierEventType();
+                if (lstDossierEventType != null)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstDossierEventType });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Data not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetAllDossierEventType");
                 return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }

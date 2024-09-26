@@ -8,8 +8,8 @@
  *  --------------------------------------------------------------------------------------------*
  *  Created Date    :- 22-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  revised By      :-  PJ                                                                      *
+ *  revised Details :-  Added new methods GetAllDossierScheduleType & GetAllDossierEventType    *  
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
@@ -41,8 +41,8 @@ namespace SahadevService.Dossier
         List<dynamic> GetAllClientByUserID(int userID);
         List<dynamic> GetAllUser();
         DossierDef GetDossierDef(int dossierDefID);
-        List<dynamic> GetAllDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
-        List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        List<dynamic> GetAllDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
         dynamic GetGeneratedDossier(int dossierDefID);
         List<AdditionalURL> GetAllAdditionalURL(int dossierID);
         bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef);
@@ -200,7 +200,10 @@ namespace SahadevService.Dossier
         /// <modifiedon>30-aug-2024</modifiedon>
         /// <modifiedby>Saroj Laddha</modifiedby>
         /// <modifiedreason>get dossier according to userId, client,status and Active </modifiedreason>
-        public List<dynamic> GetAllDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
+        /// <modifiedon>26-Sep-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
+        public List<dynamic> GetAllDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             try
             {
@@ -225,7 +228,10 @@ namespace SahadevService.Dossier
         /// <modifiedon>30-aug-2024</modifiedon>
         /// <modifiedby>Saroj Laddha</modifiedby>
         /// <modifiedreason>get dossier according to userId, client,status and Active </modifiedreason>
-        public List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
+        /// <modifiedon>26-Sep-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
+        public List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             try
             {
@@ -289,6 +295,54 @@ namespace SahadevService.Dossier
             }
 
         }
+
+        /// <summary>
+        /// This method is used to fetch all dossier schedule type
+        /// </summary>
+        /// <returns>list of object containing dossier schedule type</returns>
+        /// <createdon>26-Sept-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetAllDossierScheduleType()
+        {
+            try
+            {
+                List<dynamic> lstDossierScheduleType = uw.C3Repository.GetAllDossierScheduleType();
+                return lstDossierScheduleType;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, " GetAllDossierScheduleType");
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to fetch all dossier event type for dropdown
+        /// </summary>
+        /// <returns>list of object containing dossier event type</returns>
+        /// <createdon>26-Sept-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetAllDossierEventType()
+        {
+            try
+            {
+                List<dynamic> lstDossierEventType = uw.C3Repository.GetAllDossierEventType();
+                return lstDossierEventType;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, " GetAllDossierEventType");
+                throw ex;
+            }
+        }
+
+
 
 
         /// <summary>

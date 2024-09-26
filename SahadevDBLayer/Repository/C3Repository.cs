@@ -10,9 +10,10 @@
  *  --------------------------------------------------------------------------------------------*
  *  revised By      :-  PJ                                                                      *
  *  revised Details :-  Changed class name from SahadevC3Repository to C3Repository             *  
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  revised By      :-  PJ                                                                      *
+ *  revised Details :-  Added new methods GetAllDossierScheduleType  & GetAllDossierEventType   *  
  //**********************************************************************************************/
+
 using SahadevBusinessEntity.DTO.Model;
 using System.Collections.Generic;
 using System;
@@ -49,8 +50,8 @@ namespace SahadevDBLayer.Repository
         DossierConf GetDossierConf(int DossierDefID);
         List<DossierTagGroup> GetDossierTagGroup(int DossierDefID);
 
-        List<dynamic> GetAllDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
-        List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate =null, DateTime? EndDate = null);
+        List<dynamic> GetAllDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
         dynamic GetGeneratedDossier(int dossierDefID);
 
         List<AdditionalURL> GetAllAdditionalUrl(int dossierID);
@@ -58,12 +59,16 @@ namespace SahadevDBLayer.Repository
 
 
         List<dynamic> GetAllDossierReviewDataLinks(int dossierID, int platformID);
-        List<dynamic> GetAllDossierTrashDataLinks(int dossierID,int platformID);
+        List<dynamic> GetAllDossierTrashDataLinks(int dossierID, int platformID);
         List<dynamic> GetAllDossierReviewDraftDataLinks(int dossierID, int platformID);
 
         bool MoveToTrash(string dossierLinkMapID);
         bool SaveToDraft(string dossierLinkMapID);
         bool UpdateDataAfterEdit(int dossierLinkMapID, string editJson, int dossierID);
+
+
+        List<dynamic> GetAllDossierScheduleType();
+        List<dynamic> GetAllDossierEventType();
 
     }
 
@@ -348,22 +353,22 @@ namespace SahadevDBLayer.Repository
 
 
         /// <summary>
-        /// This method is used to fetch All Dossier  from Dossier Table
+        /// This method is used to fetch All Dossier from Dossier Table
         /// </summary>
         /// <returns>list of object containing Dossier</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>26-Sep-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
 
-        public List<dynamic> GetAllDossier(int UserID,int ClientID,int StatusID,  DateTime? StartDate = null, DateTime? EndDate = null)
+        public List<dynamic> GetAllDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@userID", UserID);
-                dbparams.Add("@ClientID", ClientID);
+                dbparams.Add("@ClientID", ClientID.Length != 0 ? string.Join(",", ClientID) : string.Empty);
                 dbparams.Add("@StatusID", StatusID);
                 dbparams.Add("@startDate", StartDate);
                 dbparams.Add("@endDate", EndDate);
@@ -384,17 +389,17 @@ namespace SahadevDBLayer.Repository
         /// <returns>list of object containing Dossier</returns>
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>26-Sep-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
 
-        public List<dynamic> GetAllGeneratedDossier(int UserID, int ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
+        public List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@userID", UserID);
-                dbparams.Add("@ClientID", ClientID);
+                dbparams.Add("@ClientID", ClientID.Length != 0 ? string.Join(",", ClientID) : string.Empty);
                 dbparams.Add("@StatusID", StatusID);
                 dbparams.Add("@startDate", StartDate);
                 dbparams.Add("@endDate", EndDate);
@@ -464,6 +469,53 @@ namespace SahadevDBLayer.Repository
                 throw ex;
             }
 
+        }
+
+        /// <summary>
+        /// This method is used to fetch all dossier schedule type from mstScheduleType table
+        /// </summary>
+        /// <returns>list of object containing dossier schedule type</returns>
+        /// <createdon>26-Sept-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public List<dynamic> GetAllDossierScheduleType()
+        {
+            try
+            {
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_DossierScheduleType_FetchAll]", null, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// This method is used to fetch all dossier event type from mstEventType table
+        /// </summary>
+        /// <returns>list of object containing dossier event type</returns>
+        /// <createdon>26-Sept-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+
+        public List<dynamic> GetAllDossierEventType()
+        {
+            try
+            {
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_DossierEventType_FetchAll]", null, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion

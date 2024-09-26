@@ -40,6 +40,17 @@ namespace Sahadev
         /// <param name="services">Object of IServiceCollection</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
+
             services.AddControllersWithViews().AddFluentValidation(fv =>
             {
                 //fv.RegisterValidatorsFromAssemblyContaining<UserValidation>();
@@ -96,7 +107,7 @@ namespace Sahadev
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseCors("AllowAllOrigins");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
