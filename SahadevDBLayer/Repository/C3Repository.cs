@@ -68,8 +68,6 @@ namespace SahadevDBLayer.Repository
 
 
         List<dynamic> GetAllDossierScheduleType();
-        List<dynamic> GetAllDossierEventType();
-
     }
 
     internal class C3Repository : RepositoryBase, IC3Repository
@@ -111,7 +109,6 @@ namespace SahadevDBLayer.Repository
 
         }
 
-
         /// <summary>
         /// To fetch the Data links that moved to trash 
         /// </summary>
@@ -140,8 +137,6 @@ namespace SahadevDBLayer.Repository
 
         }
 
-
-
         /// <summary>
         /// To fetch the Data links that are moved to draft for the review
         /// </summary>
@@ -169,7 +164,6 @@ namespace SahadevDBLayer.Repository
             }
 
         }
-
 
         /// <summary>
         /// To fetch the initial Review Data link to verify
@@ -495,29 +489,6 @@ namespace SahadevDBLayer.Repository
 
         }
 
-        /// <summary>
-        /// This method is used to fetch all dossier event type from mstEventType table
-        /// </summary>
-        /// <returns>list of object containing dossier event type</returns>
-        /// <createdon>26-Sept-2024</createdon>
-        /// <createdby>PJ</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-
-        public List<dynamic> GetAllDossierEventType()
-        {
-            try
-            {
-                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_DossierEventType_FetchAll]", null, _transaction);
-                return data;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
         #endregion
 
 
@@ -556,6 +527,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@platform2ID", objDossier.Platform2ID);
                 dbparams.Add("@platform3ID", objDossier.Platform3ID);
                 dbparams.Add("@statusID ", objDossier.StatusID);
+                dbparams.Add("@templateFileName ", objDossier.TemplateFileName);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierDef_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
@@ -619,8 +591,8 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@time2", objDossierSch.Time2);
                 dbparams.Add("@dayOfWeek", objDossierSch.DayOfWeek);
                 dbparams.Add("@dayOfMonth", objDossierSch.DayOfMonth);
-                dbparams.Add("@lastRun", objDossierSch.LastRun);
-                dbparams.Add("@nextRun", objDossierSch.NextRun);
+                //dbparams.Add("@lastRun", objDossierSch.LastRun);
+                //dbparams.Add("@nextRun", objDossierSch.NextRun);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierSch_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)

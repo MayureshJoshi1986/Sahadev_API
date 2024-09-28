@@ -60,6 +60,10 @@ namespace SahadevService.Dossier
         dynamic GetAllDossierReviewDataDetails(int dossierID, int plateformID);
         dynamic GetAllDossierDraftDataDetails(int dossierID, int plateformID);
         dynamic GetAllDossierTrashDataDetails(int dossierID, int plateformID);
+
+        List<dynamic> GetAllDossierScheduleType();
+
+        List<dynamic> GetEventType();
     }
 
     public class DossierService : IDossierService
@@ -320,24 +324,24 @@ namespace SahadevService.Dossier
         }
 
         /// <summary>
-        /// This method is used to fetch all dossier event type for dropdown
+        /// This method is used to fetch all event type for dropdown
         /// </summary>
-        /// <returns>list of object containing dossier event type</returns>
+        /// <returns>list of object containing event type</returns>
         /// <createdon>26-Sept-2024</createdon>
         /// <createdby>PJ</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<dynamic> GetAllDossierEventType()
+        public List<dynamic> GetEventType()
         {
             try
             {
-                List<dynamic> lstDossierEventType = uw.C3Repository.GetAllDossierEventType();
-                return lstDossierEventType;
+                List<dynamic> lstEventType = uw.C2Repository.GetEventType();
+                return lstEventType;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, _className, " GetAllDossierEventType");
+                _logger.LogError(ex, _className, " GetEventType");
                 throw ex;
             }
         }
@@ -665,6 +669,7 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
                 objDossierDef.StatusID = objRQ_DossierDef.StatusID;
+                objDossierDef.TemplateFileName = objRQ_DossierDef.TemplateFileName;
 
 
                 //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
@@ -679,8 +684,8 @@ namespace SahadevService.Dossier
                 objDossierSch.Time2 = Convert.ToDateTime(objRQ_DossierDef.Time2);
                 objDossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
                 objDossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
-                objDossierSch.LastRun = objRQ_DossierDef.LastRun;
-                objDossierSch.NextRun = objRQ_DossierDef.NextRun;
+                //objDossierSch.LastRun = objRQ_DossierDef.LastRun;
+                //objDossierSch.NextRun = objRQ_DossierDef.NextRun;
 
                 uw.C3Repository.InsertDossierSch(objDossierSch);
 
@@ -784,8 +789,8 @@ namespace SahadevService.Dossier
                 objDossierSch.Time2 = Convert.ToDateTime(objRQ_DossierDef.Time2);
                 objDossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
                 objDossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
-                objDossierSch.LastRun = objRQ_DossierDef.LastRun;
-                objDossierSch.NextRun = objRQ_DossierDef.NextRun;
+                //objDossierSch.LastRun = objRQ_DossierDef.LastRun;
+                //objDossierSch.NextRun = objRQ_DossierDef.NextRun;
 
                 uw.C3Repository.UpdateDossierSch(objDossierSch);
 

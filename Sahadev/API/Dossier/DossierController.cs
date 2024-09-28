@@ -513,7 +513,7 @@ namespace Sahadev.API.Dossier
         {
             try
             {
-                dynamic lstDossierEventType = SS.DossierService.GetAllDossierEventType();
+                dynamic lstDossierEventType = SS.DossierService.GetEventType();
                 if (lstDossierEventType != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstDossierEventType });

@@ -29,6 +29,8 @@ namespace SahadevDBLayer.Repository
     {
         List<FeedbackType> GetFeedbackType();
 
+        List<dynamic> GetEventType();
+
         int InsertEvent(Event objEvent);
 
         bool InsertFeedback(Feedback objRQ_Feedback);
@@ -76,6 +78,28 @@ namespace SahadevDBLayer.Repository
                 throw ex;
             }
 
+        }
+
+        /// <summary>
+        /// This method is used to fetch all event type from mstEventType table
+        /// </summary>
+        /// <returns>list of object containing event type</returns>
+        /// <createdon>27-Sept-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetEventType()
+        {
+            try
+            {
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_mstEventType_FetchAll]", null, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>

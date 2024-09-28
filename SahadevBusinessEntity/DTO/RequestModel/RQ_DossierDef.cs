@@ -62,6 +62,9 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("event_tag_id")]
         public int EventTagID { get; set; }
 
+        [JsonPropertyName("tag_query")]
+        public List<RQ_DossierTagQuery> TagQuery { get; set; }
+
         [JsonPropertyName("platform1")]
         public int Platform1ID { get; set; }
 
@@ -73,6 +76,9 @@ namespace SahadevBusinessEntity.DTO.RequestModel
 
         [JsonPropertyName("status_id")]
         public int StatusID { get; set; }
+
+        [JsonPropertyName("template_file_name")]
+        public string TemplateFileName { get; set; }
 
         #region DossierSch
 
@@ -91,11 +97,11 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("day_of_month")]
         public int DayOfMonth { get; set; }
 
-        [JsonPropertyName("last_run")]
-        public DateTime LastRun { get; set; }
+        //[JsonPropertyName("last_run")]
+        //public DateTime LastRun { get; set; }
 
-        [JsonPropertyName("next_run")]
-        public DateTime NextRun { get; set; }
+        //[JsonPropertyName("next_run")]
+        //public DateTime NextRun { get; set; }
         #endregion
 
         #region DossierConf
@@ -108,6 +114,7 @@ namespace SahadevBusinessEntity.DTO.RequestModel
 
         [JsonPropertyName("tag_group")]
         public List<RQ_DossierTagGroup> TagGroup { get; set; }
+
 
         [JsonPropertyName("recipient")]
         public List<RQ_DossierRecep> Recipient { get; set; }

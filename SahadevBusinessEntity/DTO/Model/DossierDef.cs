@@ -29,7 +29,6 @@ namespace SahadevBusinessEntity.DTO.Model
         public int ScheduleTypeID { get; set; }
         public string Title { get; set; }
         public int EventTypeID { get; set; }
-
         public string EventContext { get; set; }
         public string EventRefURL { get; set; }
         public string EventKQuery { get; set; }
@@ -38,6 +37,7 @@ namespace SahadevBusinessEntity.DTO.Model
         public int Platform2ID { get; set; }
         public int Platform3ID { get; set; }
         public int StatusID { get; set; }
+        public string TemplateFileName { get; set; }
 
         public DossierSch DossierSch { get; set; }
 
