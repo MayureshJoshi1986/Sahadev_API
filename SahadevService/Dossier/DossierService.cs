@@ -10,25 +10,18 @@
  *  --------------------------------------------------------------------------------------------*
  *  revised By      :-  PJ                                                                      *
  *  revised Details :-  Added new methods GetAllDossierScheduleType & GetAllDossierEventType    *  
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  revised By      :-  PJ                                                                      *
+ *  revised Details :-  In InsertAdditionalURL method, removed unwanted fields like             *
+ *                      isProcessed, ErrorMsg etc, & handle multiple url                        *
  //**********************************************************************************************/
-using Dapper;
 using Microsoft.Extensions.Logging;
 using SahadevBusinessEntity.DTO.Model;
 using SahadevBusinessEntity.DTO.RequestModel;
-using SahadevBusinessEntity.DTO.ResultModel;
 using SahadevDBLayer.UnitOfWork;
-using SahadevService.Sentry;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Dynamic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-
-using System.Transactions;
 namespace SahadevService.Dossier
 {
 
@@ -607,16 +600,14 @@ namespace SahadevService.Dossier
             {
 
                 //mapping of the Request model RQ_AdditionalURL to Business model AdditionalURL
-                AdditionalURL objAdditionalURL = new AdditionalURL();
-                objAdditionalURL.URL = objRQ_AdditonalURL.URL;
-                objAdditionalURL.DossierID = objAdditionalURL.DossierID;
-                objAdditionalURL.IsProcessed = objAdditionalURL.IsProcessed;
-                objAdditionalURL.RefLinkID = objAdditionalURL.RefLinkID;
-                objAdditionalURL.TryCount = objAdditionalURL.TryCount;
-                objAdditionalURL.ErrorMsg = objAdditionalURL.ErrorMsg;
-                objAdditionalURL.CreatedBy = objAdditionalURL.CreatedBy;
-
-                bReturn = uw.C3Repository.InsertAdditionalURl(objAdditionalURL);
+                foreach (var url in objRQ_AdditonalURL.URL)
+                {
+                    AdditionalURL objAdditionalURL = new AdditionalURL();
+                    objAdditionalURL.URL = url;
+                    objAdditionalURL.DossierID = objRQ_AdditonalURL.DossierID;
+                    objAdditionalURL.CreatedBy = objRQ_AdditonalURL.CreatedBy;
+                    bReturn = uw.C3Repository.InsertAdditionalURl(objAdditionalURL);
+                }
 
                 //Commit the change 
                 uw.Commit();

@@ -7,10 +7,10 @@
  *  --------------------------------------------------------------------------------------------*
  *  Created Date    :- 27-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  ModifiedOn     :- 01-Oct-2024                                                               *
+ *  ModifiedBy     :- PJ                                                                        *
+ *  ModifiedReason :- Removed unwanted fields like isProcessed, ErrorMsg etc;                   *
+ *                    Changed parameter for multiple URLs                                       *
  //**********************************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -26,43 +26,16 @@ namespace SahadevBusinessEntity.DTO.RequestModel
     public class RQ_AdditionalURL
     {
         /// <summary>
-        /// URL
-        /// </summary>
-        [JsonPropertyName("url")]
-        public string URL { get; set; }
-
-        /// <summary>
         /// DossierID
         /// </summary>
         [JsonPropertyName("dossier_id")]
         public int DossierID { get; set; }
 
         /// <summary>
-        /// IsProcessed
-        /// </summary
-        [JsonPropertyName("is_processed")]
-        public bool IsProcessed { get; set; }
-
-
-        /// <summary>
-        /// RefLinkID
-        /// </summary
-        [JsonPropertyName("ref_link_id")]
-        public int RefLinkID { get; set; }
-
-
-        /// <summary>
-        /// TryCount
-        /// </summary
-        [JsonPropertyName("try_count")]
-        public int TryCount { get; set; }
-
-
-        /// <summary>
-        /// ErrorMsg
-        /// </summary
-        [JsonPropertyName("error_msg")]
-        public string ErrorMsg { get; set; }
+        /// URL
+        /// </summary>
+        [JsonPropertyName("url")]
+        public List<string> URL { get; set; }
 
         /// <summary>
         /// ErrorMsg

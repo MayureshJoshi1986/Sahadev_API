@@ -685,10 +685,6 @@ namespace SahadevDBLayer.Repository
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierID", objAdditionalURL.DossierID);
                 dbparams.Add("@url", objAdditionalURL.URL);
-                dbparams.Add("@isProcessed", objAdditionalURL.IsProcessed);
-                dbparams.Add("@refLinkID", objAdditionalURL.RefLinkID);
-                dbparams.Add("@tryCount", objAdditionalURL.TryCount);
-                dbparams.Add("@errorMsg", objAdditionalURL.ErrorMsg);
                 dbparams.Add("@createdBy", objAdditionalURL.CreatedBy);
                 int iResult = InsertByProcedure<int>(@"[dbo].[USP_AdditionalUrl_Insert]", dbparams, _transaction);
                 if (iResult != 0)
