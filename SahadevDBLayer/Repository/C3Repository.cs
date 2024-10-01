@@ -68,6 +68,10 @@ namespace SahadevDBLayer.Repository
 
 
         List<dynamic> GetAllDossierScheduleType();
+
+        void InsertTag(Tag objTag);
+
+        void InsertTagQuery(TagQuery objTagQuery);
     }
 
     internal class C3Repository : RepositoryBase, IC3Repository
@@ -982,6 +986,67 @@ namespace SahadevDBLayer.Repository
 
 
         #endregion
+
+
+
+        /// <summary>
+        /// This method is used to insert tag detail in Tag table (to replicate from A2 master)
+        /// </summary>
+        /// <param name="objTag">object containing tag detail</param>
+        /// <createdon>28-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public void InsertTag(Tag objTag)
+        {
+
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagID", objTag.TagID);
+                dbparams.Add("@igTagID", objTag.IGTagID);
+                dbparams.Add("@tagName", objTag.TagName);
+                dbparams.Add("@tagDescription", objTag.TagDescription);
+                dbparams.Add("@isActive", objTag.IsActive);
+                GetByProcedure<int>(@"[dbo].[USP_Tag_Insert]", dbparams, _transaction);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+        /// <summary>
+        /// This method is used to insert tag query detail in TagQuery table (to replicate from A2 master)
+        /// </summary>
+        /// <param name="objTagQuery">object containing TagQuery detail</param>
+        /// <createdon>28-SEP-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        public void InsertTagQuery(TagQuery objTagQuery)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagQueryID", objTagQuery.TagQueryID);
+                dbparams.Add("@tagID", objTagQuery.TagID);
+                dbparams.Add("@platformID", objTagQuery.PlatformID);
+                dbparams.Add("@query", objTagQuery.Query);
+                dbparams.Add("@typeOfQuery", objTagQuery.TypeOfQuery);
+                dbparams.Add("@isActive", objTagQuery.IsActive);
+                InsertByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, _transaction);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
 
 
     }

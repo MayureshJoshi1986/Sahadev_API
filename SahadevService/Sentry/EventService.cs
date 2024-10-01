@@ -18,6 +18,7 @@ using SahadevBusinessEntity.DTO.RequestModel;
 using SahadevDBLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace SahadevService.Sentry
 {
@@ -133,6 +134,9 @@ namespace SahadevService.Sentry
 
                 //throw new TransactionAbortedException(); // Just to test the Transaction Rollback
 
+
+                uw.C2Repository.InsertTag(objTag);
+
                 //do the entry in Tag query for all the selected plateform
                 TagQuery objTagQuery = new TagQuery();
 
@@ -143,7 +147,8 @@ namespace SahadevService.Sentry
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
                     objTagQuery.PlatformID = objRQ_Event.Platform1;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.A2Repository.InsertTagQuery(objTagQuery);
+                    objTagQuery.TagQueryID =  uw.A2Repository.InsertTagQuery(objTagQuery);
+                    uw.C2Repository.InsertTagQuery(objTagQuery); // to replicate same in the C2 database
                 }
                 if (objRQ_Event.Platform2 != 0)
                 {
@@ -153,7 +158,8 @@ namespace SahadevService.Sentry
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
                     objTagQuery.PlatformID = objRQ_Event.Platform2;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.A2Repository.InsertTagQuery(objTagQuery);
+                    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+                    uw.C2Repository.InsertTagQuery(objTagQuery); // to replicate same in the C2 database
                 }
 
                 if (objRQ_Event.Platform3 != 0)
@@ -164,7 +170,8 @@ namespace SahadevService.Sentry
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
                     objTagQuery.PlatformID = objRQ_Event.Platform3;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.A2Repository.InsertTagQuery(objTagQuery);
+                    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+                    uw.C2Repository.InsertTagQuery(objTagQuery); // to replicate same in the C2 database
                 }
 
                 if (objRQ_Event.Platform4 != 0)
@@ -175,8 +182,12 @@ namespace SahadevService.Sentry
                     objTagQuery.TypeOfQuery = string.Empty; // what to map with??
                     objTagQuery.PlatformID = objRQ_Event.Platform4;
                     objTagQuery.IsActive = objTag.IsActive;
-                    uw.A2Repository.InsertTagQuery(objTagQuery);
+                    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+                    uw.C2Repository.InsertTagQuery(objTagQuery); // to replicate same in the C2 database
                 }
+
+                
+               
 
                 uw.Commit();
                 bReturn =  true;

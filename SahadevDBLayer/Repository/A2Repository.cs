@@ -35,7 +35,7 @@ namespace SahadevDBLayer.Repository
 
         bool InsertTagMap(TagMap objTagMap);
 
-        bool InsertTagQuery(TagQuery objTagQuery);
+        int InsertTagQuery(TagQuery objTagQuery);
     }
 
     internal class A2Repository : RepositoryBase, IA2Repository
@@ -213,12 +213,11 @@ namespace SahadevDBLayer.Repository
         /// <returns>true if successfully inserted else false</returns>
         /// <createdon>17-Aug-2024</createdon>
         /// <createdby>PJ</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        public bool InsertTagQuery(TagQuery objTagQuery)
+        /// <modifiedon>28-00-2024</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>To return TagQueryId</modifiedreason>
+        public int InsertTagQuery(TagQuery objTagQuery)
         {
-            bool bResult = false;
             try
             {
                 var dbparams = new DynamicParameters();
@@ -227,16 +226,13 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@query", objTagQuery.Query);
                 dbparams.Add("@typeOfQuery", objTagQuery.TypeOfQuery);
                 dbparams.Add("@isActive", objTagQuery.IsActive);
-
-                int iResult = InsertByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, _transaction);
-                if (iResult != 0)
-                    bResult = true;
+                return InsertByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, _transaction);              
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return bResult;
+            
 
         }
     }
