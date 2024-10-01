@@ -222,7 +222,7 @@ namespace Sahadev.API.Dossier
         {
             try
             {
-                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(userID, clientID , statusID, dtStartDate, dtEndDate);
+                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(userID, clientID, statusID, dtStartDate, dtEndDate);
                 if (lstGetAllDossier != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstGetAllDossier });
@@ -320,42 +320,6 @@ namespace Sahadev.API.Dossier
         }
 
         /// <summary>
-        /// This API is used to get all additional URLs of a dossier
-        /// </summary>
-        /// <returns>list of object containing all additional URLs of a dossier</returns>
-        /// <param name="dossierID">DossierID</param>
-        /// <createdon>27-Aug-2024</createdon>
-        /// <createdby>PJ</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
-        [HttpGet]
-        [Route("Dossier_FetchAdditionalUrl")]
-        public IActionResult GetAllAdditionalURL(string dossierID)
-        {
-            try
-            {
-                List<AdditionalURL> lstAdditionalURL = SS.DossierService.GetAllAdditionalURL(Convert.ToInt32(dossierID));
-                if (lstAdditionalURL != null && lstAdditionalURL.Count != 0)
-                {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstAdditionalURL });
-                }
-                else
-                {
-                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.RetrievalFailed, "Additional URL") });
-                }
-            }
-            catch (Exception ex)
-            {
-                //For error user Log.LogError methods
-                //For warning user Log.LogWarning methods
-                //For information user Log.LogInformation methods
-                _logger.LogError(ex, _className, "GetAllAdditionalURL");
-                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
-            }
-        }
-
-        /// <summary>
         /// This API is used to fetch insert dossier def detail 
         /// </summary>
         /// <returns>success message if successfully inserted else error message</returns>
@@ -387,6 +351,42 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "AddDossierConfiguration");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+        /// <summary>
+        /// This API is used to get all additional URLs of a dossier
+        /// </summary>
+        /// <returns>list of object containing all additional URLs of a dossier</returns>
+        /// <param name="dossierID">DossierID</param>
+        /// <createdon>27-Aug-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_FetchAdditionalUrl")]
+        public IActionResult GetAllAdditionalURL(string dossierID)
+        {
+            try
+            {
+                List<AdditionalURL> lstAdditionalURL = SS.DossierService.GetAllAdditionalURL(Convert.ToInt32(dossierID));
+                if (lstAdditionalURL != null && lstAdditionalURL.Count != 0)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstAdditionalURL });
+                }
+                else
+                {
+                    return BadRequest(new GenericResponse.APIResponse { code = HttpStatusCode.BadRequest, message = string.Format(Common.RetrievalFailed, "Additional URL") });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetAllAdditionalURL");
                 return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
@@ -736,11 +736,11 @@ namespace Sahadev.API.Dossier
         /// <createdby>Saroj Laddha</createdby>
         [HttpPost]
         [Route("Dossier_Review_UpdateDataAfterEdit")]
-        public IActionResult UpdateDataAfterEdit([FromBody] List<RQ_DossierReviewLinks> lstLinksToUpdate,  int platformID)
+        public IActionResult UpdateDataAfterEdit([FromBody] List<RQ_DossierReviewLinks> lstLinksToUpdate, int platformID)
         {
             try
             {
-                bool bReturn = SS.DossierService.UpdateDataAfterEdit(lstLinksToUpdate,platformID);
+                bool bReturn = SS.DossierService.UpdateDataAfterEdit(lstLinksToUpdate, platformID);
                 if (bReturn == true)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Updated, "Dossier Review links") });
