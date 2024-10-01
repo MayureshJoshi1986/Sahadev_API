@@ -21,6 +21,7 @@ using SahadevDBLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using System.Diagnostics.SymbolStore;
 using System.Dynamic;
 using System.Linq;
 namespace SahadevService.Dossier
@@ -48,7 +49,7 @@ namespace SahadevService.Dossier
 
         bool MoveToTrash(List<string> dossierLinkMapID);
         bool SaveToDraft(List<string> dossierLinkMapID);
-        bool UpdateDataAfterEdit(List<RQ_DossierReviewLinks> lstLinksToUpdate, int platformID);
+        bool UpdateDataAfterEdit(List<RQ_DossierReviewLinks> lstLinksToUpdate);
 
 
         dynamic GetAllDossierReviewDataDetails(int dossierID, int plateformID);
@@ -761,7 +762,8 @@ namespace SahadevService.Dossier
 
                             //adding in c3 database
                             uw.C3Repository.InsertTagQuery(objTagQuery);
-                        }else if (query.PlatformID== 2)
+                        }
+                        else if (query.PlatformID == 2)
                         {
                             objTagQuery.PlatformID = 2;
                             objTagQuery.TagQueryID = 0;
@@ -769,7 +771,8 @@ namespace SahadevService.Dossier
 
                             //adding in c3 database
                             uw.C3Repository.InsertTagQuery(objTagQuery);
-                        }else  if (query.PlatformID == 3)
+                        }
+                        else if (query.PlatformID == 3)
                         {
                             objTagQuery.PlatformID = 3;
                             objTagQuery.TagQueryID = 0;
@@ -1068,21 +1071,18 @@ namespace SahadevService.Dossier
         /// table to save the old and new updated values
         /// </summary>
         /// <param name="lstLinksToUpdate">object containing dossierLinkMapID to Update the record and contains old to new record change history json</param>
-        /// <param name="platformID">records of a particular platform</param>
         /// <returns>true if successfully Updated else false</returns>
         /// <createdon>07-SEP-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        public bool UpdateDataAfterEdit(List<RQ_DossierReviewLinks> lstLinksToUpdate, int platformID)
+        public bool UpdateDataAfterEdit(List<RQ_DossierReviewLinks> lstLinksToUpdate)
         {
-            bool bReturn = false;
+            bool bIsUpdate = false;
             try
             {
                 foreach (var link in lstLinksToUpdate)
                 {
-
-                    bReturn = uw.C3Repository.UpdateDataAfterEdit(link.DossierLinkMapID, link.EditsJson, link.DossierID);
-
-                    bReturn = uw.ERepository.UpadateDataAfterEdit(platformID, link.LinkID, link.Sentiment, link.ArticleMention);
+                    bIsUpdate = uw.C3Repository.UpdateDataAfterEdit(link.DossierLinkMapID, link.EditsJson, link.DossierID);
+                    bIsUpdate = uw.ERepository.UpadateDataAfterEdit(link.PlatformID, link.LinkID, link.Sentiment, link.ArticleMention);
                 }
 
                 //Commit the change 
@@ -1093,7 +1093,7 @@ namespace SahadevService.Dossier
                 uw.Rollback();
                 _logger.LogError(ex, _className, "UpdateDataAfterEdit");
             }
-            return bReturn;
+            return bIsUpdate;
 
         }
 

@@ -730,17 +730,17 @@ namespace Sahadev.API.Dossier
         /// table to save the old and new updated values
         /// </summary>
         /// <param name="lstLinksToUpdate">object containing dossierLinkMapID to Update the record and contains old to new record change history json</param>
-        /// <param name="platformID">for which platform Data need to be updated</param>
+ 
         /// <returns>true if successfully Updated else false</returns>
         /// <createdon>07-SEP-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         [HttpPost]
         [Route("Dossier_Review_UpdateDataAfterEdit")]
-        public IActionResult UpdateDataAfterEdit([FromBody] List<RQ_DossierReviewLinks> lstLinksToUpdate, int platformID)
+        public IActionResult UpdateDataAfterEdit([FromBody] List<RQ_DossierReviewLinks> lstLinksToUpdate)
         {
             try
             {
-                bool bReturn = SS.DossierService.UpdateDataAfterEdit(lstLinksToUpdate, platformID);
+                bool bReturn = SS.DossierService.UpdateDataAfterEdit(lstLinksToUpdate);
                 if (bReturn == true)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Updated, "Dossier Review links") });

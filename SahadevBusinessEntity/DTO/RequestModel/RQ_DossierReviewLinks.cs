@@ -43,6 +43,9 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("dossier_Id")]
         public int DossierID { get; set; }
 
+        [JsonPropertyName("platform_Id")]
+        public int PlatformID { get; set; }
+
 
        
     }
