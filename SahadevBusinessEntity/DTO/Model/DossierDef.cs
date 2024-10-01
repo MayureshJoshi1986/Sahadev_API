@@ -23,6 +23,7 @@ namespace SahadevBusinessEntity.DTO.Model
     {
         public int DossierDefID { get; set; }
         public int ClientID { get; set; }
+        public string ClientName { get; set; }
         public int DossierTypeID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

@@ -36,6 +36,17 @@ namespace SahadevDBLayer.Repository
         bool InsertTagMap(TagMap objTagMap);
 
         int InsertTagQuery(TagQuery objTagQuery);
+
+
+        List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId);
+
+        Tag GetTagByClientTopicID(int clientTopicId);
+
+        List<TagQuery> GetAllTagQueryByTagID(int tagId);
+
+        bool UpdateTagQuery(TagQuery objTagQuery);
+
+
     }
 
     internal class A2Repository : RepositoryBase, IA2Repository
@@ -72,6 +83,92 @@ namespace SahadevDBLayer.Repository
             }
 
         }
+
+
+        /// <summary>
+        /// This method is used to get fetch clienttopic  from clienttopic table
+        /// </summary>
+        /// <param name="clientId">pass client id for which client topic need to be fetched</param>
+        /// <param name="topicTypeId">topictype id for event = 2, dossier 3, and ClientOnboard = 1</param>
+        /// <returns>list of object containing client topic</returns>
+        /// <createdon>01-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId,int clientId)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientId", clientId);
+                dbparams.Add("@topicTypeId",topicTypeId);
+                var data = GetAllByProcedure<ClientTopic>(@"[dbo].[USP_ClientTopic_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+        /// <summary>
+        /// This method is used to get fetch tag from tagmap (get tagid from clienttopicid) and then 
+        /// get tag details from tag table
+        /// </summary>
+        /// <param name="clientTopicId">pass client id for which tag need to be fetched</param>
+
+        /// <returns>return tag detail</returns>
+        /// <createdon>01-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public Tag GetTagByClientTopicID(int clientTopicId)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientTopicId", clientTopicId);
+                var data = GetByProcedure<Tag>(@"[dbo].[USP_Tag_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+        /// <summary>
+        /// This method is used to get fetch tagqueries for tag id
+        /// </summary>
+        /// <param name="tagId">pass tag id for which tagquery to be fetched</param>
+        /// <returns>list of object containing tag Queries</returns>
+        /// <createdon>01-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<TagQuery> GetAllTagQueryByTagID(int tagId)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagId", tagId);
+                var data = GetAllByProcedure<TagQuery>(@"[dbo].[USP_TagQuery_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
 
         /// <summary>
         /// This method is used to insert client detail in client table
@@ -226,13 +323,48 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@query", objTagQuery.Query);
                 dbparams.Add("@typeOfQuery", objTagQuery.TypeOfQuery);
                 dbparams.Add("@isActive", objTagQuery.IsActive);
-                return InsertByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, _transaction);              
+                return GetByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, _transaction);              
             }
             catch (Exception ex)
             {
                 throw ex;
             }
             
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to update tag query detail in TagQuery table
+        /// </summary>
+        /// <param name="objTagQuery">object containing TagQuery detail</param>
+        /// <returns>true if successfully updated else false</returns>
+        /// <createdon>01-Oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+
+        public bool UpdateTagQuery(TagQuery objTagQuery)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagQueryId", objTagQuery.TagQueryID);
+                dbparams.Add("@tagID", objTagQuery.TagID);
+                dbparams.Add("@platformID", objTagQuery.PlatformID);
+                dbparams.Add("@query", objTagQuery.Query);
+                dbparams.Add("@typeOfQuery", objTagQuery.TypeOfQuery);
+                dbparams.Add("@isActive", objTagQuery.IsActive);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_TagQuery_Update]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
 
         }
     }

@@ -120,7 +120,7 @@ namespace SahadevService.Sentry
                 objClientTopic.Status = objRQ_Event.StatusID;
                 objClientTopic.StartDate = objRQ_Event.StartDate;
                 objClientTopic.EndDate = objRQ_Event.EndDate;
-                objClientTopic.TopicTypeID = objRQ_Event.EventTypeID;
+                objClientTopic.TopicTypeID = 2; // 1 general listener (client on board)  , 2 Sentry , 3 Dossier
 
                 int ClientTopicId = uw.A2Repository.InsertClientTopic(objClientTopic);
 
@@ -144,7 +144,7 @@ namespace SahadevService.Sentry
                 {
                     objTagQuery.TagID = TagID;
                     objTagQuery.Query = objRQ_Event.Query;
-                    objTagQuery.TypeOfQuery = string.Empty; // what to map with??
+                    objTagQuery.TypeOfQuery = "Keyword";
                     objTagQuery.PlatformID = objRQ_Event.Platform1;
                     objTagQuery.IsActive = objTag.IsActive;
                     objTagQuery.TagQueryID =  uw.A2Repository.InsertTagQuery(objTagQuery);
@@ -155,7 +155,7 @@ namespace SahadevService.Sentry
                     objTagQuery = new TagQuery();
                     objTagQuery.TagID = TagID;
                     objTagQuery.Query = objRQ_Event.Query;
-                    objTagQuery.TypeOfQuery = string.Empty; // what to map with??
+                    objTagQuery.TypeOfQuery = "Keyword";
                     objTagQuery.PlatformID = objRQ_Event.Platform2;
                     objTagQuery.IsActive = objTag.IsActive;
                     objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
@@ -167,7 +167,7 @@ namespace SahadevService.Sentry
                     objTagQuery = new TagQuery();
                     objTagQuery.TagID = TagID;
                     objTagQuery.Query = objRQ_Event.Query;
-                    objTagQuery.TypeOfQuery = string.Empty; // what to map with??
+                    objTagQuery.TypeOfQuery = "Keyword";
                     objTagQuery.PlatformID = objRQ_Event.Platform3;
                     objTagQuery.IsActive = objTag.IsActive;
                     objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
@@ -179,7 +179,7 @@ namespace SahadevService.Sentry
                     objTagQuery = new TagQuery();
                     objTagQuery.TagID = TagID;
                     objTagQuery.Query = objRQ_Event.Query;
-                    objTagQuery.TypeOfQuery = string.Empty; // what to map with??
+                    objTagQuery.TypeOfQuery = "Keyword";
                     objTagQuery.PlatformID = objRQ_Event.Platform4;
                     objTagQuery.IsActive = objTag.IsActive;
                     objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);

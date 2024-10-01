@@ -20,6 +20,7 @@ using SahadevBusinessEntity.DTO.RequestModel;
 using SahadevDBLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Dynamic;
 using System.Linq;
 namespace SahadevService.Dossier
@@ -57,6 +58,8 @@ namespace SahadevService.Dossier
         List<dynamic> GetAllDossierScheduleType();
 
         List<dynamic> GetEventType();
+
+        List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId); //new end point required
     }
 
     public class DossierService : IDossierService
@@ -101,6 +104,34 @@ namespace SahadevService.Dossier
             catch (Exception ex)
             {
                 _logger.LogError(ex, _className, "GetAllClientsByTagID");
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to get fetch clienttopic  from clienttopic table
+        /// </summary>
+        /// <param name="clientId">pass client id for which client topic need to be fetched</param>
+        /// <param name="topicTypeId">topictype id for event = 2, dossier 3, and ClientOnboard = 1</param>
+        /// <returns>list of object containing client topic</returns>
+        /// <createdon>01-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId)
+        {
+            try
+            {
+                return uw.A2Repository.GetAllClientTopicByClientID(topicTypeId, clientId);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetAllClientTopicByClientID");
                 throw ex;
             }
 
@@ -390,7 +421,7 @@ namespace SahadevService.Dossier
                                       {
                                           foreach (var item in links)
                                           {
-                                              
+
                                               dictionary[item.Key] = item.Value;
                                           }
                                       }
@@ -635,6 +666,11 @@ namespace SahadevService.Dossier
         /// <modifiedon>29-08-24</modifiedon>
         /// <modifiedby>Saroj Laddha</modifiedby>
         /// <modifiedreason>Mapping Request model to business model</modifiedreason>
+        /// <modifiedon>30-01-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Done changes for the Event Dossier Tag,TagMap, ClientTopic, Tag Queries according to client topic selected and 
+        /// dossierTag Group to be added only periodical dossierType
+        /// </modifiedreason>
         public bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef)
         {
             bool bReturn = false;
@@ -642,6 +678,9 @@ namespace SahadevService.Dossier
             {
 
                 //Mapping Request Model to Business Model
+
+
+
 
                 //Mapping of DossierDef
                 DossierDef objDossierDef = new DossierDef();
@@ -660,12 +699,107 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
                 objDossierDef.StatusID = objRQ_DossierDef.StatusID;
-                objDossierDef.TemplateFileName = objRQ_DossierDef.TemplateFileName;
+                objDossierDef.TemplateFileName = objRQ_DossierDef.TemplateFileName;//newfield
+                objDossierDef.ClientName = objRQ_DossierDef.ClientName;//newfield
 
 
                 //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
                 int dossierDefID = uw.C3Repository.InsertDossierDef(objDossierDef);
                 objDossierDef.DossierDefID = dossierDefID;
+
+
+                //if dossier type =1 (Event Dossier) and Client Topic (Event is not selected)
+                if (objRQ_DossierDef.DossierTypeID == 1 && objRQ_DossierDef.ClientTopicID <= 0)
+                {
+                    ClientTopic objClientTopic = new ClientTopic();
+                    objClientTopic.RefTopicID = dossierDefID;
+                    objClientTopic.StartDate = objRQ_DossierDef.StartDate;
+                    objClientTopic.EndDate = objRQ_DossierDef.EndDate;
+                    objClientTopic.TopicTypeID = 3; // 1 general listener (client on board)  , 2 Sentry , 3 Dossier
+                    objClientTopic.Status = 1;
+                    objClientTopic.TopicName = objRQ_DossierDef.Title;
+                    objClientTopic.TopicDescription = objRQ_DossierDef.EventContext; //evntcontext
+                    objClientTopic.ClientID = objRQ_DossierDef.ClientID;
+                    objClientTopic.ClientTopicID = uw.A2Repository.InsertClientTopic(objClientTopic);
+
+                    Tag objTag = new Tag();
+                    objTag.IsActive = true;
+                    objTag.TagDescription = objRQ_DossierDef.EventContext;
+                    objTag.TagName = objRQ_DossierDef.Title;
+                    objTag.TagID = uw.A2Repository.InsertTag(objTag);
+                    //insert tag entry in c3 Database
+                    uw.C3Repository.InsertTag(objTag);
+
+
+                    //call update dossier function to only update eventtagid 
+
+                    objDossierDef.EventTagID = objTag.TagID;
+                    uw.C3Repository.UpdateDossierDef(objDossierDef);
+
+                    //tag map entry in A2 Database
+
+                    TagMap objTagMap = new TagMap();
+                    objTagMap.TagID = objTag.TagID;
+                    objTagMap.ClientTopicID = objClientTopic.ClientTopicID;
+                    objTagMap.IsActive = true;
+                    uw.A2Repository.InsertTagMap(objTagMap);
+
+                    //Add entries in Tag Query A2 Database
+
+                    foreach (var query in objRQ_DossierDef.TagQuery)
+                    {
+                        TagQuery objTagQuery = new TagQuery();
+                        objTagQuery.TagID = objTag.TagID;
+                        objTagQuery.Query = query.Query;
+                        objTagQuery.TypeOfQuery = "Keyword";
+                        objTagQuery.IsActive = true;
+                        if (query.PlatformID == 1)
+                        {
+                            objTagQuery.PlatformID = 1;
+                            objTagQuery.TagQueryID = 0;
+                            objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+
+                            //adding in c3 database
+                            uw.C3Repository.InsertTagQuery(objTagQuery);
+                        }else if (query.PlatformID== 2)
+                        {
+                            objTagQuery.PlatformID = 2;
+                            objTagQuery.TagQueryID = 0;
+                            objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+
+                            //adding in c3 database
+                            uw.C3Repository.InsertTagQuery(objTagQuery);
+                        }else  if (query.PlatformID == 3)
+                        {
+                            objTagQuery.PlatformID = 3;
+                            objTagQuery.TagQueryID = 0;
+                            objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+
+                            //adding in c3 database
+                            uw.C3Repository.InsertTagQuery(objTagQuery);
+                        }
+
+                    }
+                }
+                //elseif dossier type =1 (Event Dossier) and Client Topic (Event is selected)
+                else if (objRQ_DossierDef.DossierTypeID == 1 && objRQ_DossierDef.ClientTopicID > 0)
+                {
+                    Tag objTag = uw.A2Repository.GetTagByClientTopicID(objRQ_DossierDef.ClientTopicID);
+                    if (objTag != null)
+                    {
+                        uw.C3Repository.InsertTag(objTag);
+                    }
+
+                    List<TagQuery> lstTagQuery = uw.A2Repository.GetAllTagQueryByTagID(objTag.TagID);
+                    foreach (var query in lstTagQuery)
+                    {
+                        uw.C3Repository.InsertTagQuery(query);
+                    }
+                }
+
+
+
+
 
                 //Mapping Of DossierSch
                 DossierSch objDossierSch = new DossierSch();
@@ -702,16 +836,19 @@ namespace SahadevService.Dossier
                     uw.C3Repository.InsertDossierRecep(objDossierRecep);
                 }
 
-                //multiple entries with for loop 
-                //Insert into DossierTagGroup table
-                foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                if (objRQ_DossierDef.DossierTypeID == 2) // dossier tag group entry in only case of periodical dossier
                 {
-                    DossierTagGroup objDossierTagGroup = new DossierTagGroup();
-                    objDossierTagGroup.DossierDefID = dossierDefID;
-                    objDossierTagGroup.TGID = objTagGroup.TGID;
-                    objDossierTagGroup.TagID = objTagGroup.TagID;
-                    objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
-                    uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                    //multiple entries with for loop 
+                    //Insert into DossierTagGroup table
+                    foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                    {
+                        DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                        objDossierTagGroup.DossierDefID = dossierDefID;
+                        objDossierTagGroup.TGID = objTagGroup.TGID;
+                        objDossierTagGroup.TagID = objTagGroup.TagID;
+                        objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
+                        uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                    }
                 }
 
 
@@ -741,6 +878,11 @@ namespace SahadevService.Dossier
         /// <modifiedon>29-08-24</modifiedon>
         /// <modifiedby>Saroj Laddha</modifiedby>
         /// <modifiedreason>Mapping Request model to business model</modifiedreason>
+        /// <modifiedon>30-01-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Done changes for the Event Dossier Tag Queries according to client topic selected and 
+        /// dossierTag Group Add remove functionality added for periodical dossier 
+        /// </modifiedreason>
         public bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef)
         {
             bool bReturn = false;
@@ -809,17 +951,49 @@ namespace SahadevService.Dossier
                     uw.C3Repository.UpdateDossierRecep(objDossierRecep);
                 }
 
+
+                //if dossier type =1 (Event Dossier) and Client Topic (Event is not selected)
+                if (objRQ_DossierDef.DossierTypeID == 1 && objRQ_DossierDef.ClientTopicID <= 0)
+                {
+                    //Update entries in Tag Query A2 Database and c3 databae
+
+                    foreach (var query in objRQ_DossierDef.TagQuery)
+                    {
+                        TagQuery objTagQuery = new TagQuery();
+                        objTagQuery.TagQueryID = query.TagQueryID;
+                        objTagQuery.TagID = query.TagID;
+                        objTagQuery.Query = query.Query;
+                        objTagQuery.TypeOfQuery = "Keyword";
+                        objTagQuery.IsActive = true;
+                        objTagQuery.PlatformID = query.PlatformID;
+                        uw.A2Repository.UpdateTagQuery(objTagQuery);
+                        uw.C3Repository.UpdateTagQuery(objTagQuery);
+
+                    }
+                }
+
                 //multiple entries with for loop 
                 //Update DossierTagGroup
-                foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                if (objRQ_DossierDef.DossierTypeID == 2) // dossier tag group entry in only case of periodical dossier
                 {
-                    DossierTagGroup objDossierTagGroup = new DossierTagGroup();
-                    objDossierTagGroup.DossierTagGroupID = objTagGroup.DossierTagGroupID;
-                    objDossierTagGroup.DossierDefID = objRQ_DossierDef.DossierDefID;
-                    objDossierTagGroup.TGID = objTagGroup.TGID;
-                    objDossierTagGroup.TagID = objTagGroup.TagID;
-                    objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
-                    uw.C3Repository.UpdateDossierTagGroup(objDossierTagGroup);
+
+                    foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                    {
+                        if (objTagGroup.FlagToAddRemove == 1)
+                        {
+                            DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                            objDossierTagGroup.DossierDefID = objRQ_DossierDef.DossierDefID;
+                            objDossierTagGroup.TGID = objTagGroup.TGID;
+                            objDossierTagGroup.TagID = objTagGroup.TagID;
+                            objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
+                            uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+
+                        }
+                        else if (objTagGroup.FlagToAddRemove == 2)
+                        {
+                            uw.C3Repository.DeleteDossierTagGroup(objTagGroup.DossierTagGroupID);
+                        }
+                    }
                 }
 
 
@@ -898,7 +1072,7 @@ namespace SahadevService.Dossier
         /// <returns>true if successfully Updated else false</returns>
         /// <createdon>07-SEP-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        public bool UpdateDataAfterEdit(List<RQ_DossierReviewLinks> lstLinksToUpdate , int platformID)
+        public bool UpdateDataAfterEdit(List<RQ_DossierReviewLinks> lstLinksToUpdate, int platformID)
         {
             bool bReturn = false;
             try
@@ -906,7 +1080,7 @@ namespace SahadevService.Dossier
                 foreach (var link in lstLinksToUpdate)
                 {
 
-                    bReturn = uw.C3Repository.UpdateDataAfterEdit(link.DossierLinkMapID, link.EditsJson , link.DossierID);
+                    bReturn = uw.C3Repository.UpdateDataAfterEdit(link.DossierLinkMapID, link.EditsJson, link.DossierID);
 
                     bReturn = uw.ERepository.UpadateDataAfterEdit(platformID, link.LinkID, link.Sentiment, link.ArticleMention);
                 }

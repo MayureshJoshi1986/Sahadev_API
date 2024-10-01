@@ -34,5 +34,13 @@ namespace SahadevBusinessEntity.DTO.RequestModel
 
         [JsonPropertyName("type_of_binding")]
         public int TypeOfBinding { get; set; }
+
+        /// <summary>
+        /// Added  = 1
+        /// Removed = 2
+        /// 
+        /// </summary>
+        [JsonPropertyName("flag_to_add_remove")]
+        public int FlagToAddRemove { get; set; }    
     }
 }

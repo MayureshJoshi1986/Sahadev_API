@@ -72,6 +72,10 @@ namespace SahadevDBLayer.Repository
         void InsertTag(Tag objTag);
 
         void InsertTagQuery(TagQuery objTagQuery);
+
+        bool DeleteDossierTagGroup(int dossierTagGroupId);
+
+        bool UpdateTagQuery(TagQuery objTagQuery);
     }
 
     internal class C3Repository : RepositoryBase, IC3Repository
@@ -532,6 +536,7 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@platform3ID", objDossier.Platform3ID);
                 dbparams.Add("@statusID ", objDossier.StatusID);
                 dbparams.Add("@templateFileName ", objDossier.TemplateFileName);
+                dbparams.Add("@clientName", objDossier.ClientName);
                 iResult = GetByProcedure<int>(@"[dbo].[USP_DossierDef_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
@@ -742,6 +747,8 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@platform2ID", objDossier.Platform2ID);
                 dbparams.Add("@platform3ID", objDossier.Platform3ID);
                 dbparams.Add("@statusID", objDossier.StatusID);
+                dbparams.Add("@templateFileName ", objDossier.TemplateFileName);
+                dbparams.Add("@clientName", objDossier.ClientName);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierDef_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -811,8 +818,8 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@time2", objDossierSch.Time2);
                 dbparams.Add("@dayOfWeek", objDossierSch.DayOfWeek);
                 dbparams.Add("@dayOfMonth", objDossierSch.DayOfMonth);
-                dbparams.Add("@lastRun", objDossierSch.LastRun);
-                dbparams.Add("@nextRun", objDossierSch.NextRun);
+               // dbparams.Add("@lastRun", objDossierSch.LastRun);
+               // dbparams.Add("@nextRun", objDossierSch.NextRun);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierSch_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -880,6 +887,34 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@tagID", objDossierTagGroup.TagID);
                 dbparams.Add("@typeOfBinding", objDossierTagGroup.TypeOfBinding);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierTagGroup_Update]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+
+        /// <summary>
+        /// This method is used to delete dossierTagGroup
+        /// </summary>
+        /// <param name="dossierTagGroupId">pass id to delete dossiertaggroup</param>
+        /// <returns>true if successfully Updated else false</returns>
+        /// <createdon>01-Oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+
+        public bool DeleteDossierTagGroup(int dossierTagGroupId)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierTagGroupID", dossierTagGroupId);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierTagGroup_Delete]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
             }
@@ -1042,6 +1077,40 @@ namespace SahadevDBLayer.Repository
             }
 
         }
+
+        /// <summary>
+        /// This method is used to update tag query detail in TagQuery table
+        /// </summary>
+        /// <param name="objTagQuery">object containing TagQuery detail</param>
+        /// <returns>true if successfully updated else false</returns>
+        /// <createdon>01-Oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+
+        public bool UpdateTagQuery(TagQuery objTagQuery)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagQueryId", objTagQuery.TagQueryID);
+                dbparams.Add("@tagID", objTagQuery.TagID);
+                dbparams.Add("@platformID", objTagQuery.PlatformID);
+                dbparams.Add("@query", objTagQuery.Query);
+                dbparams.Add("@typeOfQuery", objTagQuery.TypeOfQuery);
+                dbparams.Add("@isActive", objTagQuery.IsActive);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_TagQuery_Update]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+
+        }
+
 
 
 

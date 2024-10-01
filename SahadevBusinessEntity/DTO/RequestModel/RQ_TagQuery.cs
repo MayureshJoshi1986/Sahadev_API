@@ -22,12 +22,20 @@ namespace SahadevBusinessEntity.DTO.RequestModel
     /// <summary>
     /// Request model for RQ_DossierTagQuery
     /// </summary>
-    public class RQ_DossierTagQuery
+    public class RQ_TagQuery
     {
+        [JsonPropertyName("tag_query_id")]
+        public int TagQueryID {  get; set; }
+
         [JsonPropertyName("platform_id")]
         public int PlatformID { get; set; }
 
-        [JsonPropertyName("tag_query")]
-        public int TagQuery { get; set; }
+        [JsonPropertyName("query")]
+        public string Query { get; set; }
+
+        [JsonPropertyName("tag_Id")]
+        public int TagID {  get; set; }
+
+
     }
 }

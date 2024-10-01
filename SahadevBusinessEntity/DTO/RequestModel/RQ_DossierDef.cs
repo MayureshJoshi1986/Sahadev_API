@@ -29,8 +29,14 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("dossier_def_id")]
         public int DossierDefID { get; set; }
 
+        [JsonPropertyName("client_topic_id")]
+        public int ClientTopicID { get; set; }
+
         [JsonPropertyName("client_id")]
         public int ClientID { get; set; }
+
+        [JsonPropertyName("client_name")]
+        public string ClientName { get; set; }
 
         [JsonPropertyName("dossier_type_id")]
         public int DossierTypeID { get; set; }
@@ -63,7 +69,7 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         public int EventTagID { get; set; }
 
         [JsonPropertyName("tag_query")]
-        public List<RQ_DossierTagQuery> TagQuery { get; set; }
+        public List<RQ_TagQuery> TagQuery { get; set; }
 
         [JsonPropertyName("platform1")]
         public int Platform1ID { get; set; }
