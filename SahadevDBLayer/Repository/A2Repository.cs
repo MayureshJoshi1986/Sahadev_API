@@ -39,6 +39,7 @@ namespace SahadevDBLayer.Repository
 
 
         List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId);
+         ClientTopic GetClientTopic(int topicTypeId, int clientId, int refTopicId);
 
         Tag GetTagByClientTopicID(int clientTopicId);
 
@@ -104,6 +105,38 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@clientId", clientId);
                 dbparams.Add("@topicTypeId",topicTypeId);
                 var data = GetAllByProcedure<ClientTopic>(@"[dbo].[USP_ClientTopic_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to get fetch clienttopic  from clienttopic table
+        /// </summary>
+        /// <param name="clientId">pass client id for which client topic need to be fetched</param>
+        /// <param name="topicTypeId">topictype id for event = 2, dossier 3, and ClientOnboard = 1</param>
+        /// <param name="refTopicId">refTopicId means eventId of sentry or DossierDefID or for clientonboard</param>
+        /// <returns>object containing client topic</returns>
+        /// <createdon>02-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public ClientTopic GetClientTopic(int clientId, int refTopicId, int topicTypeId )
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientId", clientId);
+                dbparams.Add("@refTopicId", refTopicId);
+                dbparams.Add("@topicTypeId", topicTypeId);
+                var data = GetByProcedure<ClientTopic>(@"[dbo].[USP_Client_ClientTopic_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)

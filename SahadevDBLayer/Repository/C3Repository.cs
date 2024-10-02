@@ -65,6 +65,8 @@ namespace SahadevDBLayer.Repository
         bool MoveToTrash(string dossierLinkMapID);
         bool SaveToDraft(string dossierLinkMapID);
         bool UpdateDataAfterEdit(int dossierLinkMapID, string editJson, int dossierID);
+        List<TagQuery> GetAllTagQueryByTagID(int tagId);
+        Tag GetTagByTaID(int tagId);
 
 
         List<dynamic> GetAllDossierScheduleType();
@@ -1110,6 +1112,68 @@ namespace SahadevDBLayer.Repository
 
 
         }
+
+
+
+
+        /// <summary>
+        /// This method is used to fetch tag 
+        /// get tag details from tag table
+        /// </summary>
+        /// <param name="tagId">pass client id for which tag need to be fetched</param>
+
+        /// <returns>return tag detail</returns>
+        /// <createdon>02-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public Tag GetTagByTaID(int tagId)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagId", tagId);
+                var data = GetByProcedure<Tag>(@"[dbo].[USP_Tag_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+
+        /// <summary>
+        /// This method is used to get fetch tagqueries for tag id
+        /// </summary>
+        /// <param name="tagId">pass tag id for which tagquery to be fetched</param>
+        /// <returns>list of object containing tag Queries</returns>
+        /// <createdon>02-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<TagQuery> GetAllTagQueryByTagID(int tagId)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagId", tagId);
+                var data = GetAllByProcedure<TagQuery>(@"[dbo].[USP_TagQuery_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
 
 
 

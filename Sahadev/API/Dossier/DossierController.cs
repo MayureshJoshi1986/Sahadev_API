@@ -299,7 +299,8 @@ namespace Sahadev.API.Dossier
         {
             try
             {
-                dynamic lstGetGeneratedDossier = SS.DossierService.GetGeneratedDossier(Convert.ToInt32(dossierDefID));
+                 dynamic lstGetGeneratedDossier = SS.DossierService.GetDossierDef(Convert.ToInt32(dossierDefID));
+                //dynamic lstGetGeneratedDossier = SS.DossierService.GetGeneratedDossier(Convert.ToInt32(dossierDefID));
                 if (lstGetGeneratedDossier != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstGetGeneratedDossier });

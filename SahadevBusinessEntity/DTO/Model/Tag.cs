@@ -48,6 +48,8 @@ namespace SahadevBusinessEntity.DTO.Model
 
         public List<Event> Events { get; set; }
 
+        public List<TagQuery> TagQuery { get; set; }
+
 
 
     }

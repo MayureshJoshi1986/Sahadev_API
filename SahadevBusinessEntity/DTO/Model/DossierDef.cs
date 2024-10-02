@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace SahadevBusinessEntity.DTO.Model
@@ -24,6 +25,8 @@ namespace SahadevBusinessEntity.DTO.Model
         public int DossierDefID { get; set; }
         public int ClientID { get; set; }
         public string ClientName { get; set; }
+
+        public int ClientTopicID { get; set; }   
         public int DossierTypeID { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -49,5 +52,18 @@ namespace SahadevBusinessEntity.DTO.Model
         public List<DossierRecep> DossierReceps { get; set; }
 
         public List<Dossier> Dossiers { get; set; }
+
+        public Tag Tag { get; set; }
+
+        /// <summary>
+        /// CreatedAt
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
+
+        /// <summary>
+        /// ModifiedAt
+        /// </summary>
+        public DateTime ModifiedAt { get; set; }
+
     }
 }
