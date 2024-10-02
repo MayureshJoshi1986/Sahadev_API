@@ -42,5 +42,7 @@ namespace SahadevBusinessEntity.DTO.Model
         public DateTime CreatedOn { get; set; }
         public DateTime ModifieddOn { get; set; }
 
+        public List<TagQuery> TagQuery { get; set; }
+
     }
 }

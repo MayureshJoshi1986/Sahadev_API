@@ -784,33 +784,36 @@ namespace SahadevService.Dossier
                             objTagQuery.Query = query.Query;
                             objTagQuery.TypeOfQuery = "Keyword";
                             objTagQuery.IsActive = true;
-                            if (query.PlatformID == 1)
-                            {
-                                objTagQuery.PlatformID = 1;
-                                objTagQuery.TagQueryID = 0;
-                                objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+                            objTagQuery.PlatformID = query.PlatformID;
+                            objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+                            uw.C3Repository.InsertTagQuery(objTagQuery);
+                            //if (query.PlatformID == 1)
+                            //{
+                            //    objTagQuery.PlatformID = 1;
+                            //    objTagQuery.TagQueryID = 0;
+                            //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
 
-                                //adding in c3 database
-                                uw.C3Repository.InsertTagQuery(objTagQuery);
-                            }
-                            else if (query.PlatformID == 2)
-                            {
-                                objTagQuery.PlatformID = 2;
-                                objTagQuery.TagQueryID = 0;
-                                objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+                            //    //adding in c3 database
+                            //    uw.C3Repository.InsertTagQuery(objTagQuery);
+                            //}
+                            //else if (query.PlatformID == 2)
+                            //{
+                            //    objTagQuery.PlatformID = 2;
+                            //    objTagQuery.TagQueryID = 0;
+                            //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
 
-                                //adding in c3 database
-                                uw.C3Repository.InsertTagQuery(objTagQuery);
-                            }
-                            else if (query.PlatformID == 3)
-                            {
-                                objTagQuery.PlatformID = 3;
-                                objTagQuery.TagQueryID = 0;
-                                objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
+                            //    //adding in c3 database
+                            //    uw.C3Repository.InsertTagQuery(objTagQuery);
+                            //}
+                            //else if (query.PlatformID == 3)
+                            //{
+                            //    objTagQuery.PlatformID = 3;
+                            //    objTagQuery.TagQueryID = 0;
+                            //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
 
-                                //adding in c3 database
-                                uw.C3Repository.InsertTagQuery(objTagQuery);
-                            }
+                            //    //adding in c3 database
+                            //    uw.C3Repository.InsertTagQuery(objTagQuery);
+                            //}
 
                         }
                     }
@@ -872,16 +875,19 @@ namespace SahadevService.Dossier
 
                 if (objRQ_DossierDef.DossierTypeID == 2) // dossier tag group entry in only case of periodical dossier
                 {
-                    //multiple entries with for loop 
-                    //Insert into DossierTagGroup table
-                    foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                    if (objRQ_DossierDef.TagGroup != null)
                     {
-                        DossierTagGroup objDossierTagGroup = new DossierTagGroup();
-                        objDossierTagGroup.DossierDefID = dossierDefID;
-                        objDossierTagGroup.TGID = objTagGroup.TGID;
-                        objDossierTagGroup.TagID = objTagGroup.TagID;
-                        objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
-                        uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                        //multiple entries with for loop 
+                        //Insert into DossierTagGroup table
+                        foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                        {
+                            DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                            objDossierTagGroup.DossierDefID = dossierDefID;
+                            objDossierTagGroup.TGID = objTagGroup.TGID;
+                            objDossierTagGroup.TagID = objTagGroup.TagID;
+                            objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
+                            uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                        }
                     }
                 }
 
@@ -1012,24 +1018,27 @@ namespace SahadevService.Dossier
                 //Update DossierTagGroup
                 if (objRQ_DossierDef.DossierTypeID == 2) // dossier tag group entry in only case of periodical dossier
                 {
-
-                    foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
+                    if (objRQ_DossierDef.TagGroup != null)
                     {
-                        if (objTagGroup.FlagToAddRemove == 1)
+                        foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
                         {
-                            DossierTagGroup objDossierTagGroup = new DossierTagGroup();
-                            objDossierTagGroup.DossierDefID = objRQ_DossierDef.DossierDefID;
-                            objDossierTagGroup.TGID = objTagGroup.TGID;
-                            objDossierTagGroup.TagID = objTagGroup.TagID;
-                            objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
-                            uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
+                            if (objTagGroup.FlagToAddRemove == 1)
+                            {
+                                DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                                objDossierTagGroup.DossierDefID = objRQ_DossierDef.DossierDefID;
+                                objDossierTagGroup.TGID = objTagGroup.TGID;
+                                objDossierTagGroup.TagID = objTagGroup.TagID;
+                                objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
+                                uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
 
-                        }
-                        else if (objTagGroup.FlagToAddRemove == 2)
-                        {
-                            uw.C3Repository.DeleteDossierTagGroup(objTagGroup.DossierTagGroupID);
+                            }
+                            else if (objTagGroup.FlagToAddRemove == 2)
+                            {
+                                uw.C3Repository.DeleteDossierTagGroup(objTagGroup.DossierTagGroupID);
+                            }
                         }
                     }
+                
                 }
 
 

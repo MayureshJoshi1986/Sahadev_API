@@ -13,6 +13,7 @@
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace SahadevBusinessEntity.DTO.RequestModel
@@ -116,6 +117,11 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         /// <summary>
         /// TagID
         /// </summary>
+   
         public int TagID { get; set; }
+
+
+        [JsonPropertyName("tag_query")]
+        public List<RQ_TagQuery> rQ_TagQueries { get; set; }
     }
 }
