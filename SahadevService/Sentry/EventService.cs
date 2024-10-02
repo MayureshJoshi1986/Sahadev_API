@@ -71,6 +71,9 @@ namespace SahadevService.Sentry
         /// <modifiedon>30-08-24</modifiedon>
         /// <modifiedby>Saroj Laddha</modifiedby>
         /// <modifiedreason>Mapping of the Request Model to Business Model</modifiedreason>
+        ///  <modifiedon>02-10-24</modifiedon>
+        /// <modifiedby>Saroj Laddha</modifiedby>
+        /// <modifiedreason>Changes done for the multiple tag queries</modifiedreason>
         public bool Add(RQ_Event objRQ_Event)
         {
             bool bReturn = false;
@@ -160,55 +163,6 @@ namespace SahadevService.Sentry
                         objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
                         uw.C2Repository.InsertTagQuery(objTagQuery);
                     }
-
-                    //do the entry in Tag query for all the selected plateform
-                    //TagQuery objTagQuery = new TagQuery();
-
-                    //if (objRQ_Event.Platform1 != 0)
-                    //{
-                    //    objTagQuery.TagID = TagID;
-                    //    objTagQuery.Query = objRQ_Event.Query;
-                    //    objTagQuery.TypeOfQuery = "Keyword";
-                    //    objTagQuery.PlatformID = objRQ_Event.Platform1;
-                    //    objTagQuery.IsActive = objTag.IsActive;
-                    //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
-                    //    uw.C2Repository.InsertTagQuery(objTagQuery); // to replicate same in the C2 database
-                    //}
-                    //if (objRQ_Event.Platform2 != 0)
-                    //{
-                    //    objTagQuery = new TagQuery();
-                    //    objTagQuery.TagID = TagID;
-                    //    objTagQuery.Query = objRQ_Event.Query;
-                    //    objTagQuery.TypeOfQuery = "Keyword";
-                    //    objTagQuery.PlatformID = objRQ_Event.Platform2;
-                    //    objTagQuery.IsActive = objTag.IsActive;
-                    //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
-                    //    uw.C2Repository.InsertTagQuery(objTagQuery); // to replicate same in the C2 database
-                    //}
-
-                    //if (objRQ_Event.Platform3 != 0)
-                    //{
-                    //    objTagQuery = new TagQuery();
-                    //    objTagQuery.TagID = TagID;
-                    //    objTagQuery.Query = objRQ_Event.Query;
-                    //    objTagQuery.TypeOfQuery = "Keyword";
-                    //    objTagQuery.PlatformID = objRQ_Event.Platform3;
-                    //    objTagQuery.IsActive = objTag.IsActive;
-                    //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
-                    //    uw.C2Repository.InsertTagQuery(objTagQuery); // to replicate same in the C2 database
-                    //}
-
-                    //if (objRQ_Event.Platform4 != 0)
-                    //{
-                    //    objTagQuery = new TagQuery();
-                    //    objTagQuery.TagID = TagID;
-                    //    objTagQuery.Query = objRQ_Event.Query;
-                    //    objTagQuery.TypeOfQuery = "Keyword";
-                    //    objTagQuery.PlatformID = objRQ_Event.Platform4;
-                    //    objTagQuery.IsActive = objTag.IsActive;
-                    //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
-                    //    uw.C2Repository.InsertTagQuery(objTagQuery); // to replicate same in the C2 database
-                    //}
                 }
 
                 
