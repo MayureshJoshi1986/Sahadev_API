@@ -32,6 +32,7 @@
   <ItemGroup>
     <Folder Include="API\Common\" />
     <Folder Include="error\" />
+    <Folder Include="wwwroot\dossiertemplate\" />
   </ItemGroup>
 
   

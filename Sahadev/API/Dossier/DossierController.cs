@@ -332,18 +332,18 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason></modifiedreason>
         [HttpPost]
         [Route("DossierConfiguration_Create")]
-        public IActionResult AddDossierConfiguration([FromBody] RQ_DossierDef objRQ_DossierDef)
+        public IActionResult AddDossierConfiguration([FromForm] RQ_DossierDef objRQ_DossierDef)
         {
             try
             {
                 bool bReturn = SS.DossierService.InsertDossierDef(objRQ_DossierDef);
                 if (bReturn == true)
                 {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Added, "Dossier Configuration") });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Added, "Dossier") });
                 }
                 else
                 {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.AddFailed, "Dossier Configuration") });
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.AddFailed, "Dossier") });
                 }
             }
             catch (Exception ex)
@@ -440,18 +440,18 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason></modifiedreason>
         [HttpPost]
         [Route("DossierConfiguration_Update")]
-        public IActionResult UpdateDossierConfiguration([FromBody] RQ_DossierDef objRQ_DossierDef)
+        public IActionResult UpdateDossierConfiguration([FromForm] RQ_DossierDef objRQ_DossierDef)
         {
             try
             {
                 bool bReturn = SS.DossierService.UpdateDossierDef(objRQ_DossierDef);
                 if (bReturn == true)
                 {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Updated, "Dossier Configuration") });
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Format(Common.Updated, "Dossier") });
                 }
                 else
                 {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.UpdateFailed, "Dossier Configuration") });
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = string.Format(Common.UpdateFailed, "Dossier") });
                 }
             }
             catch (Exception ex)
@@ -730,8 +730,7 @@ namespace Sahadev.API.Dossier
         /// This API is used to Update DossierLinkMap table To mark the IsEdit = 1 for records edit and also update DossierEdit 
         /// table to save the old and new updated values
         /// </summary>
-        /// <param name="lstLinksToUpdate">object containing dossierLinkMapID to Update the record and contains old to new record change history json</param>
- 
+        /// <param name="lstLinksToUpdate">object containing dossierLinkMapID to Update the record and contains old to new record change history json</param> 
         /// <returns>true if successfully Updated else false</returns>
         /// <createdon>07-SEP-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
@@ -757,6 +756,43 @@ namespace Sahadev.API.Dossier
                 //For warning user Log.LogWarning methods
                 //For information user Log.LogInformation methods
                 _logger.LogError(ex, _className, "UpdateDataAfterEdit");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+        /// <summary>
+        /// This API is used to get all client topic for given clientID and topicTypeId for dropdown
+        /// </summary>
+        /// <param name="clientId">ClientID for which client topic need to be fetched</param>
+        /// <param name="topicTypeId">TopicTypeId (by default, 2)</param>
+        /// <returns>list of object containing client topic for sentry topic type  </returns>
+        /// <createdon>03-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_GetClientTopicOfSentry")]
+        public IActionResult GetClientTopicOfSentry(int clientId, int topicTypeId = 2)
+        {
+            try
+            {
+                List<ClientTopic> lstClientTopic = SS.DossierService.GetAllClientTopicByClientID(topicTypeId, clientId);
+                if (lstClientTopic!=null && lstClientTopic.Count>0)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstClientTopic });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Details not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetClientTopicOfSentry");
                 return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }

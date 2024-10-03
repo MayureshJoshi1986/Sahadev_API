@@ -14,6 +14,7 @@
  *  revised Details :-  In InsertAdditionalURL method, removed unwanted fields like             *
  *                      isProcessed, ErrorMsg etc, & handle multiple url                        *
  //**********************************************************************************************/
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using SahadevBusinessEntity.DTO.Model;
 using SahadevBusinessEntity.DTO.RequestModel;
@@ -23,7 +24,9 @@ using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Diagnostics.SymbolStore;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
+using static System.Net.WebRequestMethods;
 namespace SahadevService.Dossier
 {
 
@@ -704,11 +707,11 @@ namespace SahadevService.Dossier
             bool bReturn = false;
             try
             {
+                string _templateFileName = string.Empty;
+                if (objRQ_DossierDef.TemplateFile!=null && !string.IsNullOrEmpty(objRQ_DossierDef.TemplateFile.FileName))
+                    _templateFileName = objRQ_DossierDef.TemplateFile.FileName;
 
                 //Mapping Request Model to Business Model
-
-
-
 
                 //Mapping of DossierDef
                 DossierDef objDossierDef = new DossierDef();
@@ -722,21 +725,24 @@ namespace SahadevService.Dossier
                 objDossierDef.EventContext = objRQ_DossierDef.EventContext;
                 objDossierDef.EventRefURL = objRQ_DossierDef.EventRefURL;
                 objDossierDef.EventKQuery = objRQ_DossierDef.EventKQuery;
-                objDossierDef.EventTagID = objRQ_DossierDef.EventTagID;
+                //objDossierDef.EventTagID = objRQ_DossierDef.EventTagID;
                 objDossierDef.Platform1ID = objRQ_DossierDef.Platform1ID;
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
                 objDossierDef.StatusID = objRQ_DossierDef.StatusID;
-                objDossierDef.TemplateFileName = objRQ_DossierDef.TemplateFileName;//newfield
+                objDossierDef.TemplateFileName = _templateFileName;
                 objDossierDef.ClientName = objRQ_DossierDef.ClientName;//newfield
-
 
                 //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
                 int dossierDefID = uw.C3Repository.InsertDossierDef(objDossierDef);
                 objDossierDef.DossierDefID = dossierDefID;
 
 
-                //if dossier type =1 (Event Dossier) and Client Topic (Event is not selected)
+                if (!string.IsNullOrEmpty(_templateFileName))
+                    UploadDossierTemplate(dossierDefID, objRQ_DossierDef.TemplateFile);
+
+
+                //if dossier type = 1 (Event Dossier) and Client Topic (Event is not selected)
                 if (objRQ_DossierDef.DossierTypeID == 1 && objRQ_DossierDef.ClientTopicID <= 0)
                 {
                     ClientTopic objClientTopic = new ClientTopic();
@@ -928,6 +934,10 @@ namespace SahadevService.Dossier
             bool bReturn = false;
             try
             {
+                string _templateFileName = string.Empty;
+                if (objRQ_DossierDef.TemplateFile!=null && !string.IsNullOrEmpty(objRQ_DossierDef.TemplateFile.FileName))
+                    _templateFileName = objRQ_DossierDef.TemplateFile.FileName;
+
                 //Mapping Request Model to Business Model
 
                 //Mapping of DossierDef
@@ -947,11 +957,13 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform1ID = objRQ_DossierDef.Platform1ID;
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
+                objDossierDef.TemplateFileName = _templateFileName;
                 objDossierDef.StatusID = objRQ_DossierDef.StatusID;
 
                 uw.C3Repository.UpdateDossierDef(objDossierDef);
 
-
+                if (!string.IsNullOrEmpty(_templateFileName))
+                    UploadDossierTemplate(objDossierDef.DossierDefID, objRQ_DossierDef.TemplateFile);
 
                 //Mapping Of DossierSch
                 DossierSch objDossierSch = new DossierSch();
@@ -1038,7 +1050,7 @@ namespace SahadevService.Dossier
                             }
                         }
                     }
-                
+
                 }
 
 
@@ -1272,6 +1284,34 @@ namespace SahadevService.Dossier
         //    }
         //    return bReturn;
         //}
+
+
+        private bool UploadDossierTemplate(int DossierDefID, IFormFile TemplateFile)
+        {
+            bool bReturn = false;
+            try
+            {
+                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\dossiertemplate", DossierDefID.ToString());
+
+                //Create folder with DossierDefID name if not exists
+                if (!Directory.Exists(folderPath))
+                    Directory.CreateDirectory(folderPath);
+
+                //save template file in folder
+                var filePath = Path.Combine(folderPath, TemplateFile.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    TemplateFile.CopyToAsync(fileStream);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "UploadDossierTemplate");
+                throw ex;
+
+            }
+            return bReturn;
+        }
 
     }
 }

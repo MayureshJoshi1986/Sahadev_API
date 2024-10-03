@@ -13,6 +13,7 @@
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
 
+using Microsoft.AspNetCore.Http;
 using SahadevBusinessEntity.DTO.Model;
 using System;
 using System.Collections.Generic;
@@ -82,6 +83,9 @@ namespace SahadevBusinessEntity.DTO.RequestModel
 
         [JsonPropertyName("status_id")]
         public int StatusID { get; set; }
+
+        [JsonPropertyName("template_file")]
+        public IFormFile TemplateFile { get; set; }
 
         [JsonPropertyName("template_file_name")]
         public string TemplateFileName { get; set; }
