@@ -1135,6 +1135,10 @@ namespace SahadevService.Dossier
             {
                 foreach (var link in lstLinksToUpdate)
                 {
+                    if (link.PlatformID == 0)
+                    {
+                        throw new Exception("platformId is not provided");
+                    }
                     bIsUpdate = uw.C3Repository.UpdateDataAfterEdit(link.DossierLinkMapID, link.EditsJson, link.DossierID);
                     bIsUpdate = uw.ERepository.UpadateDataAfterEdit(link.PlatformID, link.LinkID, link.Sentiment, link.ArticleMention);
                 }
