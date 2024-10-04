@@ -67,6 +67,10 @@ namespace SahadevBusinessEntity.DTO.Model
         /// </summary>
         public DateTime? ModifiedOn { get; set; }
 
+        public Tag Tag { get; set; }
+
+
+
 
     }
 }

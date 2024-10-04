@@ -90,6 +90,45 @@ namespace Sahadev.API.Dossier
             }
         }
 
+
+
+
+        /// <summary>
+        /// This API is used to fetch all client topic details tag and tag queries
+        /// </summary>
+        /// <param name="clientTopicId">clientTopicId</param>
+        /// <returns>object containing client topic details tag and tag queries</returns>
+        /// <createdon>04-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_ClientTopic_Fetch")]
+        public IActionResult GetClientTopic(int clientTopicId)
+        {
+            try
+            {
+
+                var clientTopic = SS.DossierService.GetClientTopic(clientTopicId);
+                if (clientTopic != null)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = clientTopic });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Client topic not found." });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetClientTopic");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+
+
         /// <summary>
         /// This API is used to fetch all clients of given tagGroupName
         /// </summary>

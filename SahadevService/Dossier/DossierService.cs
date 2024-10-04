@@ -20,12 +20,14 @@ using SahadevBusinessEntity.DTO.Model;
 using SahadevBusinessEntity.DTO.RequestModel;
 using SahadevDBLayer.UnitOfWork;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Diagnostics.SymbolStore;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 using static System.Net.WebRequestMethods;
 namespace SahadevService.Dossier
 {
@@ -64,6 +66,7 @@ namespace SahadevService.Dossier
         List<dynamic> GetEventType();
 
         List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId); //new end point required
+        ClientTopic GetClientTopic(int clientTopicId);
     }
 
     public class DossierService : IDossierService
@@ -140,6 +143,43 @@ namespace SahadevService.Dossier
             }
 
         }
+
+
+        /// <summary>
+        /// This method is used to fetch clienttopic  from clienttopic table
+        /// </summary>
+        /// <param name="clientTopicId">pass clienttopicid for which client topic need to be fetched</param>
+        /// <returns>list of object containing client topic</returns>
+        /// <createdon>01-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public ClientTopic GetClientTopic(int clientTopicId)
+        {
+            try
+            {
+                ClientTopic clientTopic = uw.A2Repository.GetClientTopic(clientTopicId);
+                if (clientTopic != null)
+                {
+                    clientTopic.Tag = uw.A2Repository.GetTagByClientTopicID(clientTopicId);
+                    if (clientTopic.Tag != null)
+                    {
+                        clientTopic.Tag.TagQuery = uw.A2Repository.GetAllTagQueryByTagID(clientTopic.Tag.TagID);
+                    }
+                }
+                return clientTopic;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetClientTopic");
+                throw ex;
+            }
+
+        }
+
+
 
         /// <summary>
         /// This method is used to get all client by user id
@@ -708,7 +748,7 @@ namespace SahadevService.Dossier
             try
             {
                 string _templateFileName = string.Empty;
-                if (objRQ_DossierDef.TemplateFile!=null && !string.IsNullOrEmpty(objRQ_DossierDef.TemplateFile.FileName))
+                if (objRQ_DossierDef.TemplateFile != null && !string.IsNullOrEmpty(objRQ_DossierDef.TemplateFile.FileName))
                     _templateFileName = objRQ_DossierDef.TemplateFile.FileName;
 
                 //Mapping Request Model to Business Model
@@ -780,7 +820,6 @@ namespace SahadevService.Dossier
 
                     //Add entries in Tag Query A2 Database
 
-
                     if (objRQ_DossierDef.TagQuery != null)
                     {
                         foreach (var query in objRQ_DossierDef.TagQuery)
@@ -793,51 +832,51 @@ namespace SahadevService.Dossier
                             objTagQuery.PlatformID = query.PlatformID;
                             objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
                             uw.C3Repository.InsertTagQuery(objTagQuery);
-                            //if (query.PlatformID == 1)
-                            //{
-                            //    objTagQuery.PlatformID = 1;
-                            //    objTagQuery.TagQueryID = 0;
-                            //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
-
-                            //    //adding in c3 database
-                            //    uw.C3Repository.InsertTagQuery(objTagQuery);
-                            //}
-                            //else if (query.PlatformID == 2)
-                            //{
-                            //    objTagQuery.PlatformID = 2;
-                            //    objTagQuery.TagQueryID = 0;
-                            //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
-
-                            //    //adding in c3 database
-                            //    uw.C3Repository.InsertTagQuery(objTagQuery);
-                            //}
-                            //else if (query.PlatformID == 3)
-                            //{
-                            //    objTagQuery.PlatformID = 3;
-                            //    objTagQuery.TagQueryID = 0;
-                            //    objTagQuery.TagQueryID = uw.A2Repository.InsertTagQuery(objTagQuery);
-
-                            //    //adding in c3 database
-                            //    uw.C3Repository.InsertTagQuery(objTagQuery);
-                            //}
-
                         }
                     }
                 }
                 //elseif dossier type =1 (Event Dossier) and Client Topic (Event is selected)
                 else if (objRQ_DossierDef.DossierTypeID == 1 && objRQ_DossierDef.ClientTopicID > 0)
                 {
-                    Tag objTag = uw.A2Repository.GetTagByClientTopicID(objRQ_DossierDef.ClientTopicID);
-                    if (objTag != null)
+                    if (objRQ_DossierDef.Tag != null)
                     {
+                        Tag objTag = new Tag();
+                        objTag.IsActive = objRQ_DossierDef.Tag.IsActive;
+                        objTag.TagDescription = objRQ_DossierDef.Tag.TagDescription;
+                        objTag.TagName = objRQ_DossierDef.Tag.TagName;
+                        objTag.TagID = objRQ_DossierDef.Tag.TagID;
+                        objTag.IGTagID = objRQ_DossierDef.Tag.IGTagID;
                         uw.C3Repository.InsertTag(objTag);
                     }
 
-                    List<TagQuery> lstTagQuery = uw.A2Repository.GetAllTagQueryByTagID(objTag.TagID);
-                    foreach (var query in lstTagQuery)
+                    if (objRQ_DossierDef.TagQuery != null && objRQ_DossierDef.TagQuery.Count > 0)
                     {
-                        uw.C3Repository.InsertTagQuery(query);
+
+                        foreach (RQ_TagQuery tagQuery in objRQ_DossierDef.TagQuery)
+                        {
+                            TagQuery objTagQuery = new TagQuery();
+                            objTagQuery.TagID = tagQuery.TagID;
+                            objTagQuery.TagQueryID = tagQuery.TagQueryID;
+                            objTagQuery.IsActive = tagQuery.IsActive;
+                            objTagQuery.Query = tagQuery.Query;
+                            objTagQuery.TypeOfQuery = "Keyword";
+                            objTagQuery.PlatformID = tagQuery.PlatformID;
+                            uw.C3Repository.InsertTagQuery(objTagQuery);
+                        }
+
                     }
+
+                    //Tag objTag = uw.A2Repository.GetTagByClientTopicID(objRQ_DossierDef.ClientTopicID);
+                    //if (objTag != null)
+                    //{
+                    //    uw.C3Repository.InsertTag(objTag);
+                    //}
+
+                    //List<TagQuery> lstTagQuery = uw.A2Repository.GetAllTagQueryByTagID(objTag.TagID);
+                    //foreach (var query in lstTagQuery)
+                    //{
+                    //    uw.C3Repository.InsertTagQuery(query);
+                    //}
                 }
 
 
@@ -935,7 +974,7 @@ namespace SahadevService.Dossier
             try
             {
                 string _templateFileName = string.Empty;
-                if (objRQ_DossierDef.TemplateFile!=null && !string.IsNullOrEmpty(objRQ_DossierDef.TemplateFile.FileName))
+                if (objRQ_DossierDef.TemplateFile != null && !string.IsNullOrEmpty(objRQ_DossierDef.TemplateFile.FileName))
                     _templateFileName = objRQ_DossierDef.TemplateFile.FileName;
 
                 //Mapping Request Model to Business Model

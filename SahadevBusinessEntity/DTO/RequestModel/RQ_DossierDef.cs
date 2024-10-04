@@ -90,6 +90,9 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("template_file_name")]
         public string TemplateFileName { get; set; }
 
+        [JsonPropertyName("tag")]
+        public RQ_Tag Tag { get; set; }
+
         #region DossierSch
 
         [JsonPropertyName("dossier_sch_id")]

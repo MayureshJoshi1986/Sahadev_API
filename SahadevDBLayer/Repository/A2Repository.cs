@@ -15,7 +15,7 @@
  //**********************************************************************************************/
 using Dapper;
 using SahadevBusinessEntity.DTO.Model;
-using System; 
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -39,13 +39,14 @@ namespace SahadevDBLayer.Repository
 
 
         List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId);
-         ClientTopic GetClientTopic(int topicTypeId, int clientId, int refTopicId);
+        ClientTopic GetClientTopic(int topicTypeId, int clientId, int refTopicId);
 
         Tag GetTagByClientTopicID(int clientTopicId);
 
         List<TagQuery> GetAllTagQueryByTagID(int tagId);
 
         bool UpdateTagQuery(TagQuery objTagQuery);
+        ClientTopic GetClientTopic(int clientTopicId);
 
 
     }
@@ -59,7 +60,7 @@ namespace SahadevDBLayer.Repository
             : base(connection, transaction)
         {
             _connection = connection;
-            _transaction = transaction;           
+            _transaction = transaction;
         }
 
         /// <summary>
@@ -97,13 +98,13 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId,int clientId)
+        public List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@clientId", clientId);
-                dbparams.Add("@topicTypeId",topicTypeId);
+                dbparams.Add("@topicTypeId", topicTypeId);
                 var data = GetAllByProcedure<ClientTopic>(@"[dbo].[USP_ClientTopic_Fetch]", dbparams, _transaction);
                 return data;
             }
@@ -128,7 +129,7 @@ namespace SahadevDBLayer.Repository
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public ClientTopic GetClientTopic(int clientId, int refTopicId, int topicTypeId )
+        public ClientTopic GetClientTopic(int clientId, int refTopicId, int topicTypeId)
         {
             try
             {
@@ -145,6 +146,34 @@ namespace SahadevDBLayer.Repository
             }
 
         }
+
+
+        /// <summary>
+        /// This method is used to fetch clienttopic  from clienttopic table
+        /// </summary>
+        /// <param name="clientTopicId">pass clienttopicId for which client topic need to be fetched</param>
+        /// <returns>object containing client topic</returns>
+        /// <createdon>02-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public ClientTopic GetClientTopic(int clientTopicId)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientTopicId", clientTopicId);
+                var data = GetByProcedure<ClientTopic>(@"[dbo].[USP_GetClientTopic]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
 
 
         /// <summary>
@@ -318,7 +347,7 @@ namespace SahadevDBLayer.Repository
         {
             bool bResult = false;
             try
-            {   
+            {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@clientTopicID", objTagMap.ClientTopicID);
                 dbparams.Add("@tagID", objTagMap.TagID);
@@ -356,13 +385,13 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@query", objTagQuery.Query);
                 dbparams.Add("@typeOfQuery", objTagQuery.TypeOfQuery);
                 dbparams.Add("@isActive", objTagQuery.IsActive);
-                return GetByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, _transaction);              
+                return GetByProcedure<int>(@"[dbo].[USP_TagQuery_Insert]", dbparams, _transaction);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            
+
 
         }
 

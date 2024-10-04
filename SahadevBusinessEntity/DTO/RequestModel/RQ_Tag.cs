@@ -1,9 +1,9 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :- RQ_DossierTagQuery                                                       *
+ *  Class Name      :- RQ_Tag                                                    *
  *  --------------------------------------------------------------------------------------------*
- *  Description     :- Request model for TagQuery in Dossier                                    *
+ *  Description     :- Request model for Tag                               *
  *  --------------------------------------------------------------------------------------------*
- *  Created By      :- PJ                                                                       *
+ *  Created By      :- Saroj Laddha                                                             *
  *  --------------------------------------------------------------------------------------------*
  *  Created Date    :- 28-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
@@ -12,33 +12,30 @@
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
+
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Json.Serialization;
 
 namespace SahadevBusinessEntity.DTO.RequestModel
 {
-    /// <summary>
-    /// Request model for RQ_DossierTagQuery
-    /// </summary>
-    public class RQ_TagQuery
+    public class RQ_Tag
     {
-        [JsonPropertyName("tag_query_id")]
-        public int TagQueryID {  get; set; }
-
-        [JsonPropertyName("platform_id")]
-        public int PlatformID { get; set; }
-
-        [JsonPropertyName("query")]
-        public string Query { get; set; }
-
         [JsonPropertyName("tag_id")]
-        public int TagID {  get; set; }
+        public int TagID { get; set; }
+
+        [JsonPropertyName("ig_tag_id")]
+        public int? IGTagID { get; set; }
+
+        [JsonPropertyName("tag_name")]
+        public string TagName { get; set; }
+
+        [JsonPropertyName("tag_description")]
+        public string TagDescription { get; set; }
 
         [JsonPropertyName("is_active")]
         public bool IsActive { get; set; }
-
-
     }
 }
