@@ -27,6 +27,7 @@ using System.Diagnostics.SymbolStore;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 using static System.Net.WebRequestMethods;
 namespace SahadevService.Dossier
@@ -464,21 +465,31 @@ namespace SahadevService.Dossier
                 List<dynamic> lstReviewLinks = uw.C3Repository.GetAllDossierReviewDataLinks(dossierID, platformID);
                 if (lstReviewLinks != null)
                 {
-                    // extract link ID's
-                    List<string> lstLinkID = lstReviewLinks.Select(x => ((int)x.LinkID).ToString()).ToList();
+                    // extract link ID's // handling null and fecthing links whose id > 0 to fecth data from E database
+                    List<string> lstLinkID = lstReviewLinks.Where(x => x.LinkID != null && ((int)x.LinkID) > 0).Select(x => ((int)x.LinkID).ToString()).ToList();
 
                     // make a single comma seperated string 
                     string strLinkID = String.Join(",", lstLinkID);
 
+
+
                     //fetch the link details from the E Database 
                     List<dynamic> lstReviewLinkDetails = uw.ERepository.GetAllDossierReviewDataDetails(platformID, strLinkID);
 
-                    //joining both records as we would require DossierMapLinkID from the Sehdev_C2_2 Database to perdorm draft , trash , or update links
-                    // and with all necessary details from the E Database
-                    lstlinkDetails = lstReviewLinkDetails.Join(lstReviewLinks,
-                                  linkDetail => linkDetail.LinkID,
+
+                    //fecthing all the records of the additional url added in Datalinkmap table that has link Id null
+                    //and then fetching data for the link id details for online from E database
+                    // so datafrom link map table can have link id null or 0 for the additional url and join will give only matching 
+                    //result set so doing union all join to get matching linkId data from E database 
+                    //and all the addition url with all necessary flags required
+
+                    lstlinkDetails = lstReviewLinks.GroupJoin(lstReviewLinkDetails,
                                   links => links.LinkID,
-                                  (linkDetail, links) =>
+                                  linkDetail => linkDetail.LinkID,
+                                (links, linkDetailGroup) => new { links, linkDetailGroup })
+                                .SelectMany(x => x.linkDetailGroup.DefaultIfEmpty(),//include the result  if there are no matches even(Left Join)
+                                (x, linkDetail) =>
+
                                   {
 
                                       // to handle new columns added in Table and SP's  dynamically 
@@ -488,9 +499,9 @@ namespace SahadevService.Dossier
                                       var dictionary = (IDictionary<string, object>)expando;
 
                                       //add all properties from the first object
-                                      if (links != null)
+                                      if (x.links != null)
                                       {
-                                          foreach (var item in links)
+                                          foreach (var item in (IDictionary<string, object>)x.links)
                                           {
 
                                               dictionary[item.Key] = item.Value;
@@ -500,7 +511,7 @@ namespace SahadevService.Dossier
                                       //add all properties from the second object
                                       if (linkDetail != null)
                                       {
-                                          foreach (var item in linkDetail)
+                                          foreach (var item in (IDictionary<string, object>)linkDetail)
                                           {
                                               dictionary[item.Key] = item.Value;
                                           }
@@ -546,7 +557,7 @@ namespace SahadevService.Dossier
                 if (lstReviewDraftLinks != null)
                 {
                     // extract link ID's
-                    List<string> lstLinkID = lstReviewDraftLinks.Select(x => ((int)x.LinkID).ToString()).ToList();
+                    List<string> lstLinkID = lstReviewDraftLinks.Where(x => x.LinkID != null && ((int)x.LinkID) > 0).Select(x => ((int)x.LinkID).ToString()).ToList();
 
                     // make a single comma seperated string 
                     string strLinkID = String.Join(",", lstLinkID);
@@ -556,39 +567,42 @@ namespace SahadevService.Dossier
 
                     //joining both records as we would require DossierMapLinkID from the Sehdev_C2_2 Database to perform actions
                     // and with all necessary details from the E Database
-                    lstlinkDetails = lstReviewDraftLinkDetails.Join(lstReviewDraftLinks,
-                                  linkDetail => linkDetail.LinkID,
+                    lstlinkDetails = lstReviewDraftLinks.GroupJoin(lstReviewDraftLinkDetails,
                                   links => links.LinkID,
-                                  (linkDetail, links) =>
-                                  {
+                                  linkDetail => linkDetail.LinkID,
+                                    (links, linkDetailGroup) => new { links, linkDetailGroup })
+                                 .SelectMany(x => x.linkDetailGroup.DefaultIfEmpty(),//include the result  if there are no matches even(Left Join)
+                                 (x, linkDetail) =>
+                                 // (linkDetail, links) =>
+                                 {
 
-                                      // to handle new columns added in Table and SP's  dynamically 
-                                      // no requirement to do any change in code for getting data of a new column. this code will handle all 
-                                      // the new columns added in SP's
-                                      dynamic expando = new ExpandoObject();
-                                      var dictionary = (IDictionary<string, object>)expando;
+                                     // to handle new columns added in Table and SP's  dynamically 
+                                     // no requirement to do any change in code for getting data of a new column. this code will handle all 
+                                     // the new columns added in SP's
+                                     dynamic expando = new ExpandoObject();
+                                     var dictionary = (IDictionary<string, object>)expando;
 
-                                      //add all properties from the first object
-                                      if (links != null)
-                                      {
-                                          foreach (var item in links)
-                                          {
+                                     //add all properties from the first object
+                                     if (x.links != null)
+                                     {
+                                         foreach (var item in (IDictionary<string, object>)x.links)
+                                         {
 
-                                              dictionary[item.Key] = item.Value;
-                                          }
-                                      }
+                                             dictionary[item.Key] = item.Value;
+                                         }
+                                     }
 
-                                      //add all properties from the second object
-                                      if (linkDetail != null)
-                                      {
-                                          foreach (var item in linkDetail)
-                                          {
-                                              dictionary[item.Key] = item.Value;
-                                          }
-                                      }
-                                      return expando;
+                                     //add all properties from the second object
+                                     if (linkDetail != null)
+                                     {
+                                         foreach (var item in (IDictionary<string, object>)linkDetail)
+                                         {
+                                             dictionary[item.Key] = item.Value;
+                                         }
+                                     }
+                                     return expando;
 
-                                  }).ToList();
+                                 }).ToList();
 
 
 
@@ -625,7 +639,7 @@ namespace SahadevService.Dossier
                 if (lstDeletedLinks != null)
                 {
                     // extract link ID's
-                    List<string> lstLinkID = lstDeletedLinks.Select(x => ((int)x.LinkID).ToString()).ToList();
+                    List<string> lstLinkID = lstDeletedLinks.Where(x => x.LinkID != null && ((int)x.LinkID) > 0).Select(x => ((int)x.LinkID).ToString()).ToList();
 
                     // make a single comma seperated string 
                     string strLinkID = String.Join(",", lstLinkID);
@@ -635,39 +649,41 @@ namespace SahadevService.Dossier
 
                     //joining both records as we would require DossierMapLinkID from the Sehdev_C2_2 Database to perform actions
                     // and with all necessary details from the E Database
-                    lstlinkDetails = lstDeletedLinkDetails.Join(lstDeletedLinks,
-                                  linkDetail => linkDetail.LinkID,
+                    lstlinkDetails = lstDeletedLinks.GroupJoin(lstDeletedLinkDetails,
                                   links => links.LinkID,
-                                  (linkDetail, links) =>
-                                  {
-
-                                      // to handle new columns added in Table and SP's  dynamically 
-                                      // no requirement to do any change in code for getting data of a new column. this code will handle all 
-                                      // the new columns added in SP's
-                                      dynamic expando = new ExpandoObject();
-                                      var dictionary = (IDictionary<string, object>)expando;
-
-                                      //add all properties from the first object
-                                      if (links != null)
+                                  linkDetail => linkDetail.LinkID,
+                                   (links, linkDetailGroup) => new { links, linkDetailGroup })
+                                     .SelectMany(x => x.linkDetailGroup.DefaultIfEmpty(),
+                                     (x, linkDetail) =>
                                       {
-                                          foreach (var item in links)
+
+                                          // to handle new columns added in Table and SP's  dynamically 
+                                          // no requirement to do any change in code for getting data of a new column. this code will handle all 
+                                          // the new columns added in SP's
+                                          dynamic expando = new ExpandoObject();
+                                          var dictionary = (IDictionary<string, object>)expando;
+
+                                          //add all properties from the first object
+                                          if (x.links != null)
                                           {
+                                              foreach (var item in (IDictionary<string, object>)x.links)
+                                              {
 
-                                              dictionary[item.Key] = item.Value;
+                                                  dictionary[item.Key] = item.Value;
+                                              }
                                           }
-                                      }
 
-                                      //add all properties from the second object
-                                      if (linkDetail != null)
-                                      {
-                                          foreach (var item in linkDetail)
+                                          //add all properties from the second object
+                                          if (linkDetail != null)
                                           {
-                                              dictionary[item.Key] = item.Value;
+                                              foreach (var item in (IDictionary<string, object>)linkDetail)
+                                              {
+                                                  dictionary[item.Key] = item.Value;
+                                              }
                                           }
-                                      }
-                                      return expando;
+                                          return expando;
 
-                                  }).ToList();
+                                      }).ToList();
 
 
 
@@ -709,6 +725,11 @@ namespace SahadevService.Dossier
                     objAdditionalURL.DossierID = objRQ_AdditonalURL.DossierID;
                     objAdditionalURL.CreatedBy = objRQ_AdditonalURL.CreatedBy;
                     bReturn = uw.C3Repository.InsertAdditionalURl(objAdditionalURL);
+
+                    //passing is Added True as it is new additional url added
+                    // passing 1 be default for platform as additonal url are only added for online
+                    bReturn = uw.C3Repository.InsertAddlUrlInDataLinkMap(url, true, 1, objRQ_AdditonalURL.DossierID);
+
                 }
 
                 //Commit the change 

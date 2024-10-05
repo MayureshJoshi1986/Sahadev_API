@@ -78,6 +78,8 @@ namespace SahadevDBLayer.Repository
         bool DeleteDossierTagGroup(int dossierTagGroupId);
 
         bool UpdateTagQuery(TagQuery objTagQuery);
+
+        bool InsertAddlUrlInDataLinkMap(string url, bool isAdded, int platformId, int dossierId);
     }
 
     internal class C3Repository : RepositoryBase, IC3Repository
@@ -820,8 +822,8 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@time2", objDossierSch.Time2);
                 dbparams.Add("@dayOfWeek", objDossierSch.DayOfWeek);
                 dbparams.Add("@dayOfMonth", objDossierSch.DayOfMonth);
-               // dbparams.Add("@lastRun", objDossierSch.LastRun);
-               // dbparams.Add("@nextRun", objDossierSch.NextRun);
+                // dbparams.Add("@lastRun", objDossierSch.LastRun);
+                // dbparams.Add("@nextRun", objDossierSch.NextRun);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierSch_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
@@ -946,6 +948,41 @@ namespace SahadevDBLayer.Repository
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierLinkMapID", dossierLinkMapID);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_Review_MoveToTrash]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to Insert additional url in DossierLinkMap table To mark the IsAdded =true
+        /// </summary>
+        /// <param name="url">additional url to be added in DatalinkMap Table</param>
+        /// <param name="dossierId">dossier for which additonal url added</param>
+        /// <param name="isAdded">Is Added  true</param>
+        /// <param name="platformId">for which platform it is added</param>
+        /// <returns>true if successfully Updated else false</returns>
+        /// <createdon>05-OCT-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        public bool InsertAddlUrlInDataLinkMap(string url, bool isAdded, int platformId, int dossierId)
+        {
+
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@url", url);
+                dbparams.Add("isAdded", isAdded);
+                dbparams.Add("@platformID",platformId);
+                dbparams.Add("@dossierID", dossierId);
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_AddUrlLinkMap_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;
             }
