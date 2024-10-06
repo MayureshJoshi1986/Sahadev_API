@@ -516,6 +516,13 @@ namespace SahadevService.Dossier
                                               dictionary[item.Key] = item.Value;
                                           }
                                       }
+                                      else {
+
+                                          foreach (var key in ((IDictionary<string, object>)lstReviewLinkDetails.First()).Keys)
+                                          {
+                                              dictionary[key] = null;
+                                          }
+                                      }
                                       return expando;
 
                                   }).ToList();
@@ -600,6 +607,14 @@ namespace SahadevService.Dossier
                                              dictionary[item.Key] = item.Value;
                                          }
                                      }
+                                     else
+                                     {
+
+                                         foreach (var key in ((IDictionary<string, object>)lstReviewDraftLinkDetails.First()).Keys)
+                                         {
+                                             dictionary[key] = null;
+                                         }
+                                     }
                                      return expando;
 
                                  }).ToList();
@@ -679,6 +694,14 @@ namespace SahadevService.Dossier
                                               foreach (var item in (IDictionary<string, object>)linkDetail)
                                               {
                                                   dictionary[item.Key] = item.Value;
+                                              }
+                                          }
+                                          else
+                                          {
+
+                                              foreach (var key in ((IDictionary<string, object>)lstDeletedLinkDetails.First()).Keys)
+                                              {
+                                                  dictionary[key] = null;
                                               }
                                           }
                                           return expando;
