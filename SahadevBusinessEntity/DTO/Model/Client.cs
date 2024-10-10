@@ -58,6 +58,11 @@ namespace SahadevBusinessEntity.DTO.Model
         public DateTime ValidUntil { get; set; }
 
         /// <summary>
+        /// </summary>
+        /// </summary>
+        public int SupportUserID { get; set; }
+
+        /// <summary>
         /// CreatedAt
         /// </summary>
         public DateTime? CreatedAt { get; set; }

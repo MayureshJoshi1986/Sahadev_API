@@ -31,6 +31,11 @@ namespace SahadevDBLayer.Repository
         List<dynamic> GetAllClientByTagID(string lstTagID);
         List<dynamic> GetAllUser();
         bool Insert(Client objClient);
+
+        int InsertTask(Task objTask);
+
+        bool InsertTaskLog(TaskLog objTaskLog);
+        WorkFlowStatus GetWorkFlowStatus(int refID, int ttID);
     }
 
     internal class C1Repository : RepositoryBase, IC1Repository
@@ -179,6 +184,98 @@ namespace SahadevDBLayer.Repository
             }
             return bReturn;
 
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public int InsertTask(Task objTask)
+        {
+            int iResult = 0;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@ttID", objTask.TTID);
+                dbparams.Add("@refID", objTask.RefID);
+                dbparams.Add("@createdBy", objTask.CreatedBy);
+                dbparams.Add("@assignedTo", objTask.AssignedTo);
+                iResult = GetByProcedure<int>(@"[dbo].[USP_Task_Insert]", dbparams, _transaction);
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return iResult;
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool InsertTaskLog(TaskLog objTaskLog)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@taskID", objTaskLog.TaskID);
+                dbparams.Add("@fromStatusID", objTaskLog.FromStatusID);
+                dbparams.Add("@toStatusID", objTaskLog.ToStatusID);              
+                int iResult = InsertByProcedure<int>(@"[dbo].[USP_TaskLog_Insert]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="refID"></param>
+        /// <param name="ttID"></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public WorkFlowStatus GetWorkFlowStatus(int refID, int ttID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@refID", refID);
+                dbparams.Add("@ttID", ttID);
+                var data = GetByProcedure<WorkFlowStatus>(@"[dbo].[USP_GetWorkFlowStatus]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

@@ -835,5 +835,116 @@ namespace Sahadev.API.Dossier
                 return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
             }
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dossierDefID"></param>
+        /// <param name="statusID"></param>
+        /// <returns></returns>
+        /// <createdon>09-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("DossierConfiguration_UpdateStatus")]
+        public IActionResult UpdateDossierConfigurationStatus(int dossierDefID, int statusID)
+        {
+            try
+            {
+                bool bReturn = SS.DossierService.UpdateDosserDefStatus(dossierDefID, statusID);
+                if (bReturn)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Dossier status updated successfully." });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Failed to update dossier status" });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "UpdateDossierConfigurationStatus");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dossierID"></param>
+        /// <returns></returns>
+        /// <createdon>09-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_WorkFlowStatus_Update")]
+        public IActionResult UpdateWorkFlowStatus(int dossierID)
+        {
+            try
+            {
+                bool bReturn = SS.DossierService.UpdateWorkFlowStatus(dossierID);
+                if (bReturn)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Work flow status updated successfully." });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Failed to update Work flow status" });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "UpdateWorkFlowStatus");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dossierID"></param>
+        /// <param name="dossierLinkMapID"></param>
+        /// <returns></returns>
+        /// <createdon>09-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_UpdateDraftStatus")]
+        public IActionResult UpdateDraftStatus(int dossierID, [FromBody] List<string> dossierLinkMapID)
+        {
+            try
+            {
+                bool bReturn = SS.DossierService.UpdateDraftStatus(dossierID, dossierLinkMapID);
+                if (bReturn)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Draft status updated successfully." });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Failed to update draft status" });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "UpdateDraftStatus");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
     }
 }

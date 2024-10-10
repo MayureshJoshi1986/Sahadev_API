@@ -80,6 +80,12 @@ namespace SahadevDBLayer.Repository
         bool UpdateTagQuery(TagQuery objTagQuery);
 
         bool InsertAddlUrlInDataLinkMap(string url, bool isAdded, int platformId, int dossierId);
+
+        bool UpdateDosserDefStatus(int dossierDefID, int statusID);
+
+        bool UpdateDosserStatus(int dossierID, int statusID);
+
+        bool UpdateDraftStatus(int dossierID, string dossierLinkMapID);
     }
 
     internal class C3Repository : RepositoryBase, IC3Repository
@@ -1181,9 +1187,6 @@ namespace SahadevDBLayer.Repository
 
         }
 
-
-
-
         /// <summary>
         /// This method is used to get fetch tagqueries for tag id
         /// </summary>
@@ -1211,9 +1214,100 @@ namespace SahadevDBLayer.Repository
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dossierDefID"></param>
+        /// <param name="statusID"></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDosserDefStatus(int dossierDefID, int statusID)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierDefID", dossierDefID);
+                dbparams.Add("@statusID", statusID);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierDef_UpdateStatus]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
 
+                return bReturn;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dossierDefID"></param>
+        /// <param name="statusID"></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDosserStatus(int dossierID, int statusID)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierID", dossierID);
+                dbparams.Add("@statusID", statusID);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_Dossier_UpdateStatus]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
 
+                return bReturn;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dossierID"></param>
+        /// <param name="dossierLinkMapID"></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDraftStatus(int dossierID, string dossierLinkMapID)
+        {
+
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@dossierID", dossierID);
+                dbparams.Add("@dossierLinkMapID", dossierLinkMapID);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierLinkMap_UpdateDraftStatus]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
     }
 }

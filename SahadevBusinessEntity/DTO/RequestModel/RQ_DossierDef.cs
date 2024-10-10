@@ -161,5 +161,8 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         //public RQ_DossierTagGroup DossierTagGroup { get; set; }
 
         //public RQ_DossierRecep DossierRecep { get; set; }
+
+        [JsonPropertyName("user_id")]
+        public int user_id { get; set; }
     }
 }

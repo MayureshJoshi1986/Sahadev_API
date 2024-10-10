@@ -48,6 +48,8 @@ namespace SahadevDBLayer.Repository
         bool UpdateTagQuery(TagQuery objTagQuery);
         ClientTopic GetClientTopic(int clientTopicId);
 
+        Client GetClientByClientID(int clientId, int coretagID);
+
 
     }
 
@@ -84,6 +86,33 @@ namespace SahadevDBLayer.Repository
                 throw ex;
             }
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <param name="coretagID"></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public Client GetClientByClientID(int clientId, int coretagID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientId", clientId);
+                dbparams.Add("@coretagID", coretagID);
+                var data = GetByProcedure<Client>(@"[dbo].[USP_ClientDetail_Fetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
 

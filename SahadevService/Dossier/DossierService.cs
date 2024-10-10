@@ -68,6 +68,11 @@ namespace SahadevService.Dossier
 
         List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId); //new end point required
         ClientTopic GetClientTopic(int clientTopicId);
+
+        bool UpdateDosserDefStatus(int dossierDefID, int statusID);
+
+        bool UpdateWorkFlowStatus(int dossierID);
+
     }
 
     public class DossierService : IDossierService
@@ -516,7 +521,8 @@ namespace SahadevService.Dossier
                                               dictionary[item.Key] = item.Value;
                                           }
                                       }
-                                      else {
+                                      else
+                                      {
 
                                           foreach (var key in ((IDictionary<string, object>)lstReviewLinkDetails.First()).Keys)
                                           {
@@ -813,7 +819,8 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform1ID = objRQ_DossierDef.Platform1ID;
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
-                objDossierDef.StatusID = objRQ_DossierDef.StatusID;
+                //objDossierDef.StatusID = objRQ_DossierDef.StatusID;
+                objDossierDef.StatusID = 1;//By default 1 i.e Pending Approval
                 objDossierDef.TemplateFileName = _templateFileName;
                 objDossierDef.ClientName = objRQ_DossierDef.ClientName;//newfield
 
@@ -980,6 +987,24 @@ namespace SahadevService.Dossier
                     }
                 }
 
+                #region Task & TaskLog
+
+                //To get supportUserID for clientID
+                Client objClient = uw.A2Repository.GetClientByClientID(objRQ_DossierDef.ClientID, 0);
+
+                Task objTask = new Task();
+                objTask.TTID = 1; //For Dossier Creation
+                objTask.RefID = dossierDefID;
+                objTask.CreatedBy = objRQ_DossierDef.user_id;
+                objTask.AssignedTo = objClient.SupportUserID;
+                int iTaskID = uw.C1Repository.InsertTask(objTask);
+
+                TaskLog objTaskLog = new TaskLog();
+                objTaskLog.TaskID = iTaskID;
+                objTaskLog.FromStatusID = 0;
+                objTaskLog.ToStatusID = 1;
+                uw.C1Repository.InsertTaskLog(objTaskLog);
+                #endregion Task & TaskLog
 
                 //Commit the change 
                 uw.Commit();
@@ -1041,7 +1066,8 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
                 objDossierDef.TemplateFileName = _templateFileName;
-                objDossierDef.StatusID = objRQ_DossierDef.StatusID;
+                //objDossierDef.StatusID = objRQ_DossierDef.StatusID;
+                objDossierDef.StatusID = 1;
 
                 uw.C3Repository.UpdateDossierDef(objDossierDef);
 
@@ -1136,6 +1162,18 @@ namespace SahadevService.Dossier
 
                 }
 
+                #region Task & TaskLog
+
+                //Get LastStatusID by passing objRQ_DossierDef.DossierDefID as RefID; pass ttID as 1 for DossierCreation 
+                WorkFlowStatus objWorkFlowStatus = uw.C1Repository.GetWorkFlowStatus(objRQ_DossierDef.DossierDefID, 1);
+
+                //Insert into TaskLog
+                TaskLog objTaskLog = new TaskLog();
+                objTaskLog.TaskID = objWorkFlowStatus.TaskID;
+                objTaskLog.FromStatusID = objWorkFlowStatus.ToStatusID;
+                objTaskLog.ToStatusID = 1; // Set ToStatusID to Approval Pending
+                uw.C1Repository.InsertTaskLog(objTaskLog);
+                #endregion Task & TaskLog
 
                 //Commit the change 
                 uw.Commit();
@@ -1238,9 +1276,140 @@ namespace SahadevService.Dossier
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dossierDefID"></param>
+        /// <param name="statusID"></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDosserDefStatus(int dossierDefID, int statusID)
+        {
+            bool bResult = false;
+            try
+            {
+
+                uw.C3Repository.UpdateDosserDefStatus(dossierDefID, statusID);
+
+                #region Task & TaskLog
+
+                //Get LastStatusID by passing objRQ_DossierDef.DossierDefID as RefID; pass ttID as 1 for DossierCreation 
+                WorkFlowStatus objWorkFlowStatus = uw.C1Repository.GetWorkFlowStatus(dossierDefID, 1);
+
+                //Insert into TaskLog
+                TaskLog objTaskLog = new TaskLog();
+                objTaskLog.TaskID = objWorkFlowStatus.TaskID;
+                objTaskLog.FromStatusID = objWorkFlowStatus.ToStatusID;
+                objTaskLog.ToStatusID = statusID; // Set ToStatusID as send from UI to API
+                uw.C1Repository.InsertTaskLog(objTaskLog);
+
+                #endregion Task & TaskLog
+
+                //Commit the change 
+                uw.Commit();
+                bResult = true;
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "UpdateDosserDefStatus");
+            }
+            return bResult;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dossierID"></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateWorkFlowStatus(int dossierID)
+        {
+            bool bResult = false;
+            try
+            {
+
+                uw.C3Repository.UpdateDosserStatus(dossierID, 10);
+
+                #region Task & TaskLog
+
+                //Get LastStatusID by passing objRQ_DossierDef.DossierDefID as RefID; pass ttID as 3 for Dossier Document Creation 
+                WorkFlowStatus objWorkFlowStatus = uw.C1Repository.GetWorkFlowStatus(dossierID, 3);
+
+                //Insert into TaskLog
+                TaskLog objTaskLog = new TaskLog();
+                objTaskLog.TaskID = objWorkFlowStatus.TaskID;
+                objTaskLog.FromStatusID = objWorkFlowStatus.ToStatusID;
+                objTaskLog.ToStatusID = 10; // Set ToStatusID to Approval Pending
+                uw.C1Repository.InsertTaskLog(objTaskLog);
+
+                #endregion Task & TaskLog
+
+                //Commit the change 
+                uw.Commit();
+                bResult = true;
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "UpdateWorkFlowStatus");
+            }
+            return bResult;
+        }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dossierID"></param>
+        /// <param name="dossierLinkMapID"></param>
+        /// <returns></returns>
+        /// <createdon>09-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateDraftStatus(int dossierID, List<string> dossierLinkMapID)
+        {
+            bool bResult = false;
+            try
+            {
+                //In DossierLinkMap table, set IsDraft = 0 for given dossierID & list of dossierLinkMapID and IsDeleted = 1 & IsDraft = 1
+                uw.C3Repository.UpdateDraftStatus(dossierID, String.Join(",", dossierLinkMapID));
 
+                #region Task & TaskLog
+
+                //Get LastStatusID by passing objRQ_DossierDef.DossierDefID as RefID; pass ttID as 3 for Dossier Document Creation 
+                WorkFlowStatus objWorkFlowStatus = uw.C1Repository.GetWorkFlowStatus(dossierID, 3);
+
+                //Insert into TaskLog
+                TaskLog objTaskLog = new TaskLog();
+                objTaskLog.TaskID = objWorkFlowStatus.TaskID;
+                objTaskLog.FromStatusID = objWorkFlowStatus.ToStatusID;
+                objTaskLog.ToStatusID = 9; // Set ToStatusID to Processing Additional URL
+                uw.C1Repository.InsertTaskLog(objTaskLog);
+
+                #endregion Task & TaskLog
+
+                //Commit the change 
+                uw.Commit();
+                bResult = true;
+            }
+            catch (Exception ex)
+            {
+                uw.Rollback();
+                _logger.LogError(ex, _className, "UpdateDraftStatus");
+            }
+            return bResult;
+        }
 
         ///// <summary>
         ///// This method is used to insert DossierDef and DossierConf, DossierRecep, DossierSch, DossierTagGroup
