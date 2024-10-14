@@ -41,18 +41,13 @@ namespace SahadevBusinessEntity.DTO.Model
         public int Platform2ID { get; set; }
         public int Platform3ID { get; set; }
         public int StatusID { get; set; }
+        public string RejectionReason { get; set; }
         public string TemplateFileName { get; set; }
-
         public DossierSch DossierSch { get; set; }
-
         public DossierConf DossierConf { get; set; }
-
         public List<DossierTagGroup> DossierTagGroup { get; set; }
-
         public List<DossierRecep> DossierReceps { get; set; }
-
         public List<Dossier> Dossiers { get; set; }
-
         public Tag Tag { get; set; }
 
         /// <summary>

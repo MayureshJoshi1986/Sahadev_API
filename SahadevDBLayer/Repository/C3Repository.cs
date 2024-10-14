@@ -50,9 +50,9 @@ namespace SahadevDBLayer.Repository
         DossierConf GetDossierConf(int DossierDefID);
         List<DossierTagGroup> GetDossierTagGroup(int DossierDefID);
 
-        List<dynamic> GetAllDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        List<dynamic> GetAllDossier(int[] clientID, int statusID, int dossierDefID, int userID, string userType, DateTime? startDate = null, DateTime? endDate = null);
         List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
-        dynamic GetGeneratedDossier(int dossierDefID);
+        List<dynamic> GetGeneratedDossier(int dossierDefID);
 
         List<AdditionalURL> GetAllAdditionalUrl(int dossierID);
         bool InsertAdditionalURl(AdditionalURL objAdditionalURL);
@@ -81,11 +81,12 @@ namespace SahadevDBLayer.Repository
 
         bool InsertAddlUrlInDataLinkMap(string url, bool isAdded, int platformId, int dossierId);
 
+        #region Task & Notification
+        List<dynamic> GetDossierTaskStatus(string clientID, int userID, string userType);
         bool UpdateDosserDefStatus(int dossierDefID, int statusID);
-
         bool UpdateDosserStatus(int dossierID, int statusID);
-
         bool UpdateDraftStatus(int dossierID, string dossierLinkMapID);
+        #endregion
     }
 
     internal class C3Repository : RepositoryBase, IC3Repository
@@ -374,16 +375,18 @@ namespace SahadevDBLayer.Repository
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
 
-        public List<dynamic> GetAllDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
+        public List<dynamic> GetAllDossier(int[] clientID, int statusID, int dossierDefID, int userID, string userType, DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@userID", UserID);
-                dbparams.Add("@ClientID", ClientID.Length != 0 ? string.Join(",", ClientID) : string.Empty);
-                dbparams.Add("@StatusID", StatusID);
-                dbparams.Add("@startDate", StartDate);
-                dbparams.Add("@endDate", EndDate);
+                dbparams.Add("@clientID", clientID.Length != 0 ? string.Join(",", clientID) : string.Empty);
+                dbparams.Add("@statusID", statusID);
+                dbparams.Add("@dossierDefID", dossierDefID);
+                dbparams.Add("@userID", userID);
+                dbparams.Add("@userType", userType.ToLower());
+                dbparams.Add("@startDate", startDate);
+                dbparams.Add("@endDate", endDate);
                 var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_DossierConfiguration_FetchAll]", dbparams, _transaction);
                 return data;
             }
@@ -438,13 +441,13 @@ namespace SahadevDBLayer.Repository
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
 
-        public dynamic GetGeneratedDossier(int dossierDefID)
+        public List<dynamic> GetGeneratedDossier(int dossierDefID)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@dossierDefID", dossierDefID);
-                var data = GetByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_Fetch]", dbparams, _transaction);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_Fetch]", dbparams, _transaction);
                 return data;
             }
             catch (Exception ex)
@@ -1213,6 +1216,36 @@ namespace SahadevDBLayer.Repository
 
         }
 
+        #region Task & Notification
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clientID">Comma seperated ClientID</param>
+        /// <param name="userID">userID</param>
+        /// <param name="userType">userType</roleName>
+        /// <returns></returns>
+        /// <createdon>11-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetDossierTaskStatus(string clientID, int userID, string userType)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientID", clientID);
+                dbparams.Add("@userID", userID);
+                dbparams.Add("@userType", userType.ToLower());
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GetDossierTaskFetch]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
 
         /// <summary>
         /// 

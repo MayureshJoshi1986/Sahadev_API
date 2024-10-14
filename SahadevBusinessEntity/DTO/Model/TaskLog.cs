@@ -29,6 +29,11 @@ namespace SahadevBusinessEntity.DTO.Model
         public int ToStatusID { get; set; }
 
         /// <summary>
+        /// TaskDescription
+        /// </summary>
+        public string TaskDescription { get; set; }
+
+        /// <summary>
         /// StartTime
         /// </summary>
         public DateTime StartTime { get; set; }

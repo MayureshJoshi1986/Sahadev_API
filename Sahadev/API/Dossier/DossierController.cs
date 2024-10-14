@@ -257,11 +257,11 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
         [HttpGet]
         [Route("DossierConfiguration_FetchAll")]
-        public IActionResult GetAllDossier(DateTime? dtStartDate, DateTime? dtEndDate, [FromQuery] int[] clientID, int statusID = 1, int userID = 0)
+        public IActionResult GetAllDossier(DateTime? dtStartDate, DateTime? dtEndDate, [FromQuery] int[] clientID, int userID, string userType, int statusID = 1, int dossierDefID = 0)
         {
             try
             {
-                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(userID, clientID, statusID, dtStartDate, dtEndDate);
+                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(clientID, statusID, dossierDefID, userID, userType, dtStartDate, dtEndDate);
                 if (lstGetAllDossier != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstGetAllDossier });
@@ -338,8 +338,8 @@ namespace Sahadev.API.Dossier
         {
             try
             {
-                
-                dynamic lstGetGeneratedDossier = SS.DossierService.GetGeneratedDossier(Convert.ToInt32(dossierDefID));
+
+                List<dynamic> lstGetGeneratedDossier = SS.DossierService.GetGeneratedDossier(Convert.ToInt32(dossierDefID));
                 if (lstGetGeneratedDossier != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstGetGeneratedDossier });
@@ -840,8 +840,46 @@ namespace Sahadev.API.Dossier
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="clientID"></param>
+        /// <param name="userID"></param>
+        /// <param name="userType"></param>
+        /// <createdon>09-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        [HttpGet]
+        [Route("Dossier_DossierTask_Fetch")]
+        public IActionResult GetDossierTaskStatus([FromQuery] List<int> clientID, int userID, string userType)
+        {
+            try
+            {
+                dynamic lstDossierTaskStatus = SS.DossierService.GetDossierTaskStatus(clientID, userID, userType);
+                if (lstDossierTaskStatus != null)
+                {
+                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstDossierTaskStatus });
+                }
+                else
+                {
+                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "List not found" });
+                }
+            }
+            catch (Exception ex)
+            {
+                //For error user Log.LogError methods
+                //For warning user Log.LogWarning methods
+                //For information user Log.LogInformation methods
+                _logger.LogError(ex, _className, "GetDossierTaskStatus");
+                return StatusCode(500, new GenericResponse.APIResponse { code = HttpStatusCode.InternalServerError, message = Common.ServerError });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="dossierDefID"></param>
         /// <param name="statusID"></param>
+        /// <param name="rejectionDescription"></param>
         /// <returns></returns>
         /// <createdon>09-Oct-2024</createdon>
         /// <createdby>PJ</createdby>
@@ -850,11 +888,11 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason></modifiedreason>
         [HttpGet]
         [Route("DossierConfiguration_UpdateStatus")]
-        public IActionResult UpdateDossierConfigurationStatus(int dossierDefID, int statusID)
+        public IActionResult UpdateDossierConfigurationStatus(int dossierDefID, int statusID, string rejectionDescription="")
         {
             try
             {
-                bool bReturn = SS.DossierService.UpdateDosserDefStatus(dossierDefID, statusID);
+                bool bReturn = SS.DossierService.UpdateDosserDefStatus(dossierDefID, statusID, rejectionDescription);
                 if (bReturn)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Dossier status updated successfully." });
@@ -878,6 +916,7 @@ namespace Sahadev.API.Dossier
         /// 
         /// </summary>
         /// <param name="dossierID"></param>
+        /// <param name="statusID"></param>
         /// <returns></returns>
         /// <createdon>09-Oct-2024</createdon>
         /// <createdby>PJ</createdby>
@@ -886,11 +925,11 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason></modifiedreason>
         [HttpGet]
         [Route("Dossier_WorkFlowStatus_Update")]
-        public IActionResult UpdateWorkFlowStatus(int dossierID)
+        public IActionResult UpdateWorkFlowStatus(int dossierID, int statusID)
         {
             try
             {
-                bool bReturn = SS.DossierService.UpdateWorkFlowStatus(dossierID);
+                bool bReturn = SS.DossierService.UpdateWorkFlowStatus(dossierID, statusID);
                 if (bReturn)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Work flow status updated successfully." });
@@ -913,21 +952,19 @@ namespace Sahadev.API.Dossier
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="dossierID"></param>
-        /// <param name="dossierLinkMapID"></param>
-        /// <returns></returns>
+        /// <param name="objRQ_WorkflowStatus"></param>
         /// <createdon>09-Oct-2024</createdon>
         /// <createdby>PJ</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        [HttpGet]
+        [HttpPost]
         [Route("Dossier_UpdateDraftStatus")]
-        public IActionResult UpdateDraftStatus(int dossierID, [FromBody] List<string> dossierLinkMapID)
+        public IActionResult UpdateDraftStatus([FromBody] RQ_WorkflowStatus objRQ_WorkflowStatus)
         {
             try
             {
-                bool bReturn = SS.DossierService.UpdateDraftStatus(dossierID, dossierLinkMapID);
+                bool bReturn = SS.DossierService.UpdateDraftStatus(objRQ_WorkflowStatus.DossierID, objRQ_WorkflowStatus.DossierLinkMapID, objRQ_WorkflowStatus.StatusID);
                 if (bReturn)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = "Draft status updated successfully." });

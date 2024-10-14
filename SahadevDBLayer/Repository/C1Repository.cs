@@ -222,8 +222,7 @@ namespace SahadevDBLayer.Repository
         /// <summary>
         /// 
         /// </summary>
-        /// <param name=""></param>
-        /// <param name=""></param>
+        /// <param name="objTaskLog"></param>
         /// <returns></returns>
         /// <createdon>09-oct-2024</createdon>
         /// <createdby>PJ</createdby>
@@ -238,7 +237,8 @@ namespace SahadevDBLayer.Repository
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@taskID", objTaskLog.TaskID);
                 dbparams.Add("@fromStatusID", objTaskLog.FromStatusID);
-                dbparams.Add("@toStatusID", objTaskLog.ToStatusID);              
+                dbparams.Add("@toStatusID", objTaskLog.ToStatusID);
+                dbparams.Add("@taskDescription", objTaskLog.TaskDescription);
                 int iResult = InsertByProcedure<int>(@"[dbo].[USP_TaskLog_Insert]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;

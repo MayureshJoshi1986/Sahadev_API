@@ -84,6 +84,9 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("status_id")]
         public int StatusID { get; set; }
 
+        [JsonPropertyName("rejection_reason")]
+        public string RejectionReason { get; set; }
+
         [JsonPropertyName("template_file")]
         public IFormFile TemplateFile { get; set; }
 
@@ -163,6 +166,8 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         //public RQ_DossierRecep DossierRecep { get; set; }
 
         [JsonPropertyName("user_id")]
-        public int user_id { get; set; }
+        public int UserID { get; set; }
+
+        
     }
 }

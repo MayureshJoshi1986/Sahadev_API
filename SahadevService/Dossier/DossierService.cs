@@ -42,9 +42,9 @@ namespace SahadevService.Dossier
         List<dynamic> GetAllClientByUserID(int userID);
         List<dynamic> GetAllUser();
         DossierDef GetDossierDef(int dossierDefID);
-        List<dynamic> GetAllDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        List<dynamic> GetAllDossier(int[] clientID, int statusID, int dossierDefID, int userID, string userType, DateTime? startDate = null, DateTime? endDate = null);
         List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
-        dynamic GetGeneratedDossier(int dossierDefID);
+        List<dynamic> GetGeneratedDossier(int dossierDefID);
         List<AdditionalURL> GetAllAdditionalURL(int dossierID);
         bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef);
         bool InsertAdditionalURL(RQ_AdditionalURL objRQ_AdditonalURL);
@@ -69,9 +69,12 @@ namespace SahadevService.Dossier
         List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId); //new end point required
         ClientTopic GetClientTopic(int clientTopicId);
 
-        bool UpdateDosserDefStatus(int dossierDefID, int statusID);
-
-        bool UpdateWorkFlowStatus(int dossierID);
+        #region Task & Notification
+        List<dynamic> GetDossierTaskStatus(List<int> clientID, int userID, string userType);
+        bool UpdateDosserDefStatus(int dossierDefID, int statusID, string rejectionDescription);
+        bool UpdateWorkFlowStatus(int dossierID, int statusID);
+        bool UpdateDraftStatus(int dossierID, List<int> dossierLinkMapID, int statusID);
+        #endregion
 
     }
 
@@ -308,12 +311,11 @@ namespace SahadevService.Dossier
         /// <modifiedon>26-Sep-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
-        public List<dynamic> GetAllDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
+        public List<dynamic> GetAllDossier(int[] clientID, int statusID, int dossierDefID, int userID, string userType, DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
-                dynamic objDossier = uw.C3Repository.GetAllDossier(UserID, ClientID, StatusID, StartDate, EndDate);
-
+                dynamic objDossier = uw.C3Repository.GetAllDossier(clientID, statusID, dossierDefID, userID, userType, startDate, endDate);
                 return objDossier;
             }
             catch (Exception ex)
@@ -361,12 +363,12 @@ namespace SahadevService.Dossier
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public dynamic GetGeneratedDossier(int dossierConfID)
+        public List<dynamic> GetGeneratedDossier(int dossierDefID)
         {
             try
             {
-                dynamic objDossier = uw.C3Repository.GetGeneratedDossier(dossierConfID);
-                return objDossier;
+                List<dynamic> lstGeneratedDossier = uw.C3Repository.GetGeneratedDossier(dossierDefID);
+                return lstGeneratedDossier;
             }
             catch (Exception ex)
             {
@@ -819,8 +821,7 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform1ID = objRQ_DossierDef.Platform1ID;
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
-                //objDossierDef.StatusID = objRQ_DossierDef.StatusID;
-                objDossierDef.StatusID = 1;//By default 1 i.e Pending Approval
+                objDossierDef.StatusID = objRQ_DossierDef.StatusID;
                 objDossierDef.TemplateFileName = _templateFileName;
                 objDossierDef.ClientName = objRQ_DossierDef.ClientName;//newfield
 
@@ -995,14 +996,15 @@ namespace SahadevService.Dossier
                 Task objTask = new Task();
                 objTask.TTID = 1; //For Dossier Creation
                 objTask.RefID = dossierDefID;
-                objTask.CreatedBy = objRQ_DossierDef.user_id;
+                objTask.CreatedBy = objRQ_DossierDef.UserID;
                 objTask.AssignedTo = objClient.SupportUserID;
                 int iTaskID = uw.C1Repository.InsertTask(objTask);
 
                 TaskLog objTaskLog = new TaskLog();
                 objTaskLog.TaskID = iTaskID;
                 objTaskLog.FromStatusID = 0;
-                objTaskLog.ToStatusID = 1;
+                objTaskLog.ToStatusID = objRQ_DossierDef.StatusID;
+                objTaskLog.TaskDescription = string.Empty;
                 uw.C1Repository.InsertTaskLog(objTaskLog);
                 #endregion Task & TaskLog
 
@@ -1066,8 +1068,7 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
                 objDossierDef.TemplateFileName = _templateFileName;
-                //objDossierDef.StatusID = objRQ_DossierDef.StatusID;
-                objDossierDef.StatusID = 1;
+                objDossierDef.StatusID = objRQ_DossierDef.StatusID;
 
                 uw.C3Repository.UpdateDossierDef(objDossierDef);
 
@@ -1171,7 +1172,7 @@ namespace SahadevService.Dossier
                 TaskLog objTaskLog = new TaskLog();
                 objTaskLog.TaskID = objWorkFlowStatus.TaskID;
                 objTaskLog.FromStatusID = objWorkFlowStatus.ToStatusID;
-                objTaskLog.ToStatusID = 1; // Set ToStatusID to Approval Pending
+                objTaskLog.ToStatusID = objRQ_DossierDef.StatusID;
                 uw.C1Repository.InsertTaskLog(objTaskLog);
                 #endregion Task & TaskLog
 
@@ -1276,18 +1277,46 @@ namespace SahadevService.Dossier
 
         }
 
+        #region Task & Notification
+        /// <summary>
+        /// This method is used to get task statuses of all dossiers by ClientID
+        /// </summary>
+        /// <param name="clientID">Comma seperated ClientID</param>
+        /// <param name="userID">userID</param>
+        /// <param name="userType">userType</roleName>
+        /// <returns>list of object containing dossier task status</returns>
+        /// <createdon>10-oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetDossierTaskStatus(List<int> clientID, int userID, string userType)
+        {
+            try
+            {
+                List<dynamic> lstDossierTaskStatus = uw.C3Repository.GetDossierTaskStatus(string.Join(",", clientID), userID, userType);
+                return lstDossierTaskStatus;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "GetDossierTaskStatus");
+                throw ex;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="dossierDefID"></param>
         /// <param name="statusID"></param>
+        /// <param name="rejectionDescription"></param>
         /// <returns></returns>
         /// <createdon>09-oct-2024</createdon>
         /// <createdby>PJ</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool UpdateDosserDefStatus(int dossierDefID, int statusID)
+        public bool UpdateDosserDefStatus(int dossierDefID, int statusID, string rejectionDescription)
         {
             bool bResult = false;
             try
@@ -1304,7 +1333,14 @@ namespace SahadevService.Dossier
                 TaskLog objTaskLog = new TaskLog();
                 objTaskLog.TaskID = objWorkFlowStatus.TaskID;
                 objTaskLog.FromStatusID = objWorkFlowStatus.ToStatusID;
-                objTaskLog.ToStatusID = statusID; // Set ToStatusID as send from UI to API
+
+                // Set ToStatusID as send from UI to API
+                objTaskLog.ToStatusID = statusID;
+
+                // Set TaskDescription
+                objTaskLog.TaskDescription = rejectionDescription;
+
+                //Insert TaskLog
                 uw.C1Repository.InsertTaskLog(objTaskLog);
 
                 #endregion Task & TaskLog
@@ -1325,19 +1361,19 @@ namespace SahadevService.Dossier
         /// 
         /// </summary>
         /// <param name="dossierID"></param>
+        /// <param name="statusID"></param>
         /// <returns></returns>
         /// <createdon>09-oct-2024</createdon>
         /// <createdby>PJ</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool UpdateWorkFlowStatus(int dossierID)
+        public bool UpdateWorkFlowStatus(int dossierID, int statusID)
         {
             bool bResult = false;
             try
             {
-
-                uw.C3Repository.UpdateDosserStatus(dossierID, 10);
+                uw.C3Repository.UpdateDosserStatus(dossierID, statusID);
 
                 #region Task & TaskLog
 
@@ -1348,7 +1384,14 @@ namespace SahadevService.Dossier
                 TaskLog objTaskLog = new TaskLog();
                 objTaskLog.TaskID = objWorkFlowStatus.TaskID;
                 objTaskLog.FromStatusID = objWorkFlowStatus.ToStatusID;
-                objTaskLog.ToStatusID = 10; // Set ToStatusID to Approval Pending
+
+                // Set ToStatusID to 10 i.e Dossier Review Completed
+                objTaskLog.ToStatusID = statusID;
+
+                // Set TaskDescription
+                objTaskLog.TaskDescription = string.Empty;
+
+                //Insert TaskLog
                 uw.C1Repository.InsertTaskLog(objTaskLog);
 
                 #endregion Task & TaskLog
@@ -1365,19 +1408,19 @@ namespace SahadevService.Dossier
             return bResult;
         }
 
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="dossierID"></param>
         /// <param name="dossierLinkMapID"></param>
+        /// <param name="statusID"></param>
         /// <returns></returns>
         /// <createdon>09-oct-2024</createdon>
         /// <createdby>PJ</createdby>
         /// <modifiedon></modifiedon>
         /// <modifiedby></modifiedby>
         /// <modifiedreason></modifiedreason>
-        public bool UpdateDraftStatus(int dossierID, List<string> dossierLinkMapID)
+        public bool UpdateDraftStatus(int dossierID, List<int> dossierLinkMapID, int statusID)
         {
             bool bResult = false;
             try
@@ -1394,7 +1437,13 @@ namespace SahadevService.Dossier
                 TaskLog objTaskLog = new TaskLog();
                 objTaskLog.TaskID = objWorkFlowStatus.TaskID;
                 objTaskLog.FromStatusID = objWorkFlowStatus.ToStatusID;
-                objTaskLog.ToStatusID = 9; // Set ToStatusID to Processing Additional URL
+
+                // Set ToStatusID to 9 i.e Processing Additional URL
+                objTaskLog.ToStatusID = statusID;
+
+                objTaskLog.TaskDescription = string.Empty;
+
+                //Insert Into TaskLog
                 uw.C1Repository.InsertTaskLog(objTaskLog);
 
                 #endregion Task & TaskLog
@@ -1410,6 +1459,8 @@ namespace SahadevService.Dossier
             }
             return bResult;
         }
+        #endregion
+
 
         ///// <summary>
         ///// This method is used to insert DossierDef and DossierConf, DossierRecep, DossierSch, DossierTagGroup
