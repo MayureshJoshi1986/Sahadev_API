@@ -244,9 +244,11 @@ namespace Sahadev.API.Dossier
         /// <summary>
         /// This API is used to fetch all dossier configurations
         /// </summary>
-        /// <param name="userID">UserID</param>
         /// <param name="clientID">ID of client</param>
-        /// <param name="statusID">StatusID of dossier</param>
+        /// <param name="userID">UserID</param>
+        /// <param name="userType">UserType (User OR Support)</param>
+        /// <param name="fetchAll">FetchAll (if 0 then for dashboard, 1 then for get all)</param>
+        /// <param name="dossierDefID">dossierDefID</param>        /// 
         /// <param name="dtStartDate">StartDate of dossier</param>
         /// <param name="dtEndDate">End of dossier</param>
         /// <returns>list of object containing dossier configuration</returns>
@@ -257,11 +259,11 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
         [HttpGet]
         [Route("DossierConfiguration_FetchAll")]
-        public IActionResult GetAllDossier(DateTime? dtStartDate, DateTime? dtEndDate, [FromQuery] int[] clientID, int userID, string userType, int statusID = 1, int dossierDefID = 0)
+        public IActionResult GetAllDossier(DateTime? dtStartDate, DateTime? dtEndDate, [FromQuery] int[] clientID, int userID, string userType, int fetchAll, int dossierDefID = 0)
         {
             try
             {
-                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(clientID, statusID, dossierDefID, userID, userType, dtStartDate, dtEndDate);
+                dynamic lstGetAllDossier = SS.DossierService.GetAllDossier(clientID, dossierDefID, userID, userType, fetchAll, dtStartDate, dtEndDate);
                 if (lstGetAllDossier != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstGetAllDossier });
@@ -286,8 +288,7 @@ namespace Sahadev.API.Dossier
         /// This API is used to fetch all generated dossiers
         /// </summary>
         /// <param name="userID">UserID</param>
-        /// <param name="clientID">ID of client</param>
-        /// <param name="statusID">StatusID of dossier</param>
+        /// <param name="userType">userType</param>
         /// <param name="dtStartDate">StartDate of dossier</param>
         /// <param name="dtEndDate">End of dossier</param>
         /// <returns>list of object containing all dossier generated </returns>
@@ -298,11 +299,11 @@ namespace Sahadev.API.Dossier
         /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
         [HttpGet]
         [Route("Dossier_GeneratedDossierlist_FetchAll")]
-        public IActionResult GetAllGeneratedDossier(DateTime? dtStartDate, DateTime? dtEndDate, [FromQuery] int[] clientID, int statusID = 1, int userID = 0)
+        public IActionResult GetAllGeneratedDossier(int userID, string userType, DateTime? dtStartDate, DateTime? dtEndDate)
         {
             try
             {
-                dynamic lstGetAllGeneratedDossier = SS.DossierService.GetAllGeneratedDossier(userID, clientID, statusID, dtStartDate, dtEndDate);
+                dynamic lstGetAllGeneratedDossier = SS.DossierService.GetAllGeneratedDossier(userID, userType, dtStartDate, dtEndDate);
                 if (lstGetAllGeneratedDossier != null)
                 {
                     return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstGetAllGeneratedDossier });
@@ -816,15 +817,17 @@ namespace Sahadev.API.Dossier
         {
             try
             {
-                List<ClientTopic> lstClientTopic = SS.DossierService.GetAllClientTopicByClientID(topicTypeId, clientId);
-                if (lstClientTopic!=null && lstClientTopic.Count>0)
-                {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstClientTopic });
-                }
-                else
-                {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Details not found." });
-                }
+                return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = (SS.DossierService.GetAllClientTopicByClientID(topicTypeId, clientId)) });
+
+                //List<ClientTopic> lstClientTopic = SS.DossierService.GetAllClientTopicByClientID(topicTypeId, clientId);
+                //if (lstClientTopic!=null && lstClientTopic.Count>0)
+                //{
+                //    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstClientTopic });
+                //}
+                //else
+                //{
+                //    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Details not found." });
+                //}
             }
             catch (Exception ex)
             {

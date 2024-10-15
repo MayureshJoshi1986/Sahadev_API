@@ -39,6 +39,7 @@ namespace SahadevDBLayer.Repository
         int InsertDossierTagGroup(DossierTagGroup objDossierTagGroup);
 
         bool UpdateDossierDef(DossierDef objDossier);
+        bool UpdateTemplateFilePath(int dossierDefID, string templateFilePath);
         bool UpdateDossierRecep(DossierRecep objDossierRecep);
         bool UpdateDossierSch(DossierSch objDossierSch);
         bool UpdateDossierConf(DossierConf objDossierConf);
@@ -50,8 +51,8 @@ namespace SahadevDBLayer.Repository
         DossierConf GetDossierConf(int DossierDefID);
         List<DossierTagGroup> GetDossierTagGroup(int DossierDefID);
 
-        List<dynamic> GetAllDossier(int[] clientID, int statusID, int dossierDefID, int userID, string userType, DateTime? startDate = null, DateTime? endDate = null);
-        List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        List<dynamic> GetAllDossier(int[] clientID, int dossierDefID, int userID, string userType, int fetchAll, DateTime? startDate = null, DateTime? endDate = null);
+        List<dynamic> GetAllGeneratedDossier(int userID, string userType, DateTime? startDate = null, DateTime? endDate = null);
         List<dynamic> GetGeneratedDossier(int dossierDefID);
 
         List<AdditionalURL> GetAllAdditionalUrl(int dossierID);
@@ -373,20 +374,20 @@ namespace SahadevDBLayer.Repository
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>26-Sep-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
-        /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
+        /// <modifiedreason>changes to handle multiple clientID</modifiedreason>DossierConfiguration_FetchAll
 
-        public List<dynamic> GetAllDossier(int[] clientID, int statusID, int dossierDefID, int userID, string userType, DateTime? startDate = null, DateTime? endDate = null)
+        public List<dynamic> GetAllDossier(int[] clientID, int dossierDefID, int userID, string userType, int fetchAll, DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@clientID", clientID.Length != 0 ? string.Join(",", clientID) : string.Empty);
-                dbparams.Add("@statusID", statusID);
                 dbparams.Add("@dossierDefID", dossierDefID);
                 dbparams.Add("@userID", userID);
                 dbparams.Add("@userType", userType.ToLower());
                 dbparams.Add("@startDate", startDate);
                 dbparams.Add("@endDate", endDate);
+                dbparams.Add("@fetchAll", fetchAll);
                 var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_DossierConfiguration_FetchAll]", dbparams, _transaction);
                 return data;
             }
@@ -405,19 +406,18 @@ namespace SahadevDBLayer.Repository
         /// <createdon>26-Aug-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>26-Sep-2024</modifiedon>
-        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedby>PJ</modifiedby>USP_DossierConfiguration_FetchAll
         /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
 
-        public List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
+        public List<dynamic> GetAllGeneratedDossier(int userID, string userType, DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
                 var dbparams = new DynamicParameters();
-                dbparams.Add("@userID", UserID);
-                dbparams.Add("@ClientID", ClientID.Length != 0 ? string.Join(",", ClientID) : string.Empty);
-                dbparams.Add("@StatusID", StatusID);
-                dbparams.Add("@startDate", StartDate);
-                dbparams.Add("@endDate", EndDate);
+                dbparams.Add("@userID", userID);
+                dbparams.Add("@userType", userType);
+                dbparams.Add("@startDate", startDate);
+                dbparams.Add("@endDate", endDate);
                 var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_GeneratedDossier_FetchAll]", dbparams, _transaction);
                 return data;
             }
@@ -774,7 +774,35 @@ namespace SahadevDBLayer.Repository
 
         }
 
+        /// <summary>
+        /// This method is used to save/update TemplateFilePath in DossierDef table for given dossierDefID
+        /// </summary>
+        /// <returns>true if saved successfully else false</returns>
+        /// <createdon>15-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public bool UpdateTemplateFilePath(int dossierDefID, string templateFilePath)
+        {
+            bool bReturn = false;
+            try
+            {
+                var dbparams = new DynamicParameters();
 
+                dbparams.Add("@dossierDefID", dossierDefID);
+                dbparams.Add("@templateFilePath ", templateFilePath);
+                int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierDef_UpdateTemplateFileName]", dbparams, _transaction);
+                if (iResult != 0)
+                    bReturn = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bReturn;
+
+        }
 
         /// <summary>
         /// This method is used to Update DossierRecep detail in DossierRecep Table
@@ -831,8 +859,6 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@time2", objDossierSch.Time2);
                 dbparams.Add("@dayOfWeek", objDossierSch.DayOfWeek);
                 dbparams.Add("@dayOfMonth", objDossierSch.DayOfMonth);
-                // dbparams.Add("@lastRun", objDossierSch.LastRun);
-                // dbparams.Add("@nextRun", objDossierSch.NextRun);
                 int iResult = UpdateByProcedure<int>(@"[dbo].[USP_DossierSch_Update]", dbparams, _transaction);
                 if (iResult != 0)
                     bReturn = true;

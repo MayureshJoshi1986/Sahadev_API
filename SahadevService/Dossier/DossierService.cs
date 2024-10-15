@@ -42,8 +42,8 @@ namespace SahadevService.Dossier
         List<dynamic> GetAllClientByUserID(int userID);
         List<dynamic> GetAllUser();
         DossierDef GetDossierDef(int dossierDefID);
-        List<dynamic> GetAllDossier(int[] clientID, int statusID, int dossierDefID, int userID, string userType, DateTime? startDate = null, DateTime? endDate = null);
-        List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null);
+        List<dynamic> GetAllDossier(int[] clientID, int dossierDefID, int userID, string userType, int fetchAll, DateTime? startDate = null, DateTime? endDate = null);
+        List<dynamic> GetAllGeneratedDossier(int userID, string userType, DateTime? startDate = null, DateTime? endDate = null);
         List<dynamic> GetGeneratedDossier(int dossierDefID);
         List<AdditionalURL> GetAllAdditionalURL(int dossierID);
         bool InsertDossierDef(RQ_DossierDef objRQ_DossierDef);
@@ -253,9 +253,15 @@ namespace SahadevService.Dossier
             try
             {
                 DossierDef objDossierDef = uw.C3Repository.GetDossierDef(dossierDefID);
-
                 if (objDossierDef != null)
                 {
+                    if (!string.IsNullOrEmpty(objDossierDef.TemplateFileName))
+                    {
+                        string sTemplateFilePath = '/' + "dossiertemplate" + objDossierDef.TemplateFileName;
+                        objDossierDef.TemplateFileName = sTemplateFilePath;
+                    }
+
+
                     objDossierDef.DossierReceps = uw.C3Repository.GetAllDossierRecep(dossierDefID);
                     objDossierDef.DossierSch = uw.C3Repository.GetDossierSch(dossierDefID);
                     objDossierDef.DossierConf = uw.C3Repository.GetDossierConf(dossierDefID);
@@ -311,12 +317,12 @@ namespace SahadevService.Dossier
         /// <modifiedon>26-Sep-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
-        public List<dynamic> GetAllDossier(int[] clientID, int statusID, int dossierDefID, int userID, string userType, DateTime? startDate = null, DateTime? endDate = null)
+        public List<dynamic> GetAllDossier(int[] clientID, int dossierDefID, int userID, string userType, int fetchAll, DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
-                dynamic objDossier = uw.C3Repository.GetAllDossier(clientID, statusID, dossierDefID, userID, userType, startDate, endDate);
-                return objDossier;
+                dynamic lstDossierConfiguration = uw.C3Repository.GetAllDossier(clientID, dossierDefID, userID, userType, fetchAll, startDate, endDate);
+                return lstDossierConfiguration;
             }
             catch (Exception ex)
             {
@@ -338,11 +344,11 @@ namespace SahadevService.Dossier
         /// <modifiedon>26-Sep-2024</modifiedon>
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changes to handle multiple clientID</modifiedreason>
-        public List<dynamic> GetAllGeneratedDossier(int UserID, int[] ClientID, int StatusID, DateTime? StartDate = null, DateTime? EndDate = null)
+        public List<dynamic> GetAllGeneratedDossier(int userID, string userType, DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
-                List<dynamic> lstDossiers = uw.C3Repository.GetAllGeneratedDossier(UserID, ClientID, StatusID, StartDate, EndDate);
+                List<dynamic> lstDossiers = uw.C3Repository.GetAllGeneratedDossier(userID, userType, startDate, endDate);
                 return lstDossiers;
             }
             catch (Exception ex)
@@ -822,16 +828,19 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
                 objDossierDef.StatusID = objRQ_DossierDef.StatusID;
-                objDossierDef.TemplateFileName = _templateFileName;
+                //objDossierDef.TemplateFileName = _templateFileName;
                 objDossierDef.ClientName = objRQ_DossierDef.ClientName;//newfield
 
                 //Insert into the DossierDef Table and get the PrimaryKey of DossierDef
                 int dossierDefID = uw.C3Repository.InsertDossierDef(objDossierDef);
                 objDossierDef.DossierDefID = dossierDefID;
 
-
                 if (!string.IsNullOrEmpty(_templateFileName))
+                {
+                    string sTemplateFilePath = '/' + objDossierDef.DossierDefID.ToString() + '/' + _templateFileName;
+                    uw.C3Repository.UpdateTemplateFilePath(dossierDefID, sTemplateFilePath);
                     UploadDossierTemplate(dossierDefID, objRQ_DossierDef.TemplateFile);
+                }
 
 
                 //if dossier type = 1 (Event Dossier) and Client Topic (Event is not selected)
@@ -931,16 +940,14 @@ namespace SahadevService.Dossier
                     //}
                 }
 
-
-
-
-
                 //Mapping Of DossierSch
                 DossierSch objDossierSch = new DossierSch();
                 objDossierSch.DossierDefID = dossierDefID;
                 objDossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
-                objDossierSch.Time1 = Convert.ToDateTime(objRQ_DossierDef.Time1);
-                objDossierSch.Time2 = Convert.ToDateTime(objRQ_DossierDef.Time2);
+                if (objRQ_DossierDef.Time1 != null)
+                    objDossierSch.Time1 = Convert.ToDateTime(objRQ_DossierDef.Time1);
+                if (objRQ_DossierDef.Time2 != null)
+                    objDossierSch.Time2 = Convert.ToDateTime(objRQ_DossierDef.Time2);
                 objDossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
                 objDossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
                 //objDossierSch.LastRun = objRQ_DossierDef.LastRun;
@@ -1067,25 +1074,30 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform1ID = objRQ_DossierDef.Platform1ID;
                 objDossierDef.Platform2ID = objRQ_DossierDef.Platform2ID;
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
-                objDossierDef.TemplateFileName = _templateFileName;
+                //objDossierDef.TemplateFileName = _templateFileName;
                 objDossierDef.StatusID = objRQ_DossierDef.StatusID;
 
+                //save changes
                 uw.C3Repository.UpdateDossierDef(objDossierDef);
 
                 if (!string.IsNullOrEmpty(_templateFileName))
-                    UploadDossierTemplate(objDossierDef.DossierDefID, objRQ_DossierDef.TemplateFile);
+                {
+                    string sTemplateFilePath = '/' + objRQ_DossierDef.DossierDefID.ToString() + '/' + _templateFileName;
+                    uw.C3Repository.UpdateTemplateFilePath(objRQ_DossierDef.DossierDefID, sTemplateFilePath);
+                    UploadDossierTemplate(objRQ_DossierDef.DossierDefID, objRQ_DossierDef.TemplateFile);
+                }
 
                 //Mapping Of DossierSch
                 DossierSch objDossierSch = new DossierSch();
                 objDossierSch.DossierDefID = objRQ_DossierDef.DossierDefID;
                 objDossierSch.DossierSchID = objRQ_DossierDef.DossierSchID;
                 objDossierSch.ScheduleTypeID = objRQ_DossierDef.ScheduleTypeID;
-                objDossierSch.Time1 = Convert.ToDateTime(objRQ_DossierDef.Time1);
-                objDossierSch.Time2 = Convert.ToDateTime(objRQ_DossierDef.Time2);
+                if (objRQ_DossierDef.Time1 != null)
+                    objDossierSch.Time1 = Convert.ToDateTime(objRQ_DossierDef.Time1);
+                if (objRQ_DossierDef.Time2 != null)
+                    objDossierSch.Time2 = Convert.ToDateTime(objRQ_DossierDef.Time2);
                 objDossierSch.DayOfMonth = objRQ_DossierDef.DayOfMonth;
                 objDossierSch.DayOfWeek = objRQ_DossierDef.DayOfWeek;
-                //objDossierSch.LastRun = objRQ_DossierDef.LastRun;
-                //objDossierSch.NextRun = objRQ_DossierDef.NextRun;
 
                 uw.C3Repository.UpdateDossierSch(objDossierSch);
 
