@@ -49,7 +49,7 @@ namespace SahadevDBLayer.Repository
         ClientTopic GetClientTopic(int clientTopicId);
 
         Client GetClientByClientID(int clientId, int coretagID);
-
+        ClientTopic GetClientTopicByTagID(int tagId);
 
     }
 
@@ -168,6 +168,36 @@ namespace SahadevDBLayer.Repository
                 dbparams.Add("@topicTypeId", topicTypeId);
                 var data = GetByProcedure<ClientTopic>(@"[dbo].[USP_Client_ClientTopic_Fetch]", dbparams, _transaction);
                 return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// This method is used to fetch client topic
+        /// get tag details from tagmap table
+        /// </summary>
+        /// <param name="tagId">pass tagid for which clientTopic Id need to be fetched</param>
+
+        /// <returns>return client topic details</returns>
+        /// <createdon>15-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public ClientTopic GetClientTopicByTagID(int tagId)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@tagId", tagId);
+                return GetByProcedure<ClientTopic>(@"[dbo].[USP_ClientTopic_FetchByTagId]", dbparams, _transaction);
+
             }
             catch (Exception ex)
             {

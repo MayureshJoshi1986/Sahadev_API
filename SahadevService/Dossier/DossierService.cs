@@ -265,30 +265,24 @@ namespace SahadevService.Dossier
                     objDossierDef.DossierReceps = uw.C3Repository.GetAllDossierRecep(dossierDefID);
                     objDossierDef.DossierSch = uw.C3Repository.GetDossierSch(dossierDefID);
                     objDossierDef.DossierConf = uw.C3Repository.GetDossierConf(dossierDefID);
-                    ClientTopic objClientTopic;
                     if (objDossierDef.DossierTypeID == 1 && objDossierDef.EventTagID > 0)
                     {
-                        objDossierDef.Tag = uw.C3Repository.GetTagByTaID(objDossierDef.EventTagID);
-                        objClientTopic = uw.A2Repository.GetClientTopic(objDossierDef.ClientID, objDossierDef.DossierDefID, 2);
-                        if (objClientTopic != null)
-                        {
-                            objDossierDef.ClientTopicID = objClientTopic.ClientTopicID;
+                        //get tag using eventtageId 
+                        objDossierDef.Tag = uw.C3Repository.GetTagByTagID(objDossierDef.EventTagID);
 
-                        }
+
                         if (objDossierDef.Tag != null)
                         {
+                            ClientTopic clientTopic = uw.A2Repository.GetClientTopicByTagID(objDossierDef.Tag.TagID);
+                            if (clientTopic != null)
+                            {
+                                if (clientTopic.TopicTypeID == 2)
+                                {
+                                    objDossierDef.ClientTopicID = clientTopic.ClientTopicID;
+                                }
+                            }
                             objDossierDef.Tag.TagQuery = uw.C3Repository.GetAllTagQueryByTagID(objDossierDef.Tag.TagID);
                         }
-                    }
-                    else if (objDossierDef.DossierTypeID == 1 && objDossierDef.EventTagID <= 0)
-                    {
-                        objClientTopic = uw.A2Repository.GetClientTopic(objDossierDef.ClientID, objDossierDef.DossierDefID, 3);
-                        objDossierDef.Tag = uw.A2Repository.GetTagByClientTopicID(objClientTopic.ClientTopicID);
-                        if (objDossierDef.Tag != null)
-                        {
-                            objDossierDef.Tag.TagQuery = uw.C3Repository.GetAllTagQueryByTagID(objDossierDef.Tag.TagID);
-                        }
-
                     }
                     else if (objDossierDef.DossierTypeID == 2)
                     {
@@ -899,6 +893,9 @@ namespace SahadevService.Dossier
                 //elseif dossier type =1 (Event Dossier) and Client Topic (Event is selected)
                 else if (objRQ_DossierDef.DossierTypeID == 1 && objRQ_DossierDef.ClientTopicID > 0)
                 {
+                    objDossierDef.EventTagID = objRQ_DossierDef.Tag.TagID;
+                    uw.C3Repository.UpdateDossierDef(objDossierDef);
+
                     if (objRQ_DossierDef.Tag != null)
                     {
                         Tag objTag = new Tag();
@@ -908,6 +905,8 @@ namespace SahadevService.Dossier
                         objTag.TagID = objRQ_DossierDef.Tag.TagID;
                         objTag.IGTagID = objRQ_DossierDef.Tag.IGTagID;
                         uw.C3Repository.InsertTag(objTag);
+
+
                     }
 
                     if (objRQ_DossierDef.TagQuery != null && objRQ_DossierDef.TagQuery.Count > 0)
