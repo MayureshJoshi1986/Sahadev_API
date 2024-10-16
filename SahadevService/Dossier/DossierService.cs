@@ -461,8 +461,8 @@ namespace SahadevService.Dossier
         /// <createdon>06-Sep-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         /// <modifiedon>16-Oct-2024</modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>Added condition if lstLinkID is null or count is not 0</modifiedreason>
         public dynamic GetAllDossierReviewDataDetails(int dossierID, int platformID)
         {
             dynamic lstlinkDetails = null;
@@ -558,9 +558,9 @@ namespace SahadevService.Dossier
         /// <returns>list of object containing link Details that are Saved To draft</returns>
         /// <createdon>06-Sep-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>16-Oct-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>Added condition if lstLinkID is null or count is not 0</modifiedreason>
         public dynamic GetAllDossierDraftDataDetails(int dossierID, int platformID)
         {
             dynamic lstlinkDetails = null;
@@ -645,9 +645,9 @@ namespace SahadevService.Dossier
         /// <returns>list of object containing link Details that are moved To trash</returns>
         /// <createdon>06-Sep-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>16-Oct-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>Added condition if lstLinkID is null or count is not 0</modifiedreason>
         public dynamic GetAllDossierTrashDataDetails(int dossierID, int platformID)
         {
 
@@ -1070,6 +1070,7 @@ namespace SahadevService.Dossier
                 objDossierDef.Platform3ID = objRQ_DossierDef.Platform3ID;
                 //objDossierDef.TemplateFileName = _templateFileName;
                 objDossierDef.StatusID = objRQ_DossierDef.StatusID;
+                objDossierDef.ClientName = objRQ_DossierDef.ClientName;
 
                 //save changes
                 uw.C3Repository.UpdateDossierDef(objDossierDef);

@@ -583,25 +583,25 @@ namespace Sahadev.API.Dossier
         /// <returns>list of object containing list of Link Details for the verifcation</returns>
         /// <createdon>07-Sep-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>16-Oct-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>Removed NotFound statuscode in response in try block</modifiedreason>
         [HttpGet]
         [Route("Dossier_Review_FetchData")]
         public IActionResult GetAllDossierReviewDataDetails(int dossierID, int platformID)
         {
             try
             {
-
                 dynamic lstReviewDataDetails = SS.DossierService.GetAllDossierReviewDataDetails(dossierID, platformID);
-                if (lstReviewDataDetails != null)
-                {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstReviewDataDetails });
-                }
-                else
-                {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Links not found for the review" });
-                }
+                return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = (lstReviewDataDetails != null) ? string.Empty : "Links not found for the review.", data = lstReviewDataDetails });
+                //if (lstReviewDataDetails != null)
+                //{
+                //    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstReviewDataDetails });
+                //}
+                //else
+                //{
+                //    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Links not found for the review" });
+                //}
             }
             catch (Exception ex)
             {
@@ -623,25 +623,25 @@ namespace Sahadev.API.Dossier
         /// <returns>list of object containing list of Link Details that are moved To draft for the review</returns>
         /// <createdon>07-Sep-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>16-Oct-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>Removed NotFound statuscode in response in try block</modifiedreason>
         [HttpGet]
         [Route("Dossier_Review_FetchDossierDetails")]
         public IActionResult GetAllDossierDraftDataDetails(int dossierID, int platformID)
         {
             try
             {
-
                 dynamic lstReviewDraftDetails = SS.DossierService.GetAllDossierDraftDataDetails(dossierID, platformID);
-                if (lstReviewDraftDetails != null)
-                {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstReviewDraftDetails });
-                }
-                else
-                {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Draft Links not found for the review" });
-                }
+                return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = (lstReviewDraftDetails != null) ? string.Empty : "Draft Links not found for the review.", data = lstReviewDraftDetails });
+                //if (lstReviewDraftDetails != null)
+                //{
+                //    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstReviewDraftDetails });
+                //}
+                //else
+                //{
+                //    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Draft Links not found for the review" });
+                //}
             }
             catch (Exception ex)
             {
@@ -663,25 +663,25 @@ namespace Sahadev.API.Dossier
         /// <returns>list of object containing list of Link Details that are moved To trash</returns>
         /// <createdon>07-Sep-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-        /// <modifiedon></modifiedon>
-        /// <modifiedby></modifiedby>
-        /// <modifiedreason></modifiedreason>
+        /// <modifiedon>16-Oct-2024</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>Removed NotFound statuscode in response in try block</modifiedreason>
         [HttpGet]
         [Route("Dossier_Review_ShowTrash")]
         public IActionResult GetAllDossierTrashDataDetails(int dossierID, int platformID)
         {
             try
             {
-
                 dynamic lstDeletedDataDetails = SS.DossierService.GetAllDossierTrashDataDetails(dossierID, platformID);
-                if (lstDeletedDataDetails != null)
-                {
-                    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstDeletedDataDetails });
-                }
-                else
-                {
-                    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Deleted Links not found for the review" });
-                }
+                return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = (lstDeletedDataDetails != null) ? string.Empty : "Deleted Links not found for the review.", data = lstDeletedDataDetails });
+                //if (lstDeletedDataDetails != null)
+                //{
+                //    return Ok(new GenericResponse.APIResponse { code = HttpStatusCode.OK, message = string.Empty, data = lstDeletedDataDetails });
+                //}
+                //else
+                //{
+                //    return NotFound(new GenericResponse.APIResponse { code = HttpStatusCode.NotFound, message = "Deleted Links not found for the review" });
+                //}
             }
             catch (Exception ex)
             {
