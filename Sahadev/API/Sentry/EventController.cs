@@ -62,7 +62,7 @@ namespace Sahadev.API.Sentry
         /// <modifiedby>PJ</modifiedby>
         /// <modifiedreason>changed request model from Event to RQ_Event</modifiedreason>
         [HttpPost]
-        [Route("")]
+        [Route("Create")]
         public IActionResult Add([FromBody] RQ_Event objRQ_Event)
         {
             try

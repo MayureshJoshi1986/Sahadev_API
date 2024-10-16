@@ -88,14 +88,11 @@ namespace SahadevService.Sentry
                 objTag.TagDescription = objRQ_Event.Description;
                 objTag.IsActive = true;
 
-
                 int TagID = uw.A2Repository.InsertTag(objTag);
-
                 objTag.TagID = TagID;
 
 
                 //Mapping Rquest Event Object to Event Business Model 
-
                 Event objEvent = new Event();
                 objEvent.EventName = objRQ_Event.EventName;
                 objEvent.Description = objRQ_Event.Description;
@@ -103,7 +100,7 @@ namespace SahadevService.Sentry
                 objEvent.ClientID = objRQ_Event.ClientID;
                 objEvent.RefArticleURL = objRQ_Event.RefArticleURL;
                 objEvent.Keywords = objRQ_Event.Keywords;
-                objEvent.Query = objRQ_Event.Query;
+                //objEvent.Query = objRQ_Event.Query;
                 objEvent.Platform1 = objRQ_Event.Platform1;
                 objEvent.Platform2 = objRQ_Event.Platform2;
                 objEvent.Platform3 = objRQ_Event.Platform3;
@@ -112,17 +109,14 @@ namespace SahadevService.Sentry
                 objEvent.EndDate = objRQ_Event.EndDate;
                 objEvent.StatusID = objRQ_Event.StatusID;
 
-
                 //Assign TagId to the Event
                 objEvent.TagID = TagID;
 
-                //Insert Event anf get event Id
-
+                //Insert Event and get event Id
                 int EventID = uw.C2Repository.InsertEvent(objEvent);
                 objEvent.EventID = EventID;
 
                 //DO entry in Client Topic
-
                 ClientTopic objClientTopic = new ClientTopic();
                 objClientTopic.RefTopicID = EventID;
                 objClientTopic.TopicName = objRQ_Event.EventName;
@@ -132,7 +126,6 @@ namespace SahadevService.Sentry
                 objClientTopic.StartDate = objRQ_Event.StartDate;
                 objClientTopic.EndDate = objRQ_Event.EndDate;
                 objClientTopic.TopicTypeID = 2; // 1 general listener (client on board)  , 2 Sentry , 3 Dossier
-
                 int ClientTopicId = uw.A2Repository.InsertClientTopic(objClientTopic);
 
 
@@ -142,13 +135,7 @@ namespace SahadevService.Sentry
                 objTagMap.ClientTopicID = ClientTopicId;
                 objTagMap.IsActive = objTag.IsActive;
                 bool result = uw.A2Repository.InsertTagMap(objTagMap);
-
-                //throw new TransactionAbortedException(); // Just to test the Transaction Rollback
-
-
                 uw.C2Repository.InsertTag(objTag);
-
-
 
                 if (objRQ_Event.rQ_TagQueries != null)
                 {
@@ -164,9 +151,6 @@ namespace SahadevService.Sentry
                         uw.C2Repository.InsertTagQuery(objTagQuery);
                     }
                 }
-
-                
-               
 
                 uw.Commit();
                 bReturn =  true;

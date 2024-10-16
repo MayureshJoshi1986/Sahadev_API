@@ -20,12 +20,12 @@ namespace SahadevBusinessEntity.Validation
             RuleFor(x => x.Description)
                 .NotNull().NotEmpty().WithMessage("Please specify a description")
                 .MaximumLength(400).WithMessage("The lenght of 'description' must not be greater than 400 charatcers");
-            RuleFor(x => x.Query)
-                .NotNull().NotEmpty().WithMessage("Please specify a query")
-                .MaximumLength(400).WithMessage("The lenght of 'query' must not be greater than 400 charatcers");
-            RuleFor(x => x.Keywords)
-                .NotNull().NotEmpty().WithMessage("Please specify a keywords.")
-                .MaximumLength(400).WithMessage("The lenght of 'Keywords' must not be greater than 400 charatcers");
+            //RuleFor(x => x.TagQuery)
+            //    .NotNull().NotEmpty().WithMessage("Please specify a tag query")
+            //    .MaximumLength(400).WithMessage("The lenght of 'query' must not be greater than 400 charatcers");
+            //RuleFor(x => x.Keywords)
+            //    .NotNull().NotEmpty().WithMessage("Please specify a keywords.")
+            //    .MaximumLength(400).WithMessage("The lenght of 'Keywords' must not be greater than 400 charatcers");
             RuleFor(x => x.StartDate)
                 .Must(IsValidDate).WithMessage("Please enter valid start date.");
                 //.MaximumLength(80).WithMessage("The lenght of 'Keywords' must not be greater than 400 charatcers");

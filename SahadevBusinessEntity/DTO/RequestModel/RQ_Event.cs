@@ -64,11 +64,11 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("keywords")]
         public string Keywords { get; set; }
 
-        /// <summary>
-        /// Query
-        /// </summary>
-        [JsonPropertyName("query")]
-        public string Query { get; set; }
+        ///// <summary>
+        ///// TagQuery
+        ///// </summary>
+        //[JsonPropertyName("tag_query")]
+        //public string TagQuery { get; set; }
 
 
         /// <summary>
@@ -114,11 +114,11 @@ namespace SahadevBusinessEntity.DTO.RequestModel
         [JsonPropertyName("status_id")]
         public int StatusID { get; set; }
 
-        /// <summary>
-        /// TagID
-        /// </summary>
-   
-        public int TagID { get; set; }
+        ///// <summary>
+        ///// TagID
+        ///// </summary>
+
+        //public int TagID { get; set; }
 
 
         [JsonPropertyName("tag_query")]
