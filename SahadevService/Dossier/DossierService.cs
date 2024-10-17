@@ -1091,8 +1091,10 @@ namespace SahadevService.Dossier
         /// <modifiedon>30-01-24</modifiedon>
         /// <modifiedby>Saroj Laddha</modifiedby>
         /// <modifiedreason>Done changes for the Event Dossier Tag Queries according to client topic selected and 
-        /// dossierTag Group Add remove functionality added for periodical dossier 
-        /// </modifiedreason>
+        /// dossierTag Group Add remove functionality added for periodical dossier </modifiedreason>
+        /// <modifiedon>17-Oct-24</modifiedon>
+        /// <modifiedby>PJ</modifiedby>
+        /// <modifiedreason>Changed logic for Insert/Update/Delete TagGroup for periodical dossier & Removed FlagToAddRemove flag logic</modifiedreason>
         public bool UpdateDossierDef(RQ_DossierDef objRQ_DossierDef)
         {
             bool bReturn = false;
@@ -1202,9 +1204,14 @@ namespace SahadevService.Dossier
                 {
                     if (objRQ_DossierDef.TagGroup != null)
                     {
+                        List<DossierTagGroup> lstDossierTagGroupFetch = uw.C3Repository.GetDossierTagGroup(objRQ_DossierDef.DossierDefID);
                         foreach (var objTagGroup in objRQ_DossierDef.TagGroup)
                         {
-                            if (objTagGroup.FlagToAddRemove == 1)
+                            //Here, we are checking if TagID in API matches with TagID in DB (i.e TagID from API exist in DB) for particular DossierDefID;                            
+                            var objDossierTagGroupUpdate = lstDossierTagGroupFetch.AsQueryable().Where(x => x.TagID == objTagGroup.TagID).FirstOrDefault();
+
+                            // If not found, the insert
+                            if (objDossierTagGroupUpdate == null)
                             {
                                 DossierTagGroup objDossierTagGroup = new DossierTagGroup();
                                 objDossierTagGroup.DossierDefID = objRQ_DossierDef.DossierDefID;
@@ -1212,16 +1219,29 @@ namespace SahadevService.Dossier
                                 objDossierTagGroup.TagID = objTagGroup.TagID;
                                 objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
                                 uw.C3Repository.InsertDossierTagGroup(objDossierTagGroup);
-
                             }
-                            else if (objTagGroup.FlagToAddRemove == 2)
+
+                            // If found, the update
+                            else
                             {
-                                uw.C3Repository.DeleteDossierTagGroup(objTagGroup.DossierTagGroupID);
+                                DossierTagGroup objDossierTagGroup = new DossierTagGroup();
+                                objDossierTagGroup.DossierTagGroupID = objDossierTagGroupUpdate.DossierTagGroupID;
+                                objDossierTagGroup.DossierDefID = objRQ_DossierDef.DossierDefID;
+                                objDossierTagGroup.TGID = objTagGroup.TGID;
+                                objDossierTagGroup.TagID = objTagGroup.TagID;
+                                objDossierTagGroup.TypeOfBinding = objTagGroup.TypeOfBinding;
+                                uw.C3Repository.UpdateDossierTagGroup(objDossierTagGroup);
+
+                                objDossierTagGroupUpdate.IsSync = true;
                             }
                         }
-                    }
 
+                        foreach (var objDossierTagGroup in lstDossierTagGroupFetch)
+                            if (objDossierTagGroup.IsSync == false)
+                                uw.C3Repository.DeleteDossierTagGroup(objDossierTagGroup.DossierTagGroupID);
+                    }
                 }
+
 
                 #region Task & TaskLog
 

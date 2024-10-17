@@ -7,8 +7,9 @@
  *  --------------------------------------------------------------------------------------------*
  *  Created Date    :- 26-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  revised By      :- PJ                                                                       *
+ *  revised On      :- 17-Oct-2024                                                              *
+ *  revised Details :- Removed parameter FlagToAddRemove                                        *
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
@@ -34,13 +35,5 @@ namespace SahadevBusinessEntity.DTO.RequestModel
 
         [JsonPropertyName("type_of_binding")]
         public int TypeOfBinding { get; set; }
-
-        /// <summary>
-        /// Added  = 1
-        /// Removed = 2
-        /// 
-        /// </summary>
-        [JsonPropertyName("flag_to_add_remove")]
-        public int FlagToAddRemove { get; set; }    
     }
 }

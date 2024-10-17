@@ -7,8 +7,9 @@
  *  --------------------------------------------------------------------------------------------*
  *  Created Date    :- 24-Aug-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
- *  revised By      :-                                                                          *
- *  revised Details :-                                                                          *
+ *  revised By      :- PJ                                                                       *
+ *  revised On      :- 17-Oct-2024                                                              *
+ *  revised Details :- Added new parameter IsSync                                               *
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
@@ -28,6 +29,7 @@ namespace SahadevBusinessEntity.DTO.Model
         public int TGID { get; set; }
         public int TagID { get; set; }
         public int TypeOfBinding { get; set; }
+        public bool IsSync { get; set; }
 
         DossierDef DossierDef { get; set; }
     }
