@@ -489,54 +489,63 @@ namespace SahadevService.Dossier
                     // so datafrom link map table can have link id null or 0 for the additional url and join will give only matching 
                     //result set so doing union all join to get matching linkId data from E database 
                     //and all the addition url with all necessary flags required
-                    if (lstLinkID != null && lstLinkID.Count > 0)
-                    {
-                        lstlinkDetails = lstReviewLinks.GroupJoin(lstReviewLinkDetails,
-                                  links => links.LinkID,
-                                  linkDetail => linkDetail.LinkID,
-                                (links, linkDetailGroup) => new { links, linkDetailGroup })
-                                .SelectMany(x => x.linkDetailGroup.DefaultIfEmpty(),//include the result  if there are no matches even(Left Join)
-                                (x, linkDetail) =>
 
+                    lstlinkDetails = lstReviewLinks.GroupJoin(lstReviewLinkDetails,
+                              links => links.LinkID,
+                              linkDetail => linkDetail.LinkID,
+                            (links, linkDetailGroup) => new { links, linkDetailGroup })
+                            .SelectMany(x => x.linkDetailGroup.DefaultIfEmpty(),//include the result  if there are no matches even(Left Join)
+                            (x, linkDetail) =>
+
+                              {
+
+                                  // to handle new columns added in Table and SP's  dynamically 
+                                  // no requirement to do any change in code for getting data of a new column. this code will handle all 
+                                  // the new columns added in SP's
+                                  dynamic expando = new ExpandoObject();
+                                  var dictionary = (IDictionary<string, object>)expando;
+
+                                  //add all properties from the first object
+                                  if (x.links != null)
                                   {
-
-                                      // to handle new columns added in Table and SP's  dynamically 
-                                      // no requirement to do any change in code for getting data of a new column. this code will handle all 
-                                      // the new columns added in SP's
-                                      dynamic expando = new ExpandoObject();
-                                      var dictionary = (IDictionary<string, object>)expando;
-
-                                      //add all properties from the first object
-                                      if (x.links != null)
+                                      foreach (var item in (IDictionary<string, object>)x.links)
                                       {
-                                          foreach (var item in (IDictionary<string, object>)x.links)
-                                          {
 
-                                              dictionary[item.Key] = item.Value;
-                                          }
+                                          dictionary[item.Key] = item.Value;
                                       }
+                                  }
 
-                                      //add all properties from the second object
-                                      if (linkDetail != null)
+                                  //add all properties from the second object
+                                  if (linkDetail != null)
+                                  {
+                                      foreach (var item in (IDictionary<string, object>)linkDetail)
                                       {
-                                          foreach (var item in (IDictionary<string, object>)linkDetail)
-                                          {
-                                              dictionary[item.Key] = item.Value;
-                                          }
+                                          dictionary[item.Key] = item.Value;
                                       }
-                                      else
+                                  }
+                                  else
+                                  {
+                                      if (lstReviewLinkDetails.Any())
                                       {
+
                                           foreach (var key in ((IDictionary<string, object>)lstReviewLinkDetails.FirstOrDefault()).Keys)
                                           {
                                               dictionary[key] = null;
                                           }
                                       }
-                                      return expando;
+                                      else
+                                      {
+                                          // If no records, use keys from an example record
+                                          dictionary = CreateBlankSchema(dictionary);
 
-                                  }).ToList();
-                    }
+                                      }
+                                  }
+                                  return expando;
 
+                              }).ToList();
                 }
+
+
 
                 return lstlinkDetails;
 
@@ -549,6 +558,31 @@ namespace SahadevService.Dossier
 
 
         }
+
+        // Method to create a blank schema dynamically
+        private static IDictionary<string, object> CreateBlankSchema(IDictionary<string, object> dictionary)
+        {
+            var schemaRecord = new Dictionary<string, object>
+                                                {
+                                                        { "LinkID ", null },
+                                                        { "Url", null },
+                                                        { "UrlHash", null },
+                                                           { "Date", null },
+                                                           { "Title", null },
+                                                           { "Publication", null },
+                                                           { "PublicationCategory", null },
+                                                           { "AVE", null },
+                                                           { "Article_Mention", null },
+                                                            { "Sentiment", null },
+                                                           { "CirculationScore", null }
+                                                };
+            foreach (var columnName in schemaRecord.Keys)
+            {
+                dictionary[columnName] = null; // Set the default value (null)
+            }
+            return dictionary;
+        }
+
 
         /// <summary>
         /// To fetch the Data links Details that saved to draft
@@ -581,52 +615,62 @@ namespace SahadevService.Dossier
 
                     //joining both records as we would require DossierMapLinkID from the Sehdev_C2_2 Database to perform actions
                     // and with all necessary details from the E Database
-                    if (lstLinkID != null && lstLinkID.Count > 0)
-                    {
-                        lstlinkDetails = lstReviewDraftLinks.GroupJoin(lstReviewDraftLinkDetails,
-                                      links => links.LinkID,
-                                      linkDetail => linkDetail.LinkID,
-                                        (links, linkDetailGroup) => new { links, linkDetailGroup })
-                                     .SelectMany(x => x.linkDetailGroup.DefaultIfEmpty(),//include the result  if there are no matches even(Left Join)
-                                     (x, linkDetail) =>
-                                     // (linkDetail, links) =>
+
+                    lstlinkDetails = lstReviewDraftLinks.GroupJoin(lstReviewDraftLinkDetails,
+                                  links => links.LinkID,
+                                  linkDetail => linkDetail.LinkID,
+                                    (links, linkDetailGroup) => new { links, linkDetailGroup })
+                                 .SelectMany(x => x.linkDetailGroup.DefaultIfEmpty(),//include the result  if there are no matches even(Left Join)
+                                 (x, linkDetail) =>
+                                 // (linkDetail, links) =>
+                                 {
+
+                                     // to handle new columns added in Table and SP's  dynamically 
+                                     // no requirement to do any change in code for getting data of a new column. this code will handle all 
+                                     // the new columns added in SP's
+                                     dynamic expando = new ExpandoObject();
+                                     var dictionary = (IDictionary<string, object>)expando;
+
+                                     //add all properties from the first object
+                                     if (x.links != null)
+                                     {
+                                         foreach (var item in (IDictionary<string, object>)x.links)
+                                         {
+
+                                             dictionary[item.Key] = item.Value;
+                                         }
+                                     }
+
+                                     //add all properties from the second object
+                                     if (linkDetail != null)
+                                     {
+                                         foreach (var item in (IDictionary<string, object>)linkDetail)
+                                         {
+                                             dictionary[item.Key] = item.Value;
+                                         }
+                                     }
+                                     else
                                      {
 
-                                         // to handle new columns added in Table and SP's  dynamically 
-                                         // no requirement to do any change in code for getting data of a new column. this code will handle all 
-                                         // the new columns added in SP's
-                                         dynamic expando = new ExpandoObject();
-                                         var dictionary = (IDictionary<string, object>)expando;
-
-                                         //add all properties from the first object
-                                         if (x.links != null)
+                                         if (lstReviewDraftLinkDetails.Any())
                                          {
-                                             foreach (var item in (IDictionary<string, object>)x.links)
-                                             {
 
-                                                 dictionary[item.Key] = item.Value;
-                                             }
-                                         }
-
-                                         //add all properties from the second object
-                                         if (linkDetail != null)
-                                         {
-                                             foreach (var item in (IDictionary<string, object>)linkDetail)
-                                             {
-                                                 dictionary[item.Key] = item.Value;
-                                             }
-                                         }
-                                         else
-                                         {
-                                             foreach (var key in ((IDictionary<string, object>)lstReviewDraftLinkDetails.First()).Keys)
+                                             foreach (var key in ((IDictionary<string, object>)lstReviewDraftLinkDetails.FirstOrDefault()).Keys)
                                              {
                                                  dictionary[key] = null;
                                              }
                                          }
-                                         return expando;
+                                         else
+                                         {
+                                             // If no records, use keys from an example record
+                                             dictionary = CreateBlankSchema(dictionary);
 
-                                     }).ToList();
-                    }
+                                         }
+                                     }
+                                     return expando;
+
+                                 }).ToList();
+
                 }
                 return lstlinkDetails;
             }
@@ -669,50 +713,59 @@ namespace SahadevService.Dossier
 
                     //joining both records as we would require DossierMapLinkID from the Sehdev_C2_2 Database to perform actions
                     // and with all necessary details from the E Database
-                    if (lstLinkID != null && lstLinkID.Count > 0)
-                    {
-                        lstlinkDetails = lstDeletedLinks.GroupJoin(lstDeletedLinkDetails,
-                                  links => links.LinkID,
-                                  linkDetail => linkDetail.LinkID,
-                                   (links, linkDetailGroup) => new { links, linkDetailGroup })
-                                     .SelectMany(x => x.linkDetailGroup.DefaultIfEmpty(),
-                                     (x, linkDetail) =>
+
+                    lstlinkDetails = lstDeletedLinks.GroupJoin(lstDeletedLinkDetails,
+                              links => links.LinkID,
+                              linkDetail => linkDetail.LinkID,
+                               (links, linkDetailGroup) => new { links, linkDetailGroup })
+                                 .SelectMany(x => x.linkDetailGroup.DefaultIfEmpty(),
+                                 (x, linkDetail) =>
+                                  {
+                                      // to handle new columns added in Table and SP's  dynamically 
+                                      // no requirement to do any change in code for getting data of a new column. this code will handle all 
+                                      // the new columns added in SP's
+                                      dynamic expando = new ExpandoObject();
+                                      var dictionary = (IDictionary<string, object>)expando;
+
+                                      //add all properties from the first object
+                                      if (x.links != null)
                                       {
-                                          // to handle new columns added in Table and SP's  dynamically 
-                                          // no requirement to do any change in code for getting data of a new column. this code will handle all 
-                                          // the new columns added in SP's
-                                          dynamic expando = new ExpandoObject();
-                                          var dictionary = (IDictionary<string, object>)expando;
-
-                                          //add all properties from the first object
-                                          if (x.links != null)
+                                          foreach (var item in (IDictionary<string, object>)x.links)
                                           {
-                                              foreach (var item in (IDictionary<string, object>)x.links)
-                                              {
 
-                                                  dictionary[item.Key] = item.Value;
-                                              }
+                                              dictionary[item.Key] = item.Value;
                                           }
+                                      }
 
-                                          //add all properties from the second object
-                                          if (linkDetail != null)
+                                      //add all properties from the second object
+                                      if (linkDetail != null)
+                                      {
+                                          foreach (var item in (IDictionary<string, object>)linkDetail)
                                           {
-                                              foreach (var item in (IDictionary<string, object>)linkDetail)
-                                              {
-                                                  dictionary[item.Key] = item.Value;
-                                              }
+                                              dictionary[item.Key] = item.Value;
                                           }
-                                          else
+                                      }
+                                      else
+                                      {
+                                          if (lstDeletedLinkDetails.Any())
                                           {
-                                              foreach (var key in ((IDictionary<string, object>)lstDeletedLinkDetails.First()).Keys)
+
+                                              foreach (var key in ((IDictionary<string, object>)lstDeletedLinkDetails.FirstOrDefault()).Keys)
                                               {
                                                   dictionary[key] = null;
                                               }
                                           }
-                                          return expando;
+                                          else
+                                          {
+                                              // If no records, use keys from an example record
+                                              dictionary = CreateBlankSchema(dictionary);
 
-                                      }).ToList();
-                    }
+                                          }
+                                      }
+                                      return expando;
+
+                                  }).ToList();
+
                 }
 
                 return lstlinkDetails;
