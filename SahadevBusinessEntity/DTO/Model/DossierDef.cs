@@ -43,6 +43,7 @@ namespace SahadevBusinessEntity.DTO.Model
         public int StatusID { get; set; }
         public string RejectionReason { get; set; }
         public string TemplateFileName { get; set; }
+        public int TotalReport { get; set; }
         public DossierSch DossierSch { get; set; }
         public DossierConf DossierConf { get; set; }
         public List<DossierTagGroup> DossierTagGroup { get; set; }
