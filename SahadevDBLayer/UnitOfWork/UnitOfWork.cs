@@ -20,12 +20,18 @@ namespace SahadevDBLayer.UnitOfWork
         /// Created By Saroj 12.58
         /// </summary>
         /// <param name="config"></param>
-        
+
         //Configuration for SahadevA2Database
         private IDbConnection _A2Connection;
         private IDbTransaction _A2Transaction;
-        public static string A2ConnectionSring = "A2ConnectionSring"; 
+        public static string A2ConnectionSring = "A2ConnectionSring";
         private IA2Repository _A2Repository;
+
+        //Configuration for SahadevB Database
+        private IDbConnection _BConnection;
+        private IDbTransaction _BTransaction;
+        public static string BConnectionSring = "BConnectionSring";
+        private IBRepository _BRepository;
 
 
         //Configuration for SahadevC1Database
@@ -75,6 +81,11 @@ namespace SahadevDBLayer.UnitOfWork
             _A2Connection.Open();
             _A2Transaction = _A2Connection.BeginTransaction();
 
+            //UnitOfWork for SahadevB Database
+            _BConnection = new SqlConnection(_config.GetConnectionString(BConnectionSring));
+            _BConnection.Open();
+            _BTransaction = _BConnection.BeginTransaction();
+
             _C1Connection = new SqlConnection(_config.GetConnectionString(C1ConnectionSring));
             _C1Connection.Open();
             _C1Transaction = _C1Connection.BeginTransaction();
@@ -102,6 +113,11 @@ namespace SahadevDBLayer.UnitOfWork
         public IA2Repository A2Repository
         {
             get { return _A2Repository ?? (_A2Repository = new A2Repository(_A2Connection, _A2Transaction)); }
+        }
+
+        public IBRepository BRepository
+        {
+            get { return _BRepository ?? (_BRepository = new BRepository(_BConnection, _BTransaction)); }
         }
 
         public IC1Repository C1Repository
@@ -138,7 +154,7 @@ namespace SahadevDBLayer.UnitOfWork
             _C2Transaction.Rollback();
             _C3Transaction.Rollback();
             _ETransaction.Rollback();
-            
+
         }
         public void Commit()
         {
@@ -147,7 +163,7 @@ namespace SahadevDBLayer.UnitOfWork
                 _A2Transaction.Commit();
                 _C1Transaction.Commit();
                 _C2Transaction.Commit();
-                _C3Transaction.Commit();   
+                _C3Transaction.Commit();
                 _ETransaction.Commit();
             }
             catch
