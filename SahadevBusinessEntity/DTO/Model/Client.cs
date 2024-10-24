@@ -27,6 +27,8 @@ namespace SahadevBusinessEntity.DTO.Model
         /// </summary>
         public string RegisteredName { get; set; }
 
+        public string Alias { get; set; }
+
         /// <summary>
         /// Description
         /// </summary>
@@ -57,10 +59,20 @@ namespace SahadevBusinessEntity.DTO.Model
         /// </summary>
         public DateTime ValidUntil { get; set; }
 
+        public int InsustryID_Primary { get; set; }
+
+        public int IndustryID_Secondary { get; set; }
+
+        public string CPM_Report {  get; set; }
+
+        public DateTime CPM_CompletedDate {  get; set; }
+
         /// <summary>
         /// </summary>
         /// </summary>
         public int SupportUserID { get; set; }
+
+        public int POCUserID {  get; set; }
 
         /// <summary>
         /// CreatedAt

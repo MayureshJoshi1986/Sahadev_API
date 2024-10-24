@@ -1,11 +1,11 @@
 ﻿/*  --------------------------------------------------------------------------------------------*
- *  Class Name      :-  User                                                            *
+ *  Class Name      :- ClientTagGroup                                                               *
  *  --------------------------------------------------------------------------------------------*
- *  Description     :-  Entity Model for the User                                *
+ *  Description     :-  Entity Model for the ClientTagGroup                                      *
  *  --------------------------------------------------------------------------------------------*
  *  Created By      :- Saroj Laddha                                                             *
  *  --------------------------------------------------------------------------------------------*
- *  Created Date    :- 24-Aug-2024                                                              *
+ *  Created Date    :- 24-OCT-2024                                                              *
  *  --------------------------------------------------------------------------------------------*
  *  revised By      :-                                                                          *
  *  revised Details :-                                                                          *
@@ -13,28 +13,20 @@
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
 
-using System; 
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SahadevBusinessEntity.DTO.Model
 {
-    public class User
+    public  class ClientTagGroup
     {
-        public int UserID { get; set; }
-        public string Name { get; set; }
-        public string UserName { get; set; }
-        public string EmailID { get; set; }
-        public bool IsActive { get; set; }
-
-        public int RefID { get; set; }  
-        public int RoleID { get; set; }
-
+         public int CTGID { get; set; }
+        public int ClientID {  get; set; }
+        public int TGID { get; set; }
+        public int TagID { get; set; }
+        public int TypeOfBinding { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime ModifiedAt
-        {
-            get; set;
-
-        }
+        public DateTime ModifiedAt { get; set; }
     }
 }
