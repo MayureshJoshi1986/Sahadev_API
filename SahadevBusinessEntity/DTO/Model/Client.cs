@@ -47,7 +47,7 @@ namespace SahadevBusinessEntity.DTO.Model
         /// <summary>
         /// CoreTagID 
         /// </summary>
-        public bool CoreTagID { get; set; }
+        public int CoreTagID { get; set; }
 
         /// <summary>
         /// ActivationFrom

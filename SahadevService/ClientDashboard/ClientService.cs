@@ -20,6 +20,8 @@ using System.Collections.Generic;
 using SahadevBusinessEntity.DTO.Model;
 using System.Text;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Cryptography;
+using SahadevBusinessEntity.DTO.RequestModel;
 
 namespace SahadevService.ClientDashboard
 {
@@ -41,7 +43,9 @@ namespace SahadevService.ClientDashboard
         dynamic GetAllTpoic();
         dynamic GetClientLinkDetails(int clientId);
 
-       Client GetClientDetail(int clientId);
+        Client GetClientDetail(int clientId);
+
+        bool InsertClient(Client client);
 
 
     }
@@ -260,13 +264,95 @@ namespace SahadevService.ClientDashboard
         /// <createdon>24-oct-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
         public Client GetClientDetail(int clientId)
-        { 
+        {
             return null;
+        }
+
+
+        /// <summary>
+        ///  To insert client
+        /// </summary>
+        /// <param name="client">pass client Id to get the client selected groups</param>
+        /// <returns>all the Topic</returns>
+        /// <createdon>24-oct-2024</createdon>
+        /// <createdby>Saroj Laddha</createdby>
+        public bool InsertClient(Client objRQ_client)
+        {
+            try
+            {   Client objClient = new Client();
+                objClient.ClientID = objRQ_client.ClientID;
+                objClient.Alias = objRQ_client.Alias;
+                objClient.ActivationFrom = objRQ_client.ActivationFrom;
+                objClient.BSEListed = objRQ_client.BSEListed;
+                objClient.NSEListed = objRQ_client.NSEListed;
+                objClient.Description = objRQ_client.Description;
+                objClient.Name = objRQ_client.Name;
+                objClient.CPM_CompletedDate = objRQ_client.CPM_CompletedDate;
+                objClient.CPM_Report = objRQ_client.CPM_Report;
+                objClient.POCUserID = objRQ_client.POCUserID;
+                objClient.InsustryID_Primary = objRQ_client.InsustryID_Primary;
+                objClient.IndustryID_Secondary = objRQ_client.IndustryID_Secondary;
+                objClient.RegisteredName = objRQ_client.RegisteredName;
+                objClient.SupportUserID = objRQ_client.SupportUserID;
+                objClient.ValidUntil = objRQ_client.ValidUntil;
+                objClient.CoreTagID = objRQ_client.CoreTagID;
+
+                if (objRQ_client != null && objRQ_client.ClientID <= 0)
+                {
+                    RQ_Tag objRQTag = new RQ_Tag();
+                    Tag objTag = new Tag();
+                    objTag.TagName = objRQTag.TagName;
+                    objTag.TagDescription = objRQTag.TagDescription;
+                    objTag.IsActive = true;
+                    int TagID = uw.BRepository.InsertTag(objTag);
+                    objClient.CoreTagID = TagID;
+                    uw.A2Repository.InsertClient(objClient); // need to return clientid
+                    objTag.TagID = TagID;
+                    uw.A2Repository.InsertTag(objTag);
+
+                    foreach (var objRQQuery in new List<RQ_TagQuery>())
+                    {
+                        TagQuery tagQuery = new TagQuery();
+                        tagQuery.Query = objRQQuery.Query;
+                        tagQuery.TagID = TagID;
+                        tagQuery.TypeOfQuery = string.Empty;
+                        tagQuery.PlatformID = objRQQuery.PlatformID;
+                        tagQuery.IsActive = true;
+                        //  tagQuery.TagQueryID= uw.BRepository.InsertTagQuery(tagQuery);
+                        uw.A2Repository.InsertTagQuery(tagQuery);
+
+                    }
+
+                    foreach (var objRQClientServiceTeam in new List<ClientServicingTeam>())
+                    {
+                        ClientServicingTeam objClientTeam = new ClientServicingTeam();
+                        objClientTeam.ClientID = objRQClientServiceTeam.ClientID;
+                        objClientTeam.UserID = objRQClientServiceTeam.UserID;
+                        objClientTeam.RoleID = objRQClientServiceTeam.RoleID;
+                        if (objClient.POCUserID == objRQClientServiceTeam.UserID)
+                        {
+                            objClientTeam.IsPOC = true;
+                        }
+                        uw.A2Repository.InsertClientServicingUser(objClientTeam);
+                    }
+                }
+                else
+                {
+                    //update client
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, _className, "InsertClient");
+                throw ex;
+            }
+
         }
 
 
     }
 
 
-    
+
 }
