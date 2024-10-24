@@ -14,7 +14,9 @@
  *  revised Details :-                                                                          *
  //**********************************************************************************************/
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using SahadevBusinessEntity.DTO.Model;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,19 +39,19 @@ namespace SahadevDBLayer.Repository
 
         int InsertTagQuery(TagQuery objTagQuery);
 
-
         List<ClientTopic> GetAllClientTopicByClientID(int topicTypeId, int clientId);
         ClientTopic GetClientTopic(int topicTypeId, int clientId, int refTopicId);
-
         Tag GetTagByClientTopicID(int clientTopicId);
-
         List<TagQuery> GetAllTagQueryByTagID(int tagId);
-
         bool UpdateTagQuery(TagQuery objTagQuery);
         ClientTopic GetClientTopic(int clientTopicId);
-
         Client GetClientByClientID(int clientId, int coretagID);
         ClientTopic GetClientTopicByTagID(int tagId);
+        List<dynamic> GetClientDetailByIndustryID(int industryId);
+        List<dynamic> GetSupportExecutive();
+        List<dynamic> GetClientServicingUser(string username);
+        List<dynamic> GetClientServicingUserByClientID(int clientID);
+        int InsertClientServicingUser(ClientServicingTeam objClientServicingTeam);
 
     }
 
@@ -463,7 +465,6 @@ namespace SahadevDBLayer.Repository
         /// <returns>true if successfully updated else false</returns>
         /// <createdon>01-Oct-2024</createdon>
         /// <createdby>Saroj Laddha</createdby>
-
         public bool UpdateTagQuery(TagQuery objTagQuery)
         {
             bool bReturn = false;
@@ -487,6 +488,134 @@ namespace SahadevDBLayer.Repository
             return bReturn;
 
 
+        }
+
+        /// <summary>
+        /// This method is used to get all client detail by IndustryID from Client table
+        /// </summary>
+        /// <param name="industryId">IndustryID</param>
+        /// <returns>object containing client detail</returns>
+        /// <createdon>24-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetClientDetailByIndustryID(int industryId)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@industryID", industryId);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_Client_FetchByIndustry]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        /// <summary>
+        /// This method is used to get all support executive
+        /// </summary>
+        /// <returns>object containing support executive</returns>
+        /// <createdon>24-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetSupportExecutive()
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_Client_FetchSupportUser]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to get all client servicing user
+        /// </summary>
+        /// <returns>list of object containing client servicing user</returns>
+        /// <param name="username">Username</param>
+        /// <createdon>24-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetClientServicingUser(string username)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@username", username);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_Client_FetchCSTeam]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to get all client servicing user by clientID
+        /// </summary>
+        /// <returns>list of object containing client servicing users by clientID</returns>
+        /// <param name="clientID">ClientID</param>
+        /// <createdon>24-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public List<dynamic> GetClientServicingUserByClientID(int clientID)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientID", clientID);
+                var data = GetAllByProcedure<dynamic>(@"[dbo].[USP_Client_FetchServiceTeam]", dbparams, _transaction);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to inser client servicing in ClientServicingTeam table
+        /// </summary>
+        /// <param name="objClientServicingTeam">object containing client servicing users</param>
+        /// <returns></returns>  
+        /// <createdon>24-Oct-2024</createdon>
+        /// <createdby>PJ</createdby>
+        /// <modifiedon></modifiedon>
+        /// <modifiedby></modifiedby>
+        /// <modifiedreason></modifiedreason>
+        public int InsertClientServicingUser(ClientServicingTeam objClientServicingTeam)
+        {
+            int iResult = 0;
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@clientID", objClientServicingTeam.ClientID);
+                dbparams.Add("@userID", objClientServicingTeam.UserID);
+                dbparams.Add("@roleID", objClientServicingTeam.RoleID);
+                dbparams.Add("@isPOC", objClientServicingTeam.IsPOC);
+                iResult = GetByProcedure<int>(@"[dbo].[USP_Client_InsertServicingTeam]", dbparams, _transaction);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return iResult;
         }
     }
 }
